@@ -21,6 +21,25 @@ public struct BoxSpriteSet
     public Sprite side;
 }
 
+[System.Serializable]
+public struct RarityDropRates
+{
+    [Range(0f, 100f)] public float common;
+    [Range(0f, 100f)] public float rare;
+    [Range(0f, 100f)] public float legendary;
+
+    public float GetWeight(ItemRarity rarity)
+    {
+        return rarity switch
+        {
+            ItemRarity.COMMON => common,
+            ItemRarity.RARE => rare,
+            ItemRarity.LEGENDARY => legendary,
+            _ => 0f
+        };
+    }
+}
+
 [DisallowMultipleComponent]
 public class Box : MonoBehaviour
 {
@@ -28,19 +47,29 @@ public class Box : MonoBehaviour
     [SerializeField] private BoxType type = BoxType.Player;
     [SerializeField] private BoxSize size = BoxSize.Small;
 
+    [Header("Capacity By Size")]
+    [SerializeField, Min(1)] private int smallCapacity = 3;
+    [SerializeField, Min(1)] private int mediumCapacity = 5;
+    [SerializeField, Min(1)] private int largeCapacity = 8;
+
+    [Header("Item Roll Settings")]
+    [SerializeField] private bool allowRepeatedItems = true;
+
     [Header("Sprites (per size)")]
     [SerializeField] private BoxSpriteSet smallSprites;
     [SerializeField] private BoxSpriteSet mediumSprites;
     [SerializeField] private BoxSpriteSet largeSprites;
 
-    [Header("Item Pool (prepared)")]
-    [Tooltip("Pool de items que puede contener esta caja (para futuras implementaciones).")]
-    [SerializeField] private List<ItemDefinition> itemPool = new List<ItemDefinition>();
+    [Header("Item Pool For This Box")]
+    [Tooltip("Pool de ScriptableObjects Item que puede soltar ESTA caja.")]
+    [SerializeField] private List<Item> itemPool = new List<Item>();
 
     private SpriteRenderer sr;
 
     public BoxType Type => type;
     public BoxSize Size => size;
+    public IReadOnlyList<Item> ItemPool => itemPool;
+    public bool AllowRepeatedItems => allowRepeatedItems;
 
     public int Weight => size switch
     {
@@ -48,6 +77,14 @@ public class Box : MonoBehaviour
         BoxSize.Medium => 2,
         BoxSize.Large => 3,
         _ => 1
+    };
+
+    public int Capacity => size switch
+    {
+        BoxSize.Small => smallCapacity,
+        BoxSize.Medium => mediumCapacity,
+        BoxSize.Large => largeCapacity,
+        _ => smallCapacity
     };
 
     private void Awake()
@@ -77,19 +114,65 @@ public class Box : MonoBehaviour
             sr.sprite = chosen;
     }
 
-    // Preparado para futuras implementaciones:
-    // public IReadOnlyList<ItemDefinition> ItemPool => itemPool;
-}
+    public List<Item> RollContents(RarityDropRates rarityRates)
+    {
+        List<Item> result = new List<Item>();
+        int remainingSlots = Capacity;
+        int safety = 100;
 
-/// <summary>
-/// PREPARADO para el sistema de items.
-/// (En el futuro lo normal sería crear un ScriptableObject real "ItemDefinition").
-/// </summary>
-public class ItemDefinition : ScriptableObject
-{
-    // public string displayName;
-    // public int value;
-    // public Rarity rarity;
-    // public List<PassiveDefinition> passives;
-    // public Dictionary<string, int> attributes;
+        List<Item> workingPool = new List<Item>(itemPool);
+
+        while (remainingSlots > 0 && safety-- > 0)
+        {
+            List<Item> validCandidates = new List<Item>();
+
+            for (int i = 0; i < workingPool.Count; i++)
+            {
+                Item item = workingPool[i];
+                if (item == null) continue;
+                if (item.boxSlots <= remainingSlots && rarityRates.GetWeight(item.rarity) > 0f)
+                    validCandidates.Add(item);
+            }
+
+            if (validCandidates.Count == 0)
+                break;
+
+            Item selected = GetWeightedRandomItem(validCandidates, rarityRates);
+            if (selected == null)
+                break;
+
+            result.Add(selected);
+            remainingSlots -= Mathf.Max(1, selected.boxSlots);
+
+            if (!allowRepeatedItems)
+            {
+                workingPool.Remove(selected);
+            }
+        }
+
+        return result;
+    }
+
+    private Item GetWeightedRandomItem(List<Item> candidates, RarityDropRates rarityRates)
+    {
+        float totalWeight = 0f;
+
+        for (int i = 0; i < candidates.Count; i++)
+            totalWeight += rarityRates.GetWeight(candidates[i].rarity);
+
+        if (totalWeight <= 0f)
+            return null;
+
+        float roll = Random.Range(0f, totalWeight);
+        float accumulated = 0f;
+
+        for (int i = 0; i < candidates.Count; i++)
+        {
+            accumulated += rarityRates.GetWeight(candidates[i].rarity);
+            if (roll <= accumulated)
+                return candidates[i];
+        }
+
+        return candidates[candidates.Count - 1];
+    }
 }

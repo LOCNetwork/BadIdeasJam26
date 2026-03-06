@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
 
     private readonly List<Interactable> inRange = new();
 
-    // Stack (último = top)
     [SerializeField] private List<Interactable> heldStack = new();
     private HoldCategory heldCategory = HoldCategory.None;
     private int currentWeight = 0;
@@ -64,6 +63,7 @@ public class Player : MonoBehaviour
 
         moveDirection = input.sqrMagnitude > 0.001f ? input.normalized : Vector2.zero;
     }
+
     public void RegisterInRange(Interactable i)
     {
         if (i == null) return;
@@ -81,7 +81,10 @@ public class Player : MonoBehaviour
     private void UpdateClosestTarget()
     {
         for (int idx = inRange.Count - 1; idx >= 0; idx--)
-            if (inRange[idx] == null) inRange.RemoveAt(idx);
+        {
+            if (inRange[idx] == null)
+                inRange.RemoveAt(idx);
+        }
 
         if (inRange.Count == 0)
         {
@@ -160,11 +163,8 @@ public class Player : MonoBehaviour
             it.transform.SetParent(HoldTarget, worldPositionStays: true);
             it.transform.localPosition = localOffset;
             it.transform.localRotation = Quaternion.identity;
-
-            // Sorting: +1 para que en suelo sea 0 y en pila 1..N
             it.SetSortingOrder(i + 1);
 
-            // Alternar sprites si es caja
             if (heldCategory == HoldCategory.Box)
             {
                 Box box = it.GetComponent<Box>();
@@ -189,7 +189,6 @@ public class Player : MonoBehaviour
         Vector3 localOffset = new Vector3(0f, yOff * index, 0f);
 
         target.PickUpToStack(HoldTarget, localOffset);
-
         RefreshStackVisuals();
     }
 
@@ -211,6 +210,41 @@ public class Player : MonoBehaviour
         return last;
     }
 
+    public bool TryTakeTopHeldBox(out GameObject boxGameObject, out Box boxData)
+    {
+        boxGameObject = null;
+        boxData = null;
+
+        if (heldStack.Count == 0)
+            return false;
+
+        Interactable last = heldStack[heldStack.Count - 1];
+        if (last == null || !last.IsBox)
+            return false;
+
+        Box foundBox = last.GetComponent<Box>();
+        if (foundBox == null)
+            return false;
+
+        PopLastFromStack();
+
+        last.transform.SetParent(null);
+        last.ResetSortingOrder();
+
+        boxGameObject = last.gameObject;
+        boxData = foundBox;
+        return true;
+    }
+
+    public bool IsHoldingAtLeastOneBox()
+    {
+        if (heldStack.Count == 0)
+            return false;
+
+        Interactable last = heldStack[heldStack.Count - 1];
+        return last != null && last.IsBox;
+    }
+
     private bool CanAdd(Interactable target)
     {
         if (!IsPickable(target)) return false;
@@ -218,7 +252,6 @@ public class Player : MonoBehaviour
         HoldCategory cat = CategoryOf(target);
         if (cat == HoldCategory.None) return false;
 
-        // No mezclar
         if (heldCategory != HoldCategory.None && heldCategory != cat)
             return false;
 
@@ -232,14 +265,12 @@ public class Player : MonoBehaviour
     {
         Interactable target = currentTarget;
 
-        // target NO pickable => interacción normal
         if (target != null && !IsPickable(target))
         {
             target.Interact(this);
             return;
         }
 
-        // NO target => si hay stack, suelta el último
         if (target == null)
         {
             if (heldStack.Count > 0)
@@ -250,9 +281,6 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // target es pickable (box o item)
-
-        // Pila vacía
         if (heldStack.Count == 0)
         {
             if (CanAdd(target))
@@ -261,19 +289,16 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // Categoría compatible
         HoldCategory targetCat = CategoryOf(target);
         if (heldCategory != targetCat)
             return;
 
-        // Si cabe: push
         if (CanAdd(target))
         {
             PushToStack(target);
             return;
         }
 
-        // Si NO cabe: swap SOLO del último si al reemplazar cabe
         if (heldStack.Count > 0)
         {
             Interactable last = heldStack[heldStack.Count - 1];

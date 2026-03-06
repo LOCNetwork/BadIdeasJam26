@@ -5,5 +5,4 @@ public enum ItemRarity
     COMMON,
     RARE,
     LEGENDARY
-
 }

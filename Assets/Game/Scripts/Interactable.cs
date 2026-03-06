@@ -23,6 +23,7 @@ public class Interactable : MonoBehaviour
         colliders2d = GetComponents<Collider2D>();
         sr = GetComponent<SpriteRenderer>();
     }
+
     public virtual void Interact(Player player)
     {
         Debug.Log("He interactuado con una no caja");
@@ -51,8 +52,10 @@ public class Interactable : MonoBehaviour
         if (colliders2d != null)
         {
             for (int i = 0; i < colliders2d.Length; i++)
+            {
                 if (colliders2d[i] != null)
                     colliders2d[i].enabled = enabled;
+            }
         }
     }
 
