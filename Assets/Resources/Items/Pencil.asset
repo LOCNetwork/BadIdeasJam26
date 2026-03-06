@@ -17,8 +17,10 @@ MonoBehaviour:
   value: 30
   weight: 0
   rarity: 0
+  boxSlots: 1
   attributes:
   - key: 0
     value: VERY_FAST
   passives: []
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
+  displaySprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}

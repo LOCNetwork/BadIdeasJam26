@@ -4,11 +4,24 @@ using UnityEngine;
 [Serializable]
 public class ItemGenerator : MonoBehaviour
 {
+    [SerializeField] private GameObject itemGameObject;
 
-    [SerializeField] GameObject itemGameObject;
-    
+    private void Awake()
+    {
+        if (itemGameObject == null)
+            itemGameObject = gameObject;
+    }
+
+    public void SetTarget(GameObject target)
+    {
+        itemGameObject = target;
+    }
+
     public void generateItemGameObject(string ID)
     {
+        if (itemGameObject == null)
+            itemGameObject = gameObject;
+
         Item itemData = Resources.Load<Item>("Items/" + ID);
 
         if (itemData == null)
@@ -17,13 +30,34 @@ public class ItemGenerator : MonoBehaviour
             return;
         }
 
+        SpriteRenderer targetSR = itemGameObject.GetComponent<SpriteRenderer>();
+        if (targetSR == null)
+            targetSR = itemGameObject.AddComponent<SpriteRenderer>();
 
-        SpriteRenderer spriteRenderer = itemData.spriteRenderer;
+        Sprite finalSprite = null;
 
-        itemGameObject.GetComponent<SpriteRenderer>().sprite = spriteRenderer.sprite;
+        if (itemData.displaySprite != null)
+        {
+            finalSprite = itemData.displaySprite;
+        }
+        else if (itemData.spriteRenderer != null)
+        {
+            finalSprite = itemData.spriteRenderer.sprite;
+        }
 
-        itemGameObject.AddComponent<WorldItem>();
-        itemGameObject.GetComponent<WorldItem>().data = itemData;
+        if (finalSprite != null)
+        {
+            targetSR.sprite = finalSprite;
+        }
+        else
+        {
+            Debug.LogWarning($"El item {ID} no tiene ni displaySprite ni spriteRenderer con sprite asignado.");
+        }
+
+        WorldItem worldItem = itemGameObject.GetComponent<WorldItem>();
+        if (worldItem == null)
+            worldItem = itemGameObject.AddComponent<WorldItem>();
+
+        worldItem.Setup(itemData);
     }
-
 }

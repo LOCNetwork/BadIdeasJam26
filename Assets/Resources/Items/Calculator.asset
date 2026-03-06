@@ -16,9 +16,11 @@ MonoBehaviour:
   displayName: Calculadora
   value: 20
   weight: 1
-  rarity: 2
+  rarity: 0
+  boxSlots: 1
   attributes:
   - key: 0
     value: 
   passives: []
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
+  displaySprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
