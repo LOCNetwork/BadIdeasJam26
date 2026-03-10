@@ -23,6 +23,10 @@ public class Player : MonoBehaviour
     [SerializeField] private KeyCode interactKey = KeyCode.E;
     [SerializeField] private Transform holdTarget;
 
+    [Header("Drop")]
+    [SerializeField] private Transform dropOrigin;
+    [SerializeField] private float dropRadius = 1.25f;
+
     [Header("Holding Capacity")]
     [SerializeField] private int maxHolding = 3;
 
@@ -57,13 +61,17 @@ public class Player : MonoBehaviour
 
     private bool IsHolding => heldStack.Count > 0;
     public Transform HoldTarget => holdTarget != null ? holdTarget : transform;
+    public Transform DropOrigin => dropOrigin != null ? dropOrigin : transform;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
 
         if (holdTarget == null)
-            Debug.LogWarning($"{name}: HoldTarget no asignado. Se usar� el transform del player.");
+            Debug.LogWarning($"{name}: HoldTarget no asignado. Se usará el transform del player.");
+
+        if (dropOrigin == null)
+            Debug.LogWarning($"{name}: DropOrigin no asignado. Se usará el transform del player.");
     }
 
     private void Start()
@@ -256,7 +264,7 @@ public class Player : MonoBehaviour
             Box box = i.GetComponent<Box>();
             if (box == null)
             {
-                Debug.LogWarning($"{i.name}: Est� marcado como Box pero no tiene componente Box.");
+                Debug.LogWarning($"{i.name}: Está marcado como Box pero no tiene componente Box.");
                 return 999;
             }
 
@@ -333,7 +341,6 @@ public class Player : MonoBehaviour
         return last;
     }
 
-
     private bool CanAdd(Interactable target)
     {
         if (!IsPickable(target))
@@ -348,6 +355,18 @@ public class Player : MonoBehaviour
         return (currentWeight + weight) <= maxHolding;
     }
 
+    private Vector3 GetRandomDropPosition()
+    {
+        Vector2 randomOffset = Random.insideUnitCircle * Mathf.Max(0f, dropRadius);
+        Vector3 origin = DropOrigin.position;
+
+        return new Vector3(
+            origin.x + randomOffset.x,
+            origin.y + randomOffset.y,
+            origin.z
+        );
+    }
+
     private void HandleInteraction()
     {
         Interactable target = currentTarget;
@@ -358,13 +377,17 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // Soltar manualmente si no hay target
         if (target == null)
         {
             if (heldStack.Count > 0)
             {
                 Interactable last = PopLastFromStack();
                 if (last != null)
-                    last.DropInPlace();
+                {
+                    Vector3 randomDropPos = GetRandomDropPosition();
+                    last.DropTo(randomDropPos, last.transform.rotation);
+                }
             }
             return;
         }
@@ -434,7 +457,6 @@ public class Player : MonoBehaviour
         return true;
     }
 
-
     public bool ReturnHeldItem(out GameObject itemGameObject, out WorldItem itemData)
     {
         itemGameObject = null;
@@ -454,10 +476,8 @@ public class Player : MonoBehaviour
         itemGameObject = last.gameObject;
         itemData = foundItem;
 
-
         return true;
     }
-
 
     public bool TryTakeTopHeldItem(out GameObject itemGameObject, out WorldItem itemData)
     {
@@ -483,7 +503,6 @@ public class Player : MonoBehaviour
         itemGameObject = last.gameObject;
         itemData = foundItem;
 
-
         return true;
     }
 
@@ -494,5 +513,14 @@ public class Player : MonoBehaviour
 
         Interactable top = heldStack[heldStack.Count - 1];
         return top != null && top.IsBox;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Transform origin = dropOrigin != null ? dropOrigin : transform;
+        if (origin == null) return;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(origin.position, dropRadius);
     }
 }
