@@ -1912,6 +1912,8 @@ MonoBehaviour:
   speed: 2
   interactKey: 101
   holdTarget: {fileID: 744668592}
+  dropOrigin: {fileID: 1798789842}
+  dropRadius: 0.8
   maxHolding: 3
   boxStackYOffset: 0.35
   itemStackYOffset: 0.2
