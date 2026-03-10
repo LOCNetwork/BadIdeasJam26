@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         if (holdTarget == null)
-            Debug.LogWarning($"{name}: HoldTarget no asignado. Se usará el transform del player.");
+            Debug.LogWarning($"{name}: HoldTarget no asignado. Se usarï¿½ el transform del player.");
     }
 
     private void Start()
@@ -256,7 +256,7 @@ public class Player : MonoBehaviour
             Box box = i.GetComponent<Box>();
             if (box == null)
             {
-                Debug.LogWarning($"{i.name}: Está marcado como Box pero no tiene componente Box.");
+                Debug.LogWarning($"{i.name}: Estï¿½ marcado como Box pero no tiene componente Box.");
                 return 999;
             }
 
@@ -331,6 +331,41 @@ public class Player : MonoBehaviour
 
         RefreshStackVisuals();
         return last;
+    }
+
+    public bool TryTakeTopHeldBox(out GameObject boxGameObject, out Box boxData)
+    {
+        boxGameObject = null;
+        boxData = null;
+
+        if (heldStack.Count == 0)
+            return false;
+
+        Interactable last = heldStack[heldStack.Count - 1];
+        if (last == null || !last.IsBox)
+            return false;
+
+        Box foundBox = last.GetComponent<Box>();
+        if (foundBox == null)
+            return false;
+
+        PopLastFromStack();
+
+        last.transform.SetParent(null);
+        last.ResetSortingOrder();
+
+        boxGameObject = last.gameObject;
+        boxData = foundBox;
+        return true;
+    }
+
+    public bool IsHoldingAtLeastOneBox()
+    {
+        if (heldStack.Count == 0)
+            return false;
+
+        Interactable last = heldStack[heldStack.Count - 1];
+        return last != null && last.IsBox;
     }
 
     private bool CanAdd(Interactable target)

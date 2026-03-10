@@ -7,6 +7,7 @@ public class Item : ScriptableObject
     [Header("Information")]
     public string itemID;
     public string displayName;
+    public string description;
     public int value;
     public Weights weight;
     public ItemRarity rarity;
