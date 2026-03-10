@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public enum BoxType
@@ -63,6 +64,12 @@ public class Box : MonoBehaviour
     [Header("Item Pool For This Box")]
     [Tooltip("Pool de ScriptableObjects Item que puede soltar ESTA caja.")]
     [SerializeField] private List<Item> itemPool = new List<Item>();
+    [Tooltip("Pool de WorldItems que vende ESTA caja.")]
+    public List<WorldItem> playerItemPool = new List<WorldItem>();
+
+    [Tooltip("Valor extra caja de jugador")]
+    public double extraPercentage = 0.0;
+    public int extraMoney = 0;
 
     private SpriteRenderer sr;
 
@@ -86,6 +93,21 @@ public class Box : MonoBehaviour
         BoxSize.Large => largeCapacity,
         _ => smallCapacity
     };
+
+    public int GetCapacityBySize(BoxSize size)
+    {
+        switch (size)
+        {
+            case BoxSize.Small:
+                return smallCapacity;
+            case BoxSize.Medium:
+                return mediumCapacity;
+            case BoxSize.Large:
+                return largeCapacity;
+        }
+
+        return -1;
+    }
 
     private void Awake()
     {

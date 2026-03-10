@@ -233,6 +233,37 @@ public class Player : MonoBehaviour
 
         boxGameObject = last.gameObject;
         boxData = foundBox;
+
+
+        return true;
+    }
+
+
+    public bool TryTakeTopHeldItem(out GameObject itemGameObject, out WorldItem itemData)
+    {
+        itemGameObject = null;
+        itemData = null;
+
+        if (heldStack.Count == 0)
+            return false;
+
+        Interactable last = heldStack[heldStack.Count - 1];
+        if (last == null || !last.IsItem)
+            return false;
+
+        WorldItem foundItem = last.GetComponent<WorldItem>();
+        if (foundItem == null)
+            return false;
+
+        PopLastFromStack();
+
+        last.transform.SetParent(null);
+        last.ResetSortingOrder();
+
+        itemGameObject = last.gameObject;
+        itemData = foundItem;
+
+
         return true;
     }
 

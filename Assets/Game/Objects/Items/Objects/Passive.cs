@@ -1,6 +1,10 @@
 using UnityEngine;
 
-public class Passive : MonoBehaviour
+public abstract class Passive
 {
-   
+
+    public abstract void ExecutePassive();
+
+
+
 }
