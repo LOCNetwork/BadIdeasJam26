@@ -99,7 +99,7 @@ public class Wrapper : Interactable
             Debug.Log($"La caja está llena.");
         }
 
-        Debug.Log($"Estadisticas Wrapper --> ESPACIO RELLENO: {currentCapacityFilled}, TOTAL SLOTS CAJA: {boxCapacity}, SOBRANTE: {boxCapacity - currentCapacityFilled}");
+        Debug.Log($"Estadisticas Wrapper --> ESPACIO RELLENO: {currentCapacityFilled + worldItem.boxSlots}, TOTAL SLOTS CAJA: {boxCapacity}, SOBRANTE: {boxCapacity - (currentCapacityFilled + worldItem.boxSlots)}");
 
 
         isBusy = false;
