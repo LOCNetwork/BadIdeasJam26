@@ -22,7 +22,7 @@ public class ItemGenerator : MonoBehaviour
         if (itemGameObject == null)
             itemGameObject = gameObject;
 
-        Item itemData = Resources.Load<Item>("Items/" + ID);
+        Item itemData = GameManager.instance.GetItemByID(ID);
 
         if (itemData == null)
         {
