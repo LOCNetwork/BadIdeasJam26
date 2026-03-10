@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal.Execution;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ public class Wrapper : Interactable
             return;
         }
 
-        if (!player.TryTakeTopHeldItem(out GameObject item, out WorldItem itemData))
+        if (!player.ReturnHeldItem(out GameObject item, out WorldItem itemData))
         {
             if (currentItemsInWrapper.Count == 0)
             {
@@ -55,10 +56,10 @@ public class Wrapper : Interactable
             return;
         }
 
-        StartCoroutine(WrapRoutine(item, itemData));
+        StartCoroutine(WrapRoutine(player, itemData.boxSlots));
     }
 
-    private IEnumerator WrapRoutine(GameObject consumedItem, WorldItem worldItem)
+    private IEnumerator WrapRoutine(Player player, int boxSlots)
     {
         isBusy = true;
 
@@ -66,23 +67,25 @@ public class Wrapper : Interactable
         Box box = new Box();
 
 
-        // 2) METER ITEM EN LISTA
+        // Insert item in list
         int currentCapacityFilled = GetItemCapacity();
 
         int boxCapacity = box.GetCapacityBySize(AVAILABLE_BOX_SIZE);
 
-        if (currentCapacityFilled + worldItem.boxSlots <= boxCapacity)
+        if (currentCapacityFilled + boxSlots <= boxCapacity)
         {
             BoxAnimationProfile profile = GetProfile(AVAILABLE_BOX_SIZE);
 
-            WorldItem worldItemCopy = new WorldItem();
-            worldItemCopy.Setup(worldItem);
+            // Take item from player if it fits
+            player.TryTakeTopHeldItem(out GameObject consumedItem, out WorldItem itemData);
 
+            WorldItem worldItemCopy = new WorldItem();
+            worldItemCopy.Setup(itemData);
 
             if (consumedItem != null)
                 Destroy(consumedItem);
 
-            // 1) INTRO
+            // Animation
             if (animator != null && profile != null && !string.IsNullOrEmpty(profile.introTrigger))
             {
                 animator.SetTrigger(profile.introTrigger);
@@ -94,12 +97,12 @@ public class Wrapper : Interactable
 
             currentItemsInWrapper.Add(worldItemCopy);
 
-            if (currentCapacityFilled + worldItem.boxSlots == boxCapacity)
+            if (currentCapacityFilled + boxSlots == boxCapacity)
             {
                 SpawnBox(AVAILABLE_BOX_SIZE);
             }
 
-            Debug.Log($"Estadisticas Wrapper --> ESPACIO RELLENO: {currentCapacityFilled + worldItem.boxSlots}, TOTAL SLOTS CAJA: {boxCapacity}, SOBRANTE: {boxCapacity - (currentCapacityFilled + worldItem.boxSlots)}");
+            Debug.Log($"Estadisticas Wrapper --> ESPACIO RELLENO: {currentCapacityFilled + boxSlots}, TOTAL SLOTS CAJA: {boxCapacity}, SOBRANTE: {boxCapacity - (currentCapacityFilled + boxSlots)}");
 
         } 
         else
