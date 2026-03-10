@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -61,20 +62,6 @@ public class Wrapper : Interactable
     {
         isBusy = true;
 
-        BoxAnimationProfile profile = GetProfile(AVAILABLE_BOX_SIZE);
-
-        // Ya hemos leído todo lo necesario de la caja
-        if (consumedItem != null)
-            Destroy(consumedItem);
-
-        // 1) INTRO
-        if (animator != null && profile != null && !string.IsNullOrEmpty(profile.introTrigger))
-        {
-            animator.SetTrigger(profile.introTrigger);
-        }
-
-        if (profile != null && profile.introDuration > 0f)
-            yield return new WaitForSeconds(profile.introDuration);
 
         Box box = new Box();
 
@@ -86,12 +73,33 @@ public class Wrapper : Interactable
 
         if (currentCapacityFilled + worldItem.boxSlots <= boxCapacity)
         {
-            currentItemsInWrapper.Add(worldItem);
+            BoxAnimationProfile profile = GetProfile(AVAILABLE_BOX_SIZE);
+
+            WorldItem worldItemCopy = new WorldItem();
+            worldItemCopy.Setup(worldItem);
+
+
+            if (consumedItem != null)
+                Destroy(consumedItem);
+
+            // 1) INTRO
+            if (animator != null && profile != null && !string.IsNullOrEmpty(profile.introTrigger))
+            {
+                animator.SetTrigger(profile.introTrigger);
+            }
+
+            if (profile != null && profile.introDuration > 0f)
+                yield return new WaitForSeconds(profile.introDuration);
+
+
+            currentItemsInWrapper.Add(worldItemCopy);
 
             if (currentCapacityFilled + worldItem.boxSlots == boxCapacity)
             {
                 SpawnBox(AVAILABLE_BOX_SIZE);
             }
+
+            Debug.Log($"Estadisticas Wrapper --> ESPACIO RELLENO: {currentCapacityFilled + worldItem.boxSlots}, TOTAL SLOTS CAJA: {boxCapacity}, SOBRANTE: {boxCapacity - (currentCapacityFilled + worldItem.boxSlots)}");
 
         } 
         else
@@ -99,8 +107,7 @@ public class Wrapper : Interactable
             Debug.Log($"La caja está llena.");
         }
 
-        Debug.Log($"Estadisticas Wrapper --> ESPACIO RELLENO: {currentCapacityFilled + worldItem.boxSlots}, TOTAL SLOTS CAJA: {boxCapacity}, SOBRANTE: {boxCapacity - (currentCapacityFilled + worldItem.boxSlots)}");
-
+        
 
         isBusy = false;
     }

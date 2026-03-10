@@ -38,4 +38,24 @@ public class WorldItem : MonoBehaviour
         this.spriteRenderer = item.spriteRenderer;
         this.displaySprite = item.displaySprite;
     }
+
+
+    public void Setup(WorldItem item)
+    {
+        this.itemID = item.itemID;
+        this.displayName = item.displayName;
+        this.value = item.value;
+        this.weight = item.weight;
+        this.rarity = item.rarity;
+
+        this.boxSlots = item.boxSlots;
+
+        this.attributes = item.attributes;
+
+        this.passives = item.passives;
+
+        this.spriteRenderer = item.spriteRenderer;
+        this.displaySprite = item.displaySprite;
+    }
+
 }
