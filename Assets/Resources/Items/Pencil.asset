@@ -23,4 +23,4 @@ MonoBehaviour:
     value: VERY_FAST
   passives: []
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  displaySprite: {fileID: -6880077232281017949, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}

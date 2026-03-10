@@ -12,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Boxes
   - 
   - 
   - 
@@ -47,6 +47,9 @@ TagManager:
     locked: 0
   - name: Item
     uniqueID: 715514231
+    locked: 0
+  - name: Player
+    uniqueID: 2218762969
     locked: 0
   m_RenderingLayers:
   - Default

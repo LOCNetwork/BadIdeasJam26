@@ -6,6 +6,16 @@ public class Player : MonoBehaviour
 {
     private enum HoldCategory { None, Box, Item }
 
+    private enum AnimState
+    {
+        Idle,
+        RunFront,
+        RunBack,
+        HoldingIdle,
+        HoldingFront,
+        HoldingBack
+    }
+
     [Header("Movement")]
     [SerializeField] private float speed = 5f;
 
@@ -13,12 +23,23 @@ public class Player : MonoBehaviour
     [SerializeField] private KeyCode interactKey = KeyCode.E;
     [SerializeField] private Transform holdTarget;
 
-    [Header("Holding Capacity (by weight)")]
+    [Header("Holding Capacity")]
     [SerializeField] private int maxHolding = 3;
 
     [Header("Stack Offsets")]
     [SerializeField] private float boxStackYOffset = 0.35f;
     [SerializeField] private float itemStackYOffset = 0.20f;
+
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+
+    [Header("Animation Trigger Names")]
+    [SerializeField] private string idleTrigger = "Idle";
+    [SerializeField] private string runFrontTrigger = "RunFront";
+    [SerializeField] private string runBackTrigger = "RunBack";
+    [SerializeField] private string holdingIdleTrigger = "HoldingIdle";
+    [SerializeField] private string holdingFrontTrigger = "HoldingFront";
+    [SerializeField] private string holdingBackTrigger = "HoldingBack";
 
     [Header("Debug")]
     [SerializeField] private Interactable currentTarget;
@@ -27,24 +48,34 @@ public class Player : MonoBehaviour
     private Vector2 moveDirection;
 
     private readonly List<Interactable> inRange = new();
-
     [SerializeField] private List<Interactable> heldStack = new();
+
     private HoldCategory heldCategory = HoldCategory.None;
     private int currentWeight = 0;
 
+    private AnimState currentAnimState = AnimState.Idle;
+
+    private bool IsHolding => heldStack.Count > 0;
     public Transform HoldTarget => holdTarget != null ? holdTarget : transform;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
         if (holdTarget == null)
-            Debug.LogWarning($"{name}: HoldTarget no asignado. Usaré el Transform del Player como fallback.");
+            Debug.LogWarning($"{name}: HoldTarget no asignado. Se usará el transform del player.");
+    }
+
+    private void Start()
+    {
+        ForcePlayAnimationState(GetTargetAnimState());
     }
 
     private void Update()
     {
         HandleMovementInput();
         UpdateClosestTarget();
+        UpdateAnimationState();
 
         if (Input.GetKeyDown(interactKey))
             HandleInteraction();
@@ -59,9 +90,97 @@ public class Player : MonoBehaviour
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-        Vector2 input = new Vector2(x, y);
 
-        moveDirection = input.sqrMagnitude > 0.001f ? input.normalized : Vector2.zero;
+        Vector2 input = new Vector2(x, y);
+        moveDirection = input.sqrMagnitude > 0.01f ? input.normalized : Vector2.zero;
+    }
+
+    private AnimState GetTargetAnimState()
+    {
+        bool moving = moveDirection.sqrMagnitude > 0.001f;
+        bool goingUp = moveDirection.y > 0.01f;
+
+        if (IsHolding)
+        {
+            if (!moving)
+                return AnimState.HoldingIdle;
+
+            return goingUp ? AnimState.HoldingBack : AnimState.HoldingFront;
+        }
+
+        if (!moving)
+            return AnimState.Idle;
+
+        return goingUp ? AnimState.RunBack : AnimState.RunFront;
+    }
+
+    private void UpdateAnimationState()
+    {
+        if (animator == null)
+            return;
+
+        AnimState targetState = GetTargetAnimState();
+
+        if (targetState == currentAnimState)
+            return;
+
+        PlayAnimationState(targetState);
+    }
+
+    private void ForcePlayAnimationState(AnimState state)
+    {
+        currentAnimState = state;
+        ResetAllAnimationTriggers();
+        SetTriggerForState(state);
+    }
+
+    private void PlayAnimationState(AnimState newState)
+    {
+        currentAnimState = newState;
+        ResetAllAnimationTriggers();
+        SetTriggerForState(newState);
+    }
+
+    private void ResetAllAnimationTriggers()
+    {
+        if (animator == null) return;
+
+        animator.ResetTrigger(idleTrigger);
+        animator.ResetTrigger(runFrontTrigger);
+        animator.ResetTrigger(runBackTrigger);
+        animator.ResetTrigger(holdingIdleTrigger);
+        animator.ResetTrigger(holdingFrontTrigger);
+        animator.ResetTrigger(holdingBackTrigger);
+    }
+
+    private void SetTriggerForState(AnimState state)
+    {
+        switch (state)
+        {
+            case AnimState.Idle:
+                animator.SetTrigger(idleTrigger);
+                break;
+
+            case AnimState.RunFront:
+                animator.SetTrigger(runFrontTrigger);
+                break;
+
+            case AnimState.RunBack:
+                animator.SetTrigger(runBackTrigger);
+                break;
+
+            case AnimState.HoldingIdle:
+                animator.SetTrigger(holdingIdleTrigger);
+                break;
+
+            case AnimState.HoldingFront:
+                animator.SetTrigger(holdingFrontTrigger);
+                break;
+
+            case AnimState.HoldingBack:
+                animator.SetTrigger(holdingBackTrigger);
+                break;
+        }
     }
 
     public void RegisterInRange(Interactable i)
@@ -75,15 +194,17 @@ public class Player : MonoBehaviour
     {
         if (i == null) return;
         inRange.Remove(i);
-        if (currentTarget == i) currentTarget = null;
+
+        if (currentTarget == i)
+            currentTarget = null;
     }
 
     private void UpdateClosestTarget()
     {
-        for (int idx = inRange.Count - 1; idx >= 0; idx--)
+        for (int i = inRange.Count - 1; i >= 0; i--)
         {
-            if (inRange[idx] == null)
-                inRange.RemoveAt(idx);
+            if (inRange[i] == null)
+                inRange.RemoveAt(i);
         }
 
         if (inRange.Count == 0)
@@ -92,25 +213,29 @@ public class Player : MonoBehaviour
             return;
         }
 
-        float best = float.MaxValue;
-        Interactable bestI = null;
-        Vector2 p = transform.position;
+        float bestDistance = float.MaxValue;
+        Interactable bestTarget = null;
+        Vector2 playerPos = transform.position;
 
-        foreach (var i in inRange)
+        foreach (var interactable in inRange)
         {
-            if (i == null) continue;
-            float d = ((Vector2)i.transform.position - p).sqrMagnitude;
-            if (d < best)
+            if (interactable == null) continue;
+
+            float dist = ((Vector2)interactable.transform.position - playerPos).sqrMagnitude;
+            if (dist < bestDistance)
             {
-                best = d;
-                bestI = i;
+                bestDistance = dist;
+                bestTarget = interactable;
             }
         }
 
-        currentTarget = bestI;
+        currentTarget = bestTarget;
     }
 
-    private bool IsPickable(Interactable i) => i != null && (i.IsBox || i.IsItem);
+    private bool IsPickable(Interactable i)
+    {
+        return i != null && (i.IsBox || i.IsItem);
+    }
 
     private HoldCategory CategoryOf(Interactable i)
     {
@@ -123,51 +248,47 @@ public class Player : MonoBehaviour
     {
         if (i == null) return 999;
 
-        if (i.IsItem) return 1;
+        if (i.IsItem)
+            return 1;
 
         if (i.IsBox)
         {
             Box box = i.GetComponent<Box>();
             if (box == null)
             {
-                Debug.LogWarning($"{i.name}: Tiene IsBox marcado pero NO tiene componente Box.cs.");
+                Debug.LogWarning($"{i.name}: Está marcado como Box pero no tiene componente Box.");
                 return 999;
             }
+
             return box.Weight;
         }
 
         return 999;
     }
 
-    private float OffsetYForCategory(HoldCategory cat)
+    private float OffsetYForCategory(HoldCategory category)
     {
-        return cat switch
-        {
-            HoldCategory.Box => boxStackYOffset,
-            HoldCategory.Item => itemStackYOffset,
-            _ => 0f
-        };
+        return category == HoldCategory.Box ? boxStackYOffset : itemStackYOffset;
     }
 
     private void RefreshStackVisuals()
     {
-        float yOff = OffsetYForCategory(heldCategory);
+        float yOffset = OffsetYForCategory(heldCategory);
 
         for (int i = 0; i < heldStack.Count; i++)
         {
-            Interactable it = heldStack[i];
-            if (it == null) continue;
+            Interactable interactable = heldStack[i];
+            if (interactable == null) continue;
 
-            Vector3 localOffset = new Vector3(0f, yOff * i, 0f);
+            Vector3 localOffset = new Vector3(0f, yOffset * i, 0f);
 
-            it.transform.SetParent(HoldTarget, worldPositionStays: true);
-            it.transform.localPosition = localOffset;
-            it.transform.localRotation = Quaternion.identity;
-            it.SetSortingOrder(i + 1);
+            interactable.transform.SetParent(HoldTarget, true);
+            interactable.transform.localPosition = localOffset;
+            interactable.transform.localRotation = Quaternion.identity;
 
             if (heldCategory == HoldCategory.Box)
             {
-                Box box = it.GetComponent<Box>();
+                Box box = interactable.GetComponent<Box>();
                 if (box != null)
                     box.ApplyStackSprite(i);
             }
@@ -184,9 +305,9 @@ public class Player : MonoBehaviour
         heldStack.Add(target);
         currentWeight += WeightOf(target);
 
-        float yOff = OffsetYForCategory(heldCategory);
-        int index = heldStack.Count - 1;
-        Vector3 localOffset = new Vector3(0f, yOff * index, 0f);
+        float yOffset = OffsetYForCategory(heldCategory);
+        int stackIndex = heldStack.Count - 1;
+        Vector3 localOffset = new Vector3(0f, yOffset * stackIndex, 0f);
 
         target.PickUpToStack(HoldTarget, localOffset);
         RefreshStackVisuals();
@@ -194,11 +315,13 @@ public class Player : MonoBehaviour
 
     private Interactable PopLastFromStack()
     {
-        if (heldStack.Count == 0) return null;
+        if (heldStack.Count == 0)
+            return null;
 
-        int lastIdx = heldStack.Count - 1;
-        Interactable last = heldStack[lastIdx];
-        heldStack.RemoveAt(lastIdx);
+        int lastIndex = heldStack.Count - 1;
+        Interactable last = heldStack[lastIndex];
+
+        heldStack.RemoveAt(lastIndex);
 
         if (last != null)
             currentWeight -= WeightOf(last);
@@ -210,55 +333,18 @@ public class Player : MonoBehaviour
         return last;
     }
 
-    public bool TryTakeTopHeldBox(out GameObject boxGameObject, out Box boxData)
-    {
-        boxGameObject = null;
-        boxData = null;
-
-        if (heldStack.Count == 0)
-            return false;
-
-        Interactable last = heldStack[heldStack.Count - 1];
-        if (last == null || !last.IsBox)
-            return false;
-
-        Box foundBox = last.GetComponent<Box>();
-        if (foundBox == null)
-            return false;
-
-        PopLastFromStack();
-
-        last.transform.SetParent(null);
-        last.ResetSortingOrder();
-
-        boxGameObject = last.gameObject;
-        boxData = foundBox;
-        return true;
-    }
-
-    public bool IsHoldingAtLeastOneBox()
-    {
-        if (heldStack.Count == 0)
-            return false;
-
-        Interactable last = heldStack[heldStack.Count - 1];
-        return last != null && last.IsBox;
-    }
-
     private bool CanAdd(Interactable target)
     {
-        if (!IsPickable(target)) return false;
-
-        HoldCategory cat = CategoryOf(target);
-        if (cat == HoldCategory.None) return false;
-
-        if (heldCategory != HoldCategory.None && heldCategory != cat)
+        if (!IsPickable(target))
             return false;
 
-        int w = WeightOf(target);
-        if (w >= 999) return false;
+        HoldCategory targetCategory = CategoryOf(target);
 
-        return (currentWeight + w) <= maxHolding;
+        if (heldCategory != HoldCategory.None && heldCategory != targetCategory)
+            return false;
+
+        int weight = WeightOf(target);
+        return (currentWeight + weight) <= maxHolding;
     }
 
     private void HandleInteraction()
@@ -276,7 +362,8 @@ public class Player : MonoBehaviour
             if (heldStack.Count > 0)
             {
                 Interactable last = PopLastFromStack();
-                if (last != null) last.DropInPlace();
+                if (last != null)
+                    last.DropInPlace();
             }
             return;
         }
@@ -289,8 +376,9 @@ public class Player : MonoBehaviour
             return;
         }
 
-        HoldCategory targetCat = CategoryOf(target);
-        if (heldCategory != targetCat)
+        HoldCategory targetCategory = CategoryOf(target);
+
+        if (heldCategory != targetCategory)
             return;
 
         if (CanAdd(target))
@@ -299,23 +387,58 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (heldStack.Count > 0)
-        {
-            Interactable last = heldStack[heldStack.Count - 1];
-            int lastW = WeightOf(last);
-            int targetW = WeightOf(target);
+        Interactable top = heldStack[heldStack.Count - 1];
+        int topWeight = WeightOf(top);
+        int targetWeight = WeightOf(target);
 
-            bool swapFits = (currentWeight - lastW + targetW) <= maxHolding;
-            if (!swapFits) return;
+        bool swapFits = (currentWeight - topWeight + targetWeight) <= maxHolding;
+        if (!swapFits)
+            return;
 
-            Vector3 dropPos = target.transform.position;
-            Quaternion dropRot = target.transform.rotation;
+        Vector3 dropPos = target.transform.position;
+        Quaternion dropRot = target.transform.rotation;
 
-            PopLastFromStack();
-            if (last != null)
-                last.DropTo(dropPos, dropRot);
+        PopLastFromStack();
 
-            PushToStack(target);
-        }
+        if (top != null)
+            top.DropTo(dropPos, dropRot);
+
+        PushToStack(target);
+    }
+
+    public bool TryTakeTopHeldBox(out GameObject boxGameObject, out Box boxData)
+    {
+        boxGameObject = null;
+        boxData = null;
+
+        if (heldStack.Count == 0)
+            return false;
+
+        Interactable top = heldStack[heldStack.Count - 1];
+
+        if (top == null || !top.IsBox)
+            return false;
+
+        Box foundBox = top.GetComponent<Box>();
+        if (foundBox == null)
+            return false;
+
+        PopLastFromStack();
+
+        top.transform.SetParent(null);
+        top.ResetSortingOrder();
+
+        boxGameObject = top.gameObject;
+        boxData = foundBox;
+        return true;
+    }
+
+    public bool IsHoldingAtLeastOneBox()
+    {
+        if (heldStack.Count == 0)
+            return false;
+
+        Interactable top = heldStack[heldStack.Count - 1];
+        return top != null && top.IsBox;
     }
 }

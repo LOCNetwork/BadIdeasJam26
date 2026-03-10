@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 941223124916465499}
   - component: {fileID: 1586956049312863219}
   - component: {fileID: 1955995734610075209}
+  - component: {fileID: -1057864127185095681}
   m_Layer: 0
   m_Name: SmallBox
   m_TagString: Untagged
@@ -213,3 +214,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &-1057864127185095681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6567542094978446674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1df90d7ef48e04e8618ac2e9b60793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSortSprite
