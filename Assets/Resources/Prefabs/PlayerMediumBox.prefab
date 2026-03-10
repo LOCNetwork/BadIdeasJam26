@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2631862457855290429}
   - component: {fileID: 5980226537000158994}
   - component: {fileID: 6401075071606405055}
+  - component: {fileID: 1543601189568360009}
   m_Layer: 0
   m_Name: PlayerMediumBox
   m_TagString: Untagged
@@ -138,6 +139,9 @@ MonoBehaviour:
     front: {fileID: 6951114633567200485, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
     side: {fileID: -7732569738864306783, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
   itemPool: []
+  playerItemPool: []
+  extraPercentage: 0
+  extraMoney: 0
 --- !u!61 &5980226537000158994
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -211,3 +215,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1543601189568360009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4146564912385909055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1df90d7ef48e04e8618ac2e9b60793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSortSprite
+  sortingOffset: 0
+  multiplier: 100
+  heldBaseOrder: 700
