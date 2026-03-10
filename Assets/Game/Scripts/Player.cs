@@ -333,40 +333,6 @@ public class Player : MonoBehaviour
         return last;
     }
 
-    public bool TryTakeTopHeldBox(out GameObject boxGameObject, out Box boxData)
-    {
-        boxGameObject = null;
-        boxData = null;
-
-        if (heldStack.Count == 0)
-            return false;
-
-        Interactable last = heldStack[heldStack.Count - 1];
-        if (last == null || !last.IsBox)
-            return false;
-
-        Box foundBox = last.GetComponent<Box>();
-        if (foundBox == null)
-            return false;
-
-        PopLastFromStack();
-
-        last.transform.SetParent(null);
-        last.ResetSortingOrder();
-
-        boxGameObject = last.gameObject;
-        boxData = foundBox;
-        return true;
-    }
-
-    public bool IsHoldingAtLeastOneBox()
-    {
-        if (heldStack.Count == 0)
-            return false;
-
-        Interactable last = heldStack[heldStack.Count - 1];
-        return last != null && last.IsBox;
-    }
 
     private bool CanAdd(Interactable target)
     {
@@ -465,6 +431,34 @@ public class Player : MonoBehaviour
 
         boxGameObject = top.gameObject;
         boxData = foundBox;
+        return true;
+    }
+
+    public bool TryTakeTopHeldItem(out GameObject itemGameObject, out WorldItem itemData)
+    {
+        itemGameObject = null;
+        itemData = null;
+
+        if (heldStack.Count == 0)
+            return false;
+
+        Interactable last = heldStack[heldStack.Count - 1];
+        if (last == null || !last.IsItem)
+            return false;
+
+        WorldItem foundItem = last.GetComponent<WorldItem>();
+        if (foundItem == null)
+            return false;
+
+        PopLastFromStack();
+
+        last.transform.SetParent(null);
+        last.ResetSortingOrder();
+
+        itemGameObject = last.gameObject;
+        itemData = foundItem;
+
+
         return true;
     }
 
