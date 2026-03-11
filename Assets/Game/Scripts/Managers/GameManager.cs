@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     
     
 
-    // Load all scriptable objects from Item folder so it can be accessed from the list
+    // Load all scriptable objects from Resources/Items folder so it can be accessed from the list
     private void loadItems()
     {
         loadedItems = new Dictionary<string, Item>();

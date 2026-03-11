@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class WorldItem : MonoBehaviour
+public class WorldItem
 {
     public string itemID;
     public string displayName;
@@ -56,6 +56,14 @@ public class WorldItem : MonoBehaviour
 
         this.spriteRenderer = item.spriteRenderer;
         this.displaySprite = item.displaySprite;
+    }
+
+    public WorldItem Clone()
+    {
+        WorldItem clone = new WorldItem();
+        clone.Setup(this);
+
+        return clone;
     }
 
 }

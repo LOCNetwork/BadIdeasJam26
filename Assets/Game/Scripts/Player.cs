@@ -469,12 +469,12 @@ public class Player : MonoBehaviour
         if (last == null || !last.IsItem)
             return false;
 
-        WorldItem foundItem = last.GetComponent<WorldItem>();
+        WorldItemComponent foundItem = last.GetComponent<WorldItemComponent>();
         if (foundItem == null)
             return false;
 
         itemGameObject = last.gameObject;
-        itemData = foundItem;
+        itemData = foundItem.Data;
 
         return true;
     }
@@ -491,7 +491,7 @@ public class Player : MonoBehaviour
         if (last == null || !last.IsItem)
             return false;
 
-        WorldItem foundItem = last.GetComponent<WorldItem>();
+        WorldItemComponent foundItem = last.GetComponent<WorldItemComponent>();
         if (foundItem == null)
             return false;
 
@@ -501,7 +501,7 @@ public class Player : MonoBehaviour
         last.ResetSortingOrder();
 
         itemGameObject = last.gameObject;
-        itemData = foundItem;
+        itemData = foundItem.Data;
 
         return true;
     }

@@ -54,10 +54,10 @@ public class ItemGenerator : MonoBehaviour
             Debug.LogWarning($"El item {ID} no tiene ni displaySprite ni spriteRenderer con sprite asignado.");
         }
 
-        WorldItem worldItem = itemGameObject.GetComponent<WorldItem>();
+        WorldItemComponent worldItem = itemGameObject.GetComponent<WorldItemComponent>();
         if (worldItem == null)
-            worldItem = itemGameObject.AddComponent<WorldItem>();
+            worldItem = itemGameObject.AddComponent<WorldItemComponent>();
 
-        worldItem.Setup(itemData);
+        worldItem.Data.Setup(itemData);
     }
 }
