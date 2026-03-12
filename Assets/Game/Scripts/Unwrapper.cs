@@ -59,7 +59,18 @@ public class Unwrapper : Interactable
     {
         isBusy = true;
 
-        List<Item> rolledItems = boxData.RollContents(rarityRates);
+        
+        List<Item> playerItems =  new List<Item>();
+        if (boxData.Type == BoxType.Player)
+        {
+            foreach (WorldItem item in boxData.playerItemPool)
+            {
+                playerItems.Add(GameManager.instance.GetItemByID(item.itemID));
+            }
+        }
+
+
+        List<Item> rolledItems = boxData.Type == BoxType.Delivery ? boxData.RollContents(rarityRates) : playerItems;
         BoxAnimationProfile profile = GetProfile(boxData.Size);
 
         // Ya hemos leído todo lo necesario de la caja

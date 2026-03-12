@@ -23,39 +23,56 @@ public class WorldItem
 
     public void Setup(Item item)
     {
-        this.itemID = item.itemID;
-        this.displayName = item.displayName;
-        this.value = item.value;
-        this.weight = item.weight;
-        this.rarity = item.rarity;
+        itemID = item.itemID;
+        displayName = item.displayName;
+        value = item.value;
+        weight = item.weight;
+        rarity = item.rarity;
 
-        this.boxSlots = item.boxSlots;
+        boxSlots = item.boxSlots;
 
-        this.attributes = item.attributes;
+        attributes = item.attributes;
 
-        this.passives = item.passives;
+        passives = item.passives;
 
-        this.spriteRenderer = item.spriteRenderer;
-        this.displaySprite = item.displaySprite;
+        spriteRenderer = item.spriteRenderer;
+        displaySprite = item.displaySprite;
     }
 
 
     public void Setup(WorldItem item)
     {
-        this.itemID = item.itemID;
-        this.displayName = item.displayName;
-        this.value = item.value;
-        this.weight = item.weight;
-        this.rarity = item.rarity;
+        itemID = item.itemID;
+        displayName = item.displayName;
+        value = item.value;
+        weight = item.weight;
+        rarity = item.rarity;
 
-        this.boxSlots = item.boxSlots;
+        boxSlots = item.boxSlots;
 
-        this.attributes = item.attributes;
+        attributes = item.attributes;
 
-        this.passives = item.passives;
+        passives = item.passives;
 
-        this.spriteRenderer = item.spriteRenderer;
-        this.displaySprite = item.displaySprite;
+        spriteRenderer = item.spriteRenderer;
+        displaySprite = item.displaySprite;
+    }
+
+
+    public Attribute GetAttribute(Attributes attributeType)
+    {
+        Attribute attribute = null;
+
+        foreach (Attribute a in attributes)
+        {
+            if (a.key == attributeType)
+            {
+                attribute = a;
+                break;
+            }
+        }
+        
+        return attribute;
     }
 
     public WorldItem Clone()
