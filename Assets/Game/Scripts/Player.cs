@@ -58,8 +58,10 @@ public class Player : MonoBehaviour
     private int currentWeight = 0;
 
     private AnimState currentAnimState = AnimState.Idle;
+    private bool movementLocked = false;
 
     private bool IsHolding => heldStack.Count > 0;
+    public bool IsMovementLocked => movementLocked;
     public Transform HoldTarget => holdTarget != null ? holdTarget : transform;
     public Transform DropOrigin => dropOrigin != null ? dropOrigin : transform;
 
@@ -91,11 +93,29 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = moveDirection * speed;
+        rb.linearVelocity = movementLocked ? Vector2.zero : moveDirection * speed;
+    }
+
+    public void SetMovementLocked(bool locked)
+    {
+        movementLocked = locked;
+
+        if (locked)
+        {
+            moveDirection = Vector2.zero;
+            if (rb != null)
+                rb.linearVelocity = Vector2.zero;
+        }
     }
 
     private void HandleMovementInput()
     {
+        if (movementLocked)
+        {
+            moveDirection = Vector2.zero;
+            return;
+        }
+
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
@@ -168,23 +188,18 @@ public class Player : MonoBehaviour
             case AnimState.Idle:
                 animator.SetTrigger(idleTrigger);
                 break;
-
             case AnimState.RunFront:
                 animator.SetTrigger(runFrontTrigger);
                 break;
-
             case AnimState.RunBack:
                 animator.SetTrigger(runBackTrigger);
                 break;
-
             case AnimState.HoldingIdle:
                 animator.SetTrigger(holdingIdleTrigger);
                 break;
-
             case AnimState.HoldingFront:
                 animator.SetTrigger(holdingFrontTrigger);
                 break;
-
             case AnimState.HoldingBack:
                 animator.SetTrigger(holdingBackTrigger);
                 break;
@@ -377,7 +392,6 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // Soltar manualmente si no hay target
         if (target == null)
         {
             if (heldStack.Count > 0)
@@ -475,7 +489,6 @@ public class Player : MonoBehaviour
 
         itemGameObject = last.gameObject;
         itemData = foundItem;
-
         return true;
     }
 
@@ -502,7 +515,6 @@ public class Player : MonoBehaviour
 
         itemGameObject = last.gameObject;
         itemData = foundItem;
-
         return true;
     }
 
