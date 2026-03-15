@@ -2,8 +2,10 @@ using NUnit.Framework.Internal.Execution;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 
 [Serializable]
@@ -27,6 +29,8 @@ public class Wrapper : Interactable
     private List<WorldItem> currentItemsInWrapper = new List<WorldItem>();
 
     private BoxSize AVAILABLE_BOX_SIZE = BoxSize.Medium;
+
+    private GameObject currentBox;
 
     private bool isBusy = false;
 
@@ -63,8 +67,13 @@ public class Wrapper : Interactable
     {
         isBusy = true;
 
+        if (currentBox == null)
+        {
+            SpawnBox(AVAILABLE_BOX_SIZE);
+        }
 
-        Box box = new Box();
+
+        Box box = currentBox.GetComponent<Box>();
 
 
         // Insert item in list
@@ -115,8 +124,31 @@ public class Wrapper : Interactable
         isBusy = false;
     }
 
+    // This method spawns a box of the unlocked size. As a box is needed in order to apply passives, the box is spawned as inactive the first time, and then set active in the next call. This way we can apply passives and calculate price before the box appears in the world.
     private void SpawnBox(BoxSize boxSize)
     {
+
+        if (currentBox != null)
+        {
+            Box boxData = currentBox.GetComponent<Box>();
+
+            CalculatePrice();
+            CalculateSellTime();
+
+            // Add items stacked in wrapper to box and clear items in wrapper
+            boxData.playerItemPool.AddRange(currentItemsInWrapper);
+
+            currentItemsInWrapper.Clear();
+
+            Debug.Log("Caja spawneada");
+
+            ChooseBoxTag();
+
+            currentBox.SetActive(true);
+            return;
+        }
+
+
         GameObject box = null;
 
         switch (boxSize)
@@ -132,16 +164,9 @@ public class Wrapper : Interactable
                 break;
         }
      
-        box.SetActive(true);
+        box.SetActive(false);
 
-        Box boxData = box.GetComponent<Box>();
-
-        // Add items stacked in wrapper to box and clear items in wrapper
-        boxData.playerItemPool.AddRange(currentItemsInWrapper);
-
-        currentItemsInWrapper.Clear();
-
-        Debug.Log("Caja spawneada");
+        currentBox = box;
     }
 
     private BoxAnimationProfile GetProfile(BoxSize size)
@@ -189,20 +214,77 @@ public class Wrapper : Interactable
 
 
         // Modify items with new passives
-
         ApplyPassives();
     }
 
     private void ApplyPassives()
     {
+        Box box = currentBox.GetComponent<Box>();
 
         foreach (WorldItem item in currentItemsInWrapper)
         {
             foreach (Passive passive in item.passives) {
-                passive.ExecutePassive();
+                passive.ExecutePassive(box, item.passivesInfo);
             }
         }
 
+    }
+
+    private void CalculatePrice()
+    {
+        Box box = currentBox.GetComponent<Box>();
+        int totalPrice = 0;
+
+        foreach (WorldItem item in currentItemsInWrapper)
+        {
+            totalPrice += item.value;
+        }
+
+        box.value = (int) Math.Round(totalPrice * (1 + box.extraPercentage) + box.extraValue);
+    }
+
+    private void CalculateSellTime()
+    {
+        Box box = currentBox.GetComponent<Box>();
+        double sellTimeIndex = 0;
+       
+
+        foreach (WorldItem item in currentItemsInWrapper)
+        {
+            sellTimeIndex += int.Parse(item.GetAttribute(Attributes.SELL_TIME).value);
+        }
+
+        sellTimeIndex /= currentItemsInWrapper.Count;
+
+        int finalIndex = (int) Math.Round(sellTimeIndex);
+
+
+        box.sellTimeIndex = finalIndex;
+    }
+
+    private void ChooseBoxTag()
+    {
+        Box box = currentBox.GetComponent<Box>();
+        String tag = "";
+
+        switch (box.sellTimeIndex)
+        {
+            case 0:
+                tag = "Very Slow";
+                break;
+            case 1:
+                tag = "Slow";
+                break;
+            case 2:
+                tag = "Fast";
+                break;
+            case 3:
+                tag = "Very Fast";
+                break;
+        }
+
+
+        GameObject go = new GameObject("BoxTag");
     }
 
 

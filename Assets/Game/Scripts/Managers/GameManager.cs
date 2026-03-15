@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,25 +9,35 @@ public class GameManager : MonoBehaviour
     private Dictionary<string, Item> loadedItems;
 
     public static GameManager instance;
-    
+
     // Managers
-    private SellManager sellManager { get; set; }
-    
+    public SellManager sellManager;
+
     // Game stats
-    public GameStats gameStats { get; set;  }
+    public GameStats gameStats;
 
     public float currentTimer; // Timer that starts in the beginning of each day (Resets each day)
     public float timer; // Timer that never resets (Game timer)
-    
-    
 
-    
+    // UI Font
+    public TMP_FontAsset fontAsset;
+
+    // Interfaces
+    public TextMeshProUGUI moneyUI;
+
+
+    // Box sell animation
+    public RectTransform container; // Parent
+
+    private bool test = false;
+
+
     void Start()
     {
         instance = this;
         gameStats = new GameStats();
         
-        sellManager = new SellManager();
+        sellManager = new SellManager(container, fontAsset);
         
         LoadItems();
         
@@ -35,6 +48,12 @@ public class GameManager : MonoBehaviour
     {
         currentTimer += Time.deltaTime;
         timer += Time.deltaTime;
+
+        if (!test)
+        {
+            test = true;
+            sellManager.DisplayItemPassive("TEST 1 [50:CALCULATOR:50] [0:PENCIL:50] This is a test to render a pencil object [50:PENCIL:0]");
+        }
 
 
         HandleSells();
@@ -79,39 +98,37 @@ public class GameManager : MonoBehaviour
     private void HandleSells()
     {
 
+        if (sellManager.boxesQueue.Count == 0) return;
 
-        foreach (KeyValuePair<WorldItem, float> item in sellManager.itemsOnSale)
+        Box box = sellManager.boxesQueue.Peek();
+
+
+        if (!sellManager.boxesOnSale.ContainsKey(box)) // This box is on animation
         {
-            Attribute sellSpeed = item.Key.GetAttribute(Attributes.SELL_TIME);
-
-            int sellMillis = 0;
-            switch (sellSpeed.value)
-            {
-                case "SLOW":
-                    sellMillis = sellManager.SECONDS_TO_SELL_SLOW * 1_000;
-                    break;
-                case "FAST":
-                    sellMillis = sellManager.SECONDS_TO_SELL_FAST * 1_000;
-                    break;
-                case "VERY_FAST":
-                    sellMillis = sellManager.SECONDS_TO_SELL_VERY_FAST * 1_000;
-                    break;
-            }
-
-
-            if (item.Value + sellMillis <= currentTimer)
-            {
-                sellManager.SellItem(item.Key);
-            }
+            return;
         }
-        
-        
-        
+
+
+        sellManager.boxesOnSale.TryGetValue(box, out float insertTime);
+
+        if (insertTime + sellManager.sellSpeedArray[box.sellTimeIndex] <= timer)
+        {
+            sellManager.CompleteBoxSale(box);
+        }
+
+
+
+
+
     }
 
-    private void UpdateMoneyUI()
+    public void UpdateMoneyUI()
     {
-        
+        if (moneyUI != null)
+        {
+            moneyUI.text = $"{gameStats.money} $";
+        }
+
     }
-    
+
 }

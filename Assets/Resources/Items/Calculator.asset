@@ -21,6 +21,6 @@ MonoBehaviour:
   boxSlots: 2
   attributes:
   - key: 0
-    value: 
+    value: 0
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
   displaySprite: {fileID: 360050356498797049, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}

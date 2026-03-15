@@ -21,6 +21,8 @@ public class WorldItem
     public SpriteRenderer spriteRenderer;
     public Sprite displaySprite;
 
+    public List<string> passivesInfo; // Extra info for passives
+
     public void Setup(Item item)
     {
         itemID = item.itemID;
@@ -37,6 +39,8 @@ public class WorldItem
 
         spriteRenderer = item.spriteRenderer;
         displaySprite = item.displaySprite;
+
+        passivesInfo = item.passivesInfo;
     }
 
 
@@ -56,6 +60,8 @@ public class WorldItem
 
         spriteRenderer = item.spriteRenderer;
         displaySprite = item.displaySprite;
+
+        passivesInfo = item.passivesInfo;
     }
 
 

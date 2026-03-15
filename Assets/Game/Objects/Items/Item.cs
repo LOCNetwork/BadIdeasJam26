@@ -25,4 +25,7 @@ public class Item : ScriptableObject
     [Header("Display")]
     public SpriteRenderer spriteRenderer;
     public Sprite displaySprite;
+
+    [Header("Extra info for passives")]
+    public List<string> passivesInfo; 
 }

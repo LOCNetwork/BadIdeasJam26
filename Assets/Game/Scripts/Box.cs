@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public enum BoxType
@@ -67,9 +66,15 @@ public class Box : MonoBehaviour
     [Tooltip("Pool de WorldItems que vende ESTA caja.")]
     public List<WorldItem> playerItemPool = new List<WorldItem>();
 
-    [Tooltip("Valor extra caja de jugador")]
+    [Tooltip("Extra box value")]
     public double extraPercentage = 0.0;
-    public int extraMoney = 0;
+    public int extraValue = 0;
+
+    [Tooltip("Total box value")]
+    public int value;
+
+    [Tooltip("Box sell time")]
+    public int sellTimeIndex;
 
     private SpriteRenderer sr;
 

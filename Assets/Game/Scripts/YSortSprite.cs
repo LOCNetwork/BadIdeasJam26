@@ -1,6 +1,8 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Transform))]
 public class YSortSprite : MonoBehaviour
 {
     [Header("Ground Y Sort")]
@@ -22,12 +24,27 @@ public class YSortSprite : MonoBehaviour
         // Si está siendo holdeado / parentado en una pila
         if (transform.parent != null)
         {
-            int siblingIndex = transform.GetSiblingIndex();
+            int siblingIndex = transform.GetSiblingIndex() * 10;
             sr.sortingOrder = heldBaseOrder + siblingIndex;
+
+            foreach (Transform child in transform)
+            {
+                GameObject childObject = child.gameObject;
+
+                if (childObject.GetComponent<SpriteRenderer>() != null) childObject.GetComponent<SpriteRenderer>().sortingOrder = sr.sortingOrder + 1;
+            }
+
             return;
         }
 
         // En el suelo: sorting normal por Y
         sr.sortingOrder = sortingOffset + Mathf.RoundToInt(-transform.position.y * multiplier);
+
+        foreach (Transform child in transform)
+        {
+            GameObject childObject = child.gameObject;
+
+            if (childObject.GetComponent<SpriteRenderer>() != null) childObject.GetComponent<SpriteRenderer>().sortingOrder = sr.sortingOrder + 1;
+        }
     }
 }

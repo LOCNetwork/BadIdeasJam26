@@ -1,17 +1,22 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
 
+[Serializable]
 public class GameStats
 {
-    
-    public int money { get; set; }
-    public Dictionary<string, int> itemsSold { get; }
-    public Dictionary<string, int> itemsObtained { get; }
-    public int policeRaids { get; set; }
-    public int day { get; set; }
-    public int totalMoneySpent { get; set; }
-    public int totalBoxesUnwrapped  { get; set; }
-    public int totalBoxesWrapped { get; set; }
-    public List<string> unlockedCatalogues { get; }
+
+
+    public int money;
+    public Dictionary<string, int> itemsSold;
+    public Dictionary<string, int> itemsObtained;
+    public int policeRaids;
+    public int day;
+    public int totalMoneySpent; 
+    public int totalBoxesUnwrapped;
+    public int totalBoxesWrapped;
+    public List<string> unlockedCatalogues;
 
 
 
@@ -31,7 +36,7 @@ public class GameStats
     }
     
     
-    
-    
+
+
 
 }
