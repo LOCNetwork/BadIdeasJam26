@@ -12,6 +12,12 @@ public class PCInteractable : Interactable
             return;
         }
 
+        if (PCShoppingCartManager.IsGloballyLocked)
+        {
+            Debug.Log("El PC está bloqueado hasta que termine la reconstrucción.");
+            return;
+        }
+
         pcMenu.Toggle(player);
     }
 }

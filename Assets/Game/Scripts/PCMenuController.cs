@@ -43,13 +43,24 @@ public class PCExitJuiceProfile
 
     [Header("Drop (relative to canvas size)")]
     [Range(-2f, 2f)] public float endOffsetXNormalized = 0f;
-    [Range(-2f, 2f)] public float endOffsetYNormalized = -0.25f;
-    public float dropDuration = 0.12f;
+    [Range(-2f, 2f)] public float endOffsetYNormalized = -0.35f;
+    public float dropDuration = 0.18f;
 
-    [Header("Scale (multipliers over final scale)")]
-    public float squashScaleXMultiplier = 1.35f;
-    public float squashScaleYMultiplier = 0.3f;
-    public float squashDuration = 0.08f;
+    [Header("Pre-Drop Stretch (multipliers over final scale)")]
+    public float stretchScaleXMultiplier = 0.82f;
+    public float stretchScaleYMultiplier = 1.28f;
+    public float stretchDuration = 0.08f;
+
+    [Header("Bounce / Squash")]
+    public float squashScaleXMultiplier = 1.12f;
+    public float squashScaleYMultiplier = 0.88f;
+    public float squashDuration = 0.06f;
+    public float returnDuration = 0.05f;
+
+    [Header("Fade Out")]
+    public bool useFade = true;
+    [Range(0f, 1f)] public float finalAlpha = 0f;
+    public float fadeDuration = 0.18f;
 
     [Header("Final")]
     public float endDelay = 0f;
@@ -111,6 +122,8 @@ public class PCMenuController : MonoBehaviour
 
     private readonly Dictionary<Transform, Vector3> cachedAnchoredPos = new();
     private readonly Dictionary<Transform, Vector3> cachedLocalScale = new();
+    private readonly Dictionary<Transform, CanvasGroup> cachedCanvasGroups = new();
+    private readonly Dictionary<Transform, float> cachedAlpha = new();
 
     public bool IsOpen => isOpen;
 
@@ -390,8 +403,9 @@ public class PCMenuController : MonoBehaviour
 
         float totalDuration =
             closeJuice.initialDelay +
-            closeJuice.squashDuration +
-            closeJuice.dropDuration +
+            closeJuice.stretchDuration +
+            Mathf.Max(closeJuice.dropDuration, closeJuice.fadeDuration) +
+            closeJuice.returnDuration +
             closeJuice.endDelay +
             (shellTargets.Count * closeJuice.staggerBetweenChildren);
 
@@ -466,6 +480,18 @@ public class PCMenuController : MonoBehaviour
 
         if (!cachedLocalScale.ContainsKey(rt.transform))
             cachedLocalScale.Add(rt.transform, rt.localScale);
+
+        if (!cachedCanvasGroups.ContainsKey(rt.transform))
+        {
+            CanvasGroup cg = rt.GetComponent<CanvasGroup>();
+            if (cg == null)
+                cg = rt.gameObject.AddComponent<CanvasGroup>();
+
+            cachedCanvasGroups.Add(rt.transform, cg);
+        }
+
+        if (!cachedAlpha.ContainsKey(rt.transform))
+            cachedAlpha.Add(rt.transform, cachedCanvasGroups[rt.transform].alpha);
     }
 
     private Vector3 GetCanvasRelativeOffset(float normalizedX, float normalizedY)
@@ -550,30 +576,66 @@ public class PCMenuController : MonoBehaviour
         Vector3 basePos = cachedAnchoredPos[rt.transform];
         Vector3 baseScale = cachedLocalScale[rt.transform];
 
+        CanvasGroup cg = cachedCanvasGroups[rt.transform];
+        float startAlpha = cachedAlpha[rt.transform];
+
+        Vector3 stretchScale = new Vector3(
+            baseScale.x * profile.stretchScaleXMultiplier,
+            baseScale.y * profile.stretchScaleYMultiplier,
+            baseScale.z
+        );
+
         Vector3 squashScale = new Vector3(
             baseScale.x * profile.squashScaleXMultiplier,
             baseScale.y * profile.squashScaleYMultiplier,
             baseScale.z
         );
 
-        float t = 0f;
-        while (t < profile.squashDuration)
-        {
-            t += Time.unscaledDeltaTime;
-            float n = Mathf.Clamp01(t / profile.squashDuration);
-            rt.localScale = Vector3.LerpUnclamped(baseScale, squashScale, n);
-            yield return null;
-        }
-
         Vector3 endOffset = GetCanvasRelativeOffset(profile.endOffsetXNormalized, profile.endOffsetYNormalized);
         Vector3 endPos = basePos + endOffset;
 
+        // 1) Stretch hacia arriba
+        float t = 0f;
+        while (t < profile.stretchDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            float n = Mathf.Clamp01(t / profile.stretchDuration);
+            float e = EaseOutBackSoft(n);
+
+            rt.localScale = Vector3.LerpUnclamped(baseScale, stretchScale, e);
+            yield return null;
+        }
+
+        // 2) Caída principal + fade
         t = 0f;
         while (t < profile.dropDuration)
         {
             t += Time.unscaledDeltaTime;
             float n = Mathf.Clamp01(t / profile.dropDuration);
-            rt.anchoredPosition3D = Vector3.LerpUnclamped(basePos, endPos, EaseInCubic(n));
+
+            float moveCurve = EaseInBackHeavy(n);
+            float scaleCurve = EaseInCubic(n);
+
+            rt.anchoredPosition3D = Vector3.LerpUnclamped(basePos, endPos, moveCurve);
+            rt.localScale = Vector3.LerpUnclamped(stretchScale, squashScale, scaleCurve);
+
+            if (profile.useFade)
+            {
+                float fadeT = Mathf.Clamp01(t / Mathf.Max(0.0001f, profile.fadeDuration));
+                cg.alpha = Mathf.Lerp(startAlpha, profile.finalAlpha, EaseInCubic(fadeT));
+            }
+
+            yield return null;
+        }
+
+        // 3) Pequeño rebote visual
+        t = 0f;
+        while (t < profile.returnDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            float n = Mathf.Clamp01(t / profile.returnDuration);
+
+            rt.localScale = Vector3.LerpUnclamped(squashScale, baseScale, n);
             yield return null;
         }
 
@@ -582,6 +644,7 @@ public class PCMenuController : MonoBehaviour
 
         rt.anchoredPosition3D = basePos;
         rt.localScale = baseScale;
+        cg.alpha = startAlpha;
     }
 
     private float EaseOutBack(float x)
@@ -594,5 +657,19 @@ public class PCMenuController : MonoBehaviour
     private float EaseInCubic(float x)
     {
         return x * x * x;
+    }
+
+    private float EaseOutBackSoft(float x)
+    {
+        float c1 = 1.1f;
+        float c3 = c1 + 1f;
+        return 1f + c3 * Mathf.Pow(x - 1f, 3f) + c1 * Mathf.Pow(x - 1f, 2f);
+    }
+
+    private float EaseInBackHeavy(float x)
+    {
+        float c1 = 2.4f;
+        float c3 = c1 + 1f;
+        return c3 * x * x * x - c1 * x * x;
     }
 }
