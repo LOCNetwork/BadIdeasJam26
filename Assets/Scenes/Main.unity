@@ -9060,10 +9060,10 @@ MonoBehaviour:
     uiPurchaseAnimator: {fileID: 1913451436}
     unlockLevel: 0
   - catalog: 2
-    uiDropAnimator: {fileID: 1720151522}
-    visualSpawnPoint: {fileID: 1246494548}
+    uiDropAnimator: {fileID: 1667605622}
+    visualSpawnPoint: {fileID: 1333556098}
     visualParent: {fileID: 1672668555}
-    uiPurchaseAnimator: {fileID: 672080706}
+    uiPurchaseAnimator: {fileID: 46908048}
     unlockLevel: 1
   - catalog: 1
     uiDropAnimator: {fileID: 1420209445}
@@ -9072,10 +9072,10 @@ MonoBehaviour:
     uiPurchaseAnimator: {fileID: 1931963875}
     unlockLevel: 2
   - catalog: 3
-    uiDropAnimator: {fileID: 1420209445}
-    visualSpawnPoint: {fileID: 2074801122}
+    uiDropAnimator: {fileID: 1720151522}
+    visualSpawnPoint: {fileID: 1246494548}
     visualParent: {fileID: 849482297}
-    uiPurchaseAnimator: {fileID: 1931963875}
+    uiPurchaseAnimator: {fileID: 672080706}
     unlockLevel: 3
   deliverySpawnPoint: {fileID: 143423155}
   deliveryAnimator: {fileID: 1375614521}
@@ -10362,7 +10362,7 @@ Animator:
   m_GameObject: {fileID: 1720151520}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4eca881b98ee6b3428908a1438b59ecd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7128c947878f1554cb9c7eaf42ca1508, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
