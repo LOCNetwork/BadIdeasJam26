@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using TMPro;
 
@@ -34,6 +35,25 @@ public class CatalogItem
     public GameObject visualPrefab;
 }
 
+[System.Serializable]
+public class CatalogUIBinding
+{
+    public CatalogType catalog;
+
+    [Header("UI Drop")]
+    public Animator uiDropAnimator;
+    public RectTransform visualSpawnPoint;
+
+    [Header("Shared Parent Candidate For This Unlock Level")]
+    public Transform visualParent;
+
+    [Header("UI Purchase")]
+    public Animator uiPurchaseAnimator;
+
+    [Header("Unlock Level For Shared Parent Priority")]
+    [Min(0)] public int unlockLevel = 0;
+}
+
 public class PCShoppingCartManager : MonoBehaviour
 {
     public static PCShoppingCartManager Instance { get; private set; }
@@ -47,26 +67,22 @@ public class PCShoppingCartManager : MonoBehaviour
     [Header("PC Manager reference")]
     [SerializeField] private PCMenuController pcManager;
 
-    [Header("UI VISUAL SPAWN")]
-    [SerializeField] private RectTransform visualSpawnPoint;
-    [SerializeField] private Transform visualParent;
-
-    [Header("UI Visual Animator")]
-    [SerializeField] private Animator uiAnimator;
+    [Header("UI Trigger Names")]
     [SerializeField] private string dropTrigger = "Drop";
+    [SerializeField] private string purchaseTrigger = "Purchase";
 
-    [Header("Delivery spawn")]
+    [Header("Catalog UI Bindings")]
+    [SerializeField] private List<CatalogUIBinding> catalogUIBindings = new();
+
+    [Header("Delivery / Repair (world)")]
     [SerializeField] private Transform deliverySpawnPoint;
     [SerializeField] private Animator deliveryAnimator;
     [SerializeField] private float deliveryForce = 6f;
 
-    [Header("Animation names")]
-    [SerializeField] private string purchaseTrigger = "Purchase";
+    [Header("Animation timings")]
     [SerializeField] private float purchaseDuration = 2f;
-
     [SerializeField] private string deliveryTrigger = "Delivery";
     [SerializeField] private float deliveryDuration = 2f;
-
     [SerializeField] private string repairTrigger = "Repair";
     [SerializeField] private float repairDuration = 2f;
 
@@ -79,6 +95,8 @@ public class PCShoppingCartManager : MonoBehaviour
     private bool purchaseRunning;
     private bool pcLocked;
     private bool wasPcOpenLastFrame;
+
+    private CatalogType activeUICatalog = CatalogType.Paper;
 
     private readonly List<CatalogItem> cart = new();
     private readonly List<GameObject> visualObjects = new();
@@ -140,6 +158,34 @@ public class PCShoppingCartManager : MonoBehaviour
         return currentMoney - reservedMoney;
     }
 
+    private int GetActivePCUpgradeLevel()
+    {
+        if (pcManager == null)
+        {
+            Debug.LogWarning("PCShoppingCartManager: pcManager no asignado, usando nivel 0.");
+            return 0;
+        }
+
+        System.Type pcType = pcManager.GetType();
+
+        FieldInfo debugModeField = pcType.GetField("debugMode", BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo debugUpgradeField = pcType.GetField("debugUpgradeLevel", BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo currentUpgradeField = pcType.GetField("currentUpgradeLevel", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        if (debugModeField == null || debugUpgradeField == null || currentUpgradeField == null)
+        {
+            Debug.LogWarning("PCShoppingCartManager: no se pudieron encontrar los campos de nivel en PCMenuController, usando nivel 0.");
+            return 0;
+        }
+
+        bool debugMode = (bool)debugModeField.GetValue(pcManager);
+
+        if (debugMode)
+            return (int)debugUpgradeField.GetValue(pcManager);
+
+        return (int)currentUpgradeField.GetValue(pcManager);
+    }
+
     private CatalogItem GetItem(CatalogType catalog, BoxSizes size)
     {
         foreach (var item in catalogItems)
@@ -151,6 +197,51 @@ public class PCShoppingCartManager : MonoBehaviour
         return null;
     }
 
+    private CatalogUIBinding GetUIBinding(CatalogType catalog)
+    {
+        foreach (var binding in catalogUIBindings)
+        {
+            if (binding.catalog == catalog)
+                return binding;
+        }
+
+        return null;
+    }
+
+    private Transform GetHighestUnlockedVisualParent()
+    {
+        int level = GetActivePCUpgradeLevel();
+        CatalogUIBinding bestBinding = null;
+
+        for (int i = 0; i < catalogUIBindings.Count; i++)
+        {
+            CatalogUIBinding binding = catalogUIBindings[i];
+            if (binding == null || binding.visualParent == null)
+                continue;
+
+            if (binding.unlockLevel > level)
+                continue;
+
+            if (bestBinding == null || binding.unlockLevel > bestBinding.unlockLevel)
+                bestBinding = binding;
+        }
+
+        return bestBinding != null ? bestBinding.visualParent : null;
+    }
+
+    // ============================
+    // ACTIVE PAGE FOR UI
+    // ============================
+
+    public void SetActivePagePaper() => activeUICatalog = CatalogType.Paper;
+    public void SetActivePageClothing() => activeUICatalog = CatalogType.Clothing;
+    public void SetActivePageTech() => activeUICatalog = CatalogType.Tech;
+    public void SetActivePageDark() => activeUICatalog = CatalogType.Dark;
+
+    // ============================
+    // ADD TO CART
+    // ============================
+
     private void AddToCart(CatalogType catalog, BoxSizes size)
     {
         if (purchaseRunning)
@@ -160,18 +251,20 @@ public class PCShoppingCartManager : MonoBehaviour
 
         if (item == null)
         {
-            Debug.Log("Item not configured in catalog");
+            Debug.Log("Item not configured in catalog.");
             return;
         }
 
         if (RemainingMoney() < item.price)
         {
-            Debug.Log("Not enough money");
+            Debug.Log("Not enough money.");
             return;
         }
 
         cart.Add(item);
         reservedMoney += item.price;
+
+        activeUICatalog = catalog;
 
         Debug.Log(
             $"Money Max: {currentMoney}\n" +
@@ -185,20 +278,39 @@ public class PCShoppingCartManager : MonoBehaviour
 
     private void SpawnVisual(CatalogItem item)
     {
-        if (item.visualPrefab == null || visualSpawnPoint == null || visualParent == null)
+        CatalogUIBinding binding = GetUIBinding(item.catalog);
+        if (binding == null)
+        {
+            Debug.LogWarning($"No UI binding configured for catalog {item.catalog}");
+            return;
+        }
+
+        if (item.visualPrefab == null)
             return;
 
-        if (uiAnimator != null && !string.IsNullOrEmpty(dropTrigger))
-            uiAnimator.SetTrigger(dropTrigger);
+        Transform sharedParent = GetHighestUnlockedVisualParent();
 
-        GameObject obj = Instantiate(item.visualPrefab, visualParent);
+        if (binding.visualSpawnPoint == null || sharedParent == null)
+        {
+            Debug.LogWarning($"Missing VisualSpawnPoint or shared VisualParent for catalog {item.catalog}");
+            return;
+        }
+
+        if (binding.uiDropAnimator != null && !string.IsNullOrEmpty(dropTrigger))
+            binding.uiDropAnimator.SetTrigger(dropTrigger);
+
+        GameObject obj = Instantiate(item.visualPrefab, sharedParent);
 
         RectTransform rect = obj.GetComponent<RectTransform>();
         if (rect != null)
-            rect.anchoredPosition = visualSpawnPoint.anchoredPosition;
+            rect.anchoredPosition = binding.visualSpawnPoint.anchoredPosition;
 
         visualObjects.Add(obj);
     }
+
+    // ============================
+    // BUTTON METHODS - ADD
+    // ============================
 
     public void AddPaperSmall() => AddToCart(CatalogType.Paper, BoxSizes.Small);
     public void AddPaperMedium() => AddToCart(CatalogType.Paper, BoxSizes.Medium);
@@ -216,21 +328,36 @@ public class PCShoppingCartManager : MonoBehaviour
     public void AddDarkMedium() => AddToCart(CatalogType.Dark, BoxSizes.Medium);
     public void AddDarkLarge() => AddToCart(CatalogType.Dark, BoxSizes.Large);
 
+    // ============================
+    // PURCHASE BUTTONS
+    // ============================
+
     public void Purchase()
+    {
+        PurchaseForCatalog(activeUICatalog);
+    }
+
+    public void PurchasePaper() => PurchaseForCatalog(CatalogType.Paper);
+    public void PurchaseClothing() => PurchaseForCatalog(CatalogType.Clothing);
+    public void PurchaseTech() => PurchaseForCatalog(CatalogType.Tech);
+    public void PurchaseDark() => PurchaseForCatalog(CatalogType.Dark);
+
+    private void PurchaseForCatalog(CatalogType catalog)
     {
         if (purchaseRunning)
             return;
 
         if (cart.Count == 0)
         {
-            Debug.Log("No items in cart");
+            Debug.Log("No items in cart.");
             return;
         }
 
-        StartCoroutine(PurchaseRoutine());
+        activeUICatalog = catalog;
+        StartCoroutine(PurchaseRoutine(activeUICatalog));
     }
 
-    private IEnumerator PurchaseRoutine()
+    private IEnumerator PurchaseRoutine(CatalogType purchaseUICatalog)
     {
         purchaseRunning = true;
         pcLocked = true;
@@ -241,14 +368,15 @@ public class PCShoppingCartManager : MonoBehaviour
         Debug.Log(
             $"PURCHASE CONFIRMED\n" +
             $"Money Max: {currentMoney + spentThisPurchase}\n" +
-            $"Money Spent: {spentThisPurchase}\n" +
+            $"Money Spent This Purchase: {spentThisPurchase}\n" +
             $"Money Remaining: {currentMoney}"
         );
 
         UpdateMoneyUI();
 
-        if (deliveryAnimator != null && !string.IsNullOrEmpty(purchaseTrigger))
-            deliveryAnimator.SetTrigger(purchaseTrigger);
+        CatalogUIBinding binding = GetUIBinding(purchaseUICatalog);
+        if (binding != null && binding.uiPurchaseAnimator != null && !string.IsNullOrEmpty(purchaseTrigger))
+            binding.uiPurchaseAnimator.SetTrigger(purchaseTrigger);
 
         yield return new WaitForSeconds(purchaseDuration);
 
@@ -267,13 +395,16 @@ public class PCShoppingCartManager : MonoBehaviour
         if (deliveryAnimator != null && !string.IsNullOrEmpty(repairTrigger))
             deliveryAnimator.SetTrigger(repairTrigger);
 
-        // Sigue bloqueado durante la reconstrucción/reparación
         yield return new WaitForSeconds(repairDuration);
 
         pcLocked = false;
         ClearCart();
         purchaseRunning = false;
     }
+
+    // ============================
+    // DELIVERY
+    // ============================
 
     private void SpawnDelivery()
     {
@@ -302,6 +433,10 @@ public class PCShoppingCartManager : MonoBehaviour
         }
     }
 
+    // ============================
+    // CLEAR CART
+    // ============================
+
     public void ClearCart()
     {
         reservedMoney = 0;
@@ -316,6 +451,10 @@ public class PCShoppingCartManager : MonoBehaviour
         visualObjects.Clear();
         UpdateMoneyUI();
     }
+
+    // ============================
+    // LOCK PC INTERACTION
+    // ============================
 
     public bool IsPCLocked()
     {
