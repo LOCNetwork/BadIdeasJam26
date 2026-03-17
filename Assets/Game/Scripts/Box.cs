@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,6 +40,7 @@ public struct RarityDropRates
         };
     }
 }
+
 
 [DisallowMultipleComponent]
 public class Box : MonoBehaviour
@@ -82,6 +84,8 @@ public class Box : MonoBehaviour
     public BoxSize Size => size;
     public IReadOnlyList<Item> ItemPool => itemPool;
     public bool AllowRepeatedItems => allowRepeatedItems;
+
+    public Guid guid;
 
     public int Weight => size switch
     {
@@ -190,7 +194,7 @@ public class Box : MonoBehaviour
         if (totalWeight <= 0f)
             return null;
 
-        float roll = Random.Range(0f, totalWeight);
+        float roll = UnityEngine.Random.Range(0f, totalWeight);
         float accumulated = 0f;
 
         for (int i = 0; i < candidates.Count; i++)
@@ -201,5 +205,56 @@ public class Box : MonoBehaviour
         }
 
         return candidates[candidates.Count - 1];
+    }
+
+
+
+    public Box Clone(GameObject host, bool copyGuid = true)
+    {
+        Box clone;
+
+        if (host == null)
+        {
+            GameObject go = new GameObject($"{gameObject.name}_clone");
+            go.transform.SetParent(transform.parent);
+            go.transform.position = transform.position;
+            go.transform.rotation = transform.rotation;
+            go.transform.localScale = transform.localScale;
+
+            clone = go.AddComponent<Box>();
+        } else
+        {
+            clone = host.AddComponent<Box>();
+        }
+
+        // copy value/primitive fields and references (we are inside the class so private fields accessible)
+        clone.type = this.type;
+        clone.size = this.size;
+
+        clone.smallCapacity = this.smallCapacity;
+        clone.mediumCapacity = this.mediumCapacity;
+        clone.largeCapacity = this.largeCapacity;
+
+        clone.allowRepeatedItems = this.allowRepeatedItems;
+
+        // shallow-copy references to sprite sets (do not create or modify SpriteRenderer)
+        clone.smallSprites = this.smallSprites;
+        clone.mediumSprites = this.mediumSprites;
+        clone.largeSprites = this.largeSprites;
+
+        // shallow-copy lists (new lists but same element references)
+        clone.itemPool = new List<Item>(this.itemPool);
+        clone.playerItemPool = new List<WorldItem>(this.playerItemPool);
+
+        // copy value fields
+        clone.extraPercentage = this.extraPercentage;
+        clone.extraValue = this.extraValue;
+        clone.value = this.value;
+        clone.sellTimeIndex = this.sellTimeIndex;
+
+        // guid handling
+        clone.guid = copyGuid ? this.guid : Guid.NewGuid();
+
+        return clone;
     }
 }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SellMachine : Interactable
@@ -17,8 +18,7 @@ public class SellMachine : Interactable
 
             player.TryTakeTopHeldBox(out GameObject boxObj, out Box boxToSell);
 
-            GameManager.instance.sellManager.PutBoxToSell(boxToSell);
-            Destroy(boxObj);
+            GameManager.instance.sellManager.PutBoxToSell(boxObj, boxToSell);
         }
 
 

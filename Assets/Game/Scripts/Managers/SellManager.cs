@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,8 +12,8 @@ using UnityEngine.UI;
 public class SellManager
 {
 
-    public Dictionary<Box, float> boxesOnSale;
-    public Queue<Box> boxesQueue;
+    public Dictionary<Guid, KeyValuePair<Box, float>> boxesOnSale;
+    public Queue<GameObject> boxesQueue;
 
     public float[] sellSpeedArray;
 
@@ -20,10 +22,17 @@ public class SellManager
     // UI Font
     private TMP_FontAsset fontAsset;
 
-    public SellManager(RectTransform container, TMP_FontAsset fontAsset)
+    private float offset;
+    private float truckModuleOffset;
+
+    private Stack<GameObject> truckBodyModules;
+
+    private MonoBehaviour mono;
+
+    public SellManager(RectTransform container, TMP_FontAsset fontAsset, MonoBehaviour mono)
     {
-        boxesOnSale = new Dictionary<Box, float>();
-        boxesQueue = new Queue<Box>();
+        boxesOnSale = new Dictionary<Guid, KeyValuePair<Box, float>>();
+        boxesQueue = new Queue<GameObject>();
 
         sellSpeedArray = new float[4];
 
@@ -34,29 +43,52 @@ public class SellManager
 
         this.container = container;
         this.fontAsset = fontAsset;
+
+        this.offset = 0;
+        this.truckModuleOffset = 0;
+
+        this.mono = mono;
+
+        this.truckBodyModules = new Stack<GameObject>();
     }
 
 
 
-    public bool PutBoxToSell(Box box)
+    public bool PutBoxToSell(GameObject go, Box box)
     {
         if (box.Type == BoxType.Delivery) return false;
 
-        boxesOnSale.Add(box, GameManager.instance.timer);
-        boxesQueue.Enqueue(box);
+        boxesOnSale.Add(box.guid, new KeyValuePair<Box, float>(box, GameManager.instance.timer));
+
+        // Remove physics components
+        UnityEngine.Object.Destroy(go.GetComponent<Rigidbody2D>());
+        UnityEngine.Object.Destroy(go.GetComponent<BoxCollider2D>());
+
+        go.transform.SetParent(GameManager.instance.truckObject.transform);
+
+        go.transform.localPosition = new Vector3(0, offset - 1);
+
+        go.GetComponent<Box>().guid = box.guid;
+
+        boxesQueue.Enqueue(go);
+
+        UpdateTruck();
+
+        offset -= 1.3f;
         
         return true;
     }
 
     public void CompleteBoxSale(Box box)
     {
-        boxesOnSale.Remove(box);
+        Debug.Log("Selling box with value: " + box.value);
+        boxesOnSale.Remove(box.guid);
         
-       
-        PerformBoxSellAnimation(box);
+        Debug.Log("Performing sell animation");
+        mono.StartCoroutine(PerformBoxSellAnimation(box));
 
 
-        GameManager.instance.gameStats.money += box.value;
+      
     }
     
     
@@ -65,18 +97,82 @@ public class SellManager
 
         foreach (WorldItem item in box.playerItemPool)
         {
+
+            if (item.passives == null) continue;
+
             foreach (Passive passive in item.passives)
             {
-                DisplayItemPassive(passive.Display(box, item.passivesInfo));
-                yield return new WaitForSeconds(2f);
+                if (passive.MeetsCondition(box, item.passivesInfo))
+                {
+                   DisplayItemPassive(passive.Display(box, item.passivesInfo));
+                   yield return new WaitForSeconds(2f);
+                }
+                    
             }
 
         }
 
 
+        UnityEngine.Object.Destroy(boxesQueue.Dequeue());
+
+        offset += 1.3f;
+
+        UpdateBoxPositions();
+        UpdateTruck();
+
+
+        Debug.Log("Adding money: " + box.value);
+        GameManager.instance.gameStats.money += box.value;
+    }
+
+    private void UpdateBoxPositions()
+    { 
+        float currentOffset = 0;
+
+        foreach (GameObject box in boxesQueue)
+        {
+            Vector3 targetPosition = new Vector3(0, currentOffset - 1, 0);
+            box.transform.localPosition = targetPosition;
+            currentOffset -= 1.3f;
+        }
+    }
+
+
+    private void UpdateTruck()
+    {
+        if (boxesQueue.Count < truckBodyModules.Count)
+        {
+            truckModuleOffset += 1.31f;
+            GameObject module = truckBodyModules.Pop();
+            UnityEngine.Object.Destroy(module);
+        } else
+        {
+            truckModuleOffset -= 1.31f;
+
+            GameObject module = new GameObject("TruckBodyModule");
+            module.transform.SetParent(GameManager.instance.truckObject.transform);
+
+            module.AddComponent<SpriteRenderer>().sprite = GameManager.instance.truckBodySprite;
+
+            module.transform.localPosition = new Vector3(0, truckModuleOffset, 0);
+
+            truckBodyModules.Push(module);
+        }
+
+        // Update truck back position
+        if (truckBodyModules.Count > 0)
+        {
+            GameObject lastModule = truckBodyModules.Peek();
+
+            GameManager.instance.truckBack.transform.localPosition = new Vector3(0, lastModule.transform.localPosition.y - 1.3f, 0);
+        } else
+        {
+            GameManager.instance.truckBack.transform.localPosition = new Vector3(0, -1.3f, 0);
+        }
+
 
     }
-    
+
 
 
     public void DisplayItemPassive(string displayText)
@@ -84,7 +180,7 @@ public class SellManager
 
         for (int i = container.childCount - 1; i >= 0; --i)
         {
-            Object.Destroy(container.GetChild(i).gameObject);
+            UnityEngine.Object.Destroy(container.GetChild(i).gameObject);
         }
 
         string[] words = displayText.Split(' ');

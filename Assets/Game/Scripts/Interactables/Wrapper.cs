@@ -28,7 +28,7 @@ public class Wrapper : Interactable
 
     private List<WorldItem> currentItemsInWrapper = new List<WorldItem>();
 
-    private BoxSize AVAILABLE_BOX_SIZE = BoxSize.Medium;
+    public BoxSize AVAILABLE_BOX_SIZE = BoxSize.Medium;
 
     private GameObject currentBox;
 
@@ -144,7 +144,11 @@ public class Wrapper : Interactable
 
             ChooseBoxTag();
 
+            boxData.guid = Guid.NewGuid(); // Unique identifier for the box, used to track it in the sell system
+
             currentBox.SetActive(true);
+
+            currentBox = null;
             return;
         }
 

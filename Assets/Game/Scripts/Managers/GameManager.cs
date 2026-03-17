@@ -31,13 +31,24 @@ public class GameManager : MonoBehaviour
 
     private bool test = false;
 
+    // Box prefabs
+    public GameObject playerSmallBoxPrefab;
+    public GameObject playerMediumBoxPrefab;
+    public GameObject playerLargeBoxPrefab;
+
+    // Truck object
+    public GameObject truckObject;
+    public Sprite truckBodySprite;
+    public GameObject truckBack;
+
+  
 
     void Start()
     {
         instance = this;
         gameStats = new GameStats();
         
-        sellManager = new SellManager(container, fontAsset);
+        sellManager = new SellManager(container, fontAsset, this);
         
         LoadItems();
         
@@ -100,25 +111,26 @@ public class GameManager : MonoBehaviour
 
         if (sellManager.boxesQueue.Count == 0) return;
 
-        Box box = sellManager.boxesQueue.Peek();
+        GameObject boxObject = sellManager.boxesQueue.Peek();
 
+        Box box = boxObject.GetComponent<Box>();
 
-        if (!sellManager.boxesOnSale.ContainsKey(box)) // This box is on animation
+        if (!sellManager.boxesOnSale.ContainsKey(box.guid)) // This box is on animation
         {
             return;
         }
 
 
-        sellManager.boxesOnSale.TryGetValue(box, out float insertTime);
+        sellManager.boxesOnSale.TryGetValue(box.guid, out KeyValuePair<Box, float> info);
 
-        if (insertTime + sellManager.sellSpeedArray[box.sellTimeIndex] <= timer)
+        Debug.Log(info.Value + sellManager.sellSpeedArray[box.sellTimeIndex]);
+        Debug.Log(timer);
+        Debug.Log(info.Value + sellManager.sellSpeedArray[box.sellTimeIndex] <= timer);
+        if (info.Value + sellManager.sellSpeedArray[box.sellTimeIndex] <= timer)
         {
-            sellManager.CompleteBoxSale(box);
+            Debug.Log("SOLD BOX");
+            sellManager.CompleteBoxSale(info.Key);
         }
-
-
-
-
 
     }
 
