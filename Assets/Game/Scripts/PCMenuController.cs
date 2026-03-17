@@ -125,6 +125,8 @@ public class PCMenuController : MonoBehaviour
     private readonly Dictionary<Transform, CanvasGroup> cachedCanvasGroups = new();
     private readonly Dictionary<Transform, float> cachedAlpha = new();
 
+    public readonly List<GameObject> visualObjects = new();
+
     public bool IsOpen => isOpen;
 
     public void Toggle(Player player)
@@ -275,6 +277,13 @@ public class PCMenuController : MonoBehaviour
             giggleVariants[homeIndex].SetActive(true);
 
         ApplyUnlockedCatalogButtons();
+
+
+        // Disable visual objects
+        foreach (GameObject go in visualObjects) 
+        {
+            go.SetActive(false);
+        }
     }
 
     private void OpenCatalog(PCCatalogType catalogType)
@@ -306,6 +315,13 @@ public class PCMenuController : MonoBehaviour
             view.pageBarObject.SetActive(true);
 
         ApplyUnlockedCatalogButtons();
+
+
+        // Enable visual objects
+        foreach (GameObject go in visualObjects)
+        {
+            if (!go.activeInHierarchy) go.SetActive(true);
+        }
     }
 
     private PCCatalogView GetCatalog(PCCatalogType type)

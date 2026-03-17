@@ -99,7 +99,7 @@ public class PCShoppingCartManager : MonoBehaviour
     private CatalogType activeUICatalog = CatalogType.Paper;
 
     private readonly List<CatalogItem> cart = new();
-    private readonly List<GameObject> visualObjects = new();
+
 
     public static bool IsGloballyLocked =>
         Instance != null && Instance.IsPCLocked();
@@ -305,7 +305,8 @@ public class PCShoppingCartManager : MonoBehaviour
         if (rect != null)
             rect.anchoredPosition = binding.visualSpawnPoint.anchoredPosition;
 
-        visualObjects.Add(obj);
+       
+        pcManager.visualObjects.Add(obj);
     }
 
     // ============================
@@ -442,13 +443,13 @@ public class PCShoppingCartManager : MonoBehaviour
         reservedMoney = 0;
         cart.Clear();
 
-        foreach (var obj in visualObjects)
+        foreach (var obj in pcManager.visualObjects)
         {
             if (obj != null)
                 Destroy(obj);
         }
 
-        visualObjects.Clear();
+        pcManager.visualObjects.Clear();
         UpdateMoneyUI();
     }
 
