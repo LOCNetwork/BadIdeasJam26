@@ -77,6 +77,7 @@ public class PCShoppingCartManager : MonoBehaviour
     [Header("Delivery / Repair (world)")]
     [SerializeField] private Transform deliverySpawnPoint;
     [SerializeField] private Animator deliveryAnimator;
+    [SerializeField] private Animator repairAnimator;
     [SerializeField] private float deliveryForce = 6f;
 
     [Header("Animation timings")]
@@ -393,8 +394,8 @@ public class PCShoppingCartManager : MonoBehaviour
 
         SpawnDelivery();
 
-        if (deliveryAnimator != null && !string.IsNullOrEmpty(repairTrigger))
-            deliveryAnimator.SetTrigger(repairTrigger);
+        if (repairAnimator != null && !string.IsNullOrEmpty(repairTrigger))
+            repairAnimator.SetTrigger(repairTrigger);
 
         yield return new WaitForSeconds(repairDuration);
 
