@@ -86,7 +86,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 6951114633567200485, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
+  m_Sprite: {fileID: -520590931183156557, guid: 57e24626dcbaf254997db983b9903add, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,14 +130,14 @@ MonoBehaviour:
   largeCapacity: 8
   allowRepeatedItems: 1
   smallSprites:
-    front: {fileID: -6880077232281017949, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
-    side: {fileID: -6007857137893288414, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
+    front: {fileID: -5403917745769237638, guid: 57e24626dcbaf254997db983b9903add, type: 3}
+    side: {fileID: 641515894465698295, guid: 57e24626dcbaf254997db983b9903add, type: 3}
   mediumSprites:
-    front: {fileID: 360050356498797049, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
-    side: {fileID: 4245052342988409972, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
+    front: {fileID: 1071377053553539095, guid: 57e24626dcbaf254997db983b9903add, type: 3}
+    side: {fileID: -2939801824191070668, guid: 57e24626dcbaf254997db983b9903add, type: 3}
   largeSprites:
-    front: {fileID: 6951114633567200485, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
-    side: {fileID: -7732569738864306783, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
+    front: {fileID: -520590931183156557, guid: 57e24626dcbaf254997db983b9903add, type: 3}
+    side: {fileID: -6540123201979456734, guid: 57e24626dcbaf254997db983b9903add, type: 3}
   itemPool: []
   playerItemPool: []
   extraPercentage: 0
