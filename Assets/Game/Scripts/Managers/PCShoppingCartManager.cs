@@ -74,11 +74,21 @@ public class PCShoppingCartManager : MonoBehaviour
     [Header("Catalog UI Bindings")]
     [SerializeField] private List<CatalogUIBinding> catalogUIBindings = new();
 
+    [Header("UI Visual Physics Randomization")]
+    [SerializeField] private float visualMinForce = 2f;
+    [SerializeField] private float visualMaxForce = 5f;
+    [SerializeField] private float visualMinAngleDeg = 180f;
+    [SerializeField] private float visualMaxAngleDeg = 360f;
+    [SerializeField] private bool randomizeVisualRotation = true;
+
     [Header("Delivery / Repair (world)")]
-    [SerializeField] private Transform deliverySpawnPoint;
+    [SerializeField] private List<Transform> deliverySpawnPoints = new();
     [SerializeField] private Animator deliveryAnimator;
     [SerializeField] private Animator repairAnimator;
-    [SerializeField] private float deliveryForce = 6f;
+
+    [Header("Delivery Force Randomization")]
+    [SerializeField] private float deliveryMinForce = 4f;
+    [SerializeField] private float deliveryMaxForce = 7f;
 
     [Header("Animation timings")]
     [SerializeField] private float purchaseDuration = 2f;
@@ -229,6 +239,13 @@ public class PCShoppingCartManager : MonoBehaviour
         return bestBinding != null ? bestBinding.visualParent : null;
     }
 
+    private Vector2 GetRandomDirectionFromAngleRange(float minAngleDeg, float maxAngleDeg)
+    {
+        float angle = Random.Range(minAngleDeg, maxAngleDeg);
+        float radians = angle * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)).normalized;
+    }
+
     public void SetActivePagePaper() => activeUICatalog = CatalogType.Paper;
     public void SetActivePageClothing() => activeUICatalog = CatalogType.Clothing;
     public void SetActivePageTech() => activeUICatalog = CatalogType.Tech;
@@ -297,6 +314,20 @@ public class PCShoppingCartManager : MonoBehaviour
         if (rect != null)
             rect.anchoredPosition = binding.visualSpawnPoint.anchoredPosition;
 
+        if (randomizeVisualRotation)
+        {
+            float randomZ = Random.Range(0f, 360f);
+            obj.transform.rotation = Quaternion.Euler(0f, 0f, randomZ);
+        }
+
+        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            Vector2 dir = GetRandomDirectionFromAngleRange(visualMinAngleDeg, visualMaxAngleDeg);
+            float force = Random.Range(visualMinForce, visualMaxForce);
+            rb.AddForce(dir * force, ForceMode2D.Impulse);
+        }
+
         pcManager.visualObjects.Add(obj);
     }
 
@@ -362,7 +393,6 @@ public class PCShoppingCartManager : MonoBehaviour
         if (binding != null && binding.uiPurchaseAnimator != null && !string.IsNullOrEmpty(purchaseTrigger))
             binding.uiPurchaseAnimator.SetTrigger(purchaseTrigger);
 
-        // Destruir visuals justo al arrancar la compra
         ClearOnlyVisuals();
 
         yield return new WaitForSeconds(purchaseDuration);
@@ -394,28 +424,53 @@ public class PCShoppingCartManager : MonoBehaviour
 
     private void SpawnDelivery()
     {
-        if (deliverySpawnPoint == null)
+        if (deliverySpawnPoints == null || deliverySpawnPoints.Count == 0)
         {
-            Debug.LogWarning("DeliverySpawnPoint is not assigned.");
+            Debug.LogWarning("DeliverySpawnPoints is empty.");
             return;
         }
 
-        foreach (var item in cart)
+        List<Transform> shuffledPoints = new List<Transform>(deliverySpawnPoints);
+        ShuffleTransformList(shuffledPoints);
+
+        if (cart.Count > shuffledPoints.Count)
         {
+            Debug.LogWarning("Hay mas items en la cesta que DeliverySpawnPoints configurados. Se reutilizaran algunos puntos.");
+        }
+
+        for (int i = 0; i < cart.Count; i++)
+        {
+            CatalogItem item = cart[i];
             if (item == null || item.deliveryPrefab == null)
                 continue;
 
-            Vector3 spawnPos = deliverySpawnPoint.position;
-            Quaternion spawnRot = deliverySpawnPoint.rotation;
+            Transform spawnPoint = shuffledPoints[i % shuffledPoints.Count];
+            if (spawnPoint == null)
+                continue;
+
+            Vector3 spawnPos = spawnPoint.position;
+            Quaternion spawnRot = spawnPoint.rotation;
 
             GameObject obj = Instantiate(item.deliveryPrefab, spawnPos, spawnRot);
 
             Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                Vector2 random = Random.insideUnitCircle.normalized;
-                rb.AddForce(random * deliveryForce, ForceMode2D.Impulse);
+                float force = Random.Range(deliveryMinForce, deliveryMaxForce);
+                Vector2 dir = spawnPoint.up.normalized;
+                rb.AddForce(dir * force, ForceMode2D.Impulse);
             }
+        }
+    }
+
+    private void ShuffleTransformList(List<Transform> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            int randomIndex = Random.Range(i, list.Count);
+            Transform temp = list[i];
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
         }
     }
 

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1955995734610075209}
   - component: {fileID: -1057864127185095681}
   m_Layer: 0
-  m_Name: SmallBox
+  m_Name: SmallBoxD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

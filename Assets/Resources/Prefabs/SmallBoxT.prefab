@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 941223124916465499}
   - component: {fileID: 1586956049312863219}
   - component: {fileID: 1955995734610075209}
-  - component: {fileID: -3490889186755944875}
+  - component: {fileID: -1057864127185095681}
   m_Layer: 0
-  m_Name: PlayerSmallBox
+  m_Name: SmallBoxT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -5403917745769237638, guid: 57e24626dcbaf254997db983b9903add, type: 3}
+  m_Sprite: {fileID: -6880077232281017949, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -123,25 +123,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13530e975e058945a5f6d19a5119480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Box
-  type: 0
+  type: 1
   size: 0
   smallCapacity: 3
   mediumCapacity: 5
   largeCapacity: 8
   allowRepeatedItems: 1
   smallSprites:
-    front: {fileID: -5403917745769237638, guid: 57e24626dcbaf254997db983b9903add, type: 3}
-    side: {fileID: 641515894465698295, guid: 57e24626dcbaf254997db983b9903add, type: 3}
+    front: {fileID: -6880077232281017949, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
+    side: {fileID: -6007857137893288414, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
   mediumSprites:
-    front: {fileID: 1071377053553539095, guid: 57e24626dcbaf254997db983b9903add, type: 3}
-    side: {fileID: -2939801824191070668, guid: 57e24626dcbaf254997db983b9903add, type: 3}
+    front: {fileID: 360050356498797049, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
+    side: {fileID: 4245052342988409972, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
   largeSprites:
-    front: {fileID: -520590931183156557, guid: 57e24626dcbaf254997db983b9903add, type: 3}
-    side: {fileID: -6540123201979456734, guid: 57e24626dcbaf254997db983b9903add, type: 3}
-  itemPool: []
-  playerItemPool: []
-  extraPercentage: 0
-  extraMoney: 0
+    front: {fileID: 6951114633567200485, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
+    side: {fileID: -7732569738864306783, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
+  itemPool:
+  - {fileID: 11400000, guid: 2b93ff2994bac39428323a0f9a859a62, type: 2}
+  - {fileID: 11400000, guid: dd0f00d3ad82935468a7ae4960f38b73, type: 2}
 --- !u!61 &1586956049312863219
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -215,7 +214,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &-3490889186755944875
+--- !u!114 &-1057864127185095681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -227,6 +226,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1df90d7ef48e04e8618ac2e9b60793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSortSprite
-  sortingOffset: 0
-  multiplier: 100
-  heldBaseOrder: 700
