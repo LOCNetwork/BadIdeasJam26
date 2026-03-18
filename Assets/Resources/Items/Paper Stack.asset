@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d44f55bb813ae4aa6bd057e91e1b1a, type: 3}
+  m_Name: Paper Stack
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  itemID: PAPER_STACK
+  displayName: Paper stack
+  description: 
+  value: 2
+  weight: 0
+  rarity: 0
+  boxSlots: 2
+  attributes:
+  - key: 0
+    value: 2
+  passivesDescriptions: []
+  spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
+  displaySprite: {fileID: 0}
+  passivesInfo: []

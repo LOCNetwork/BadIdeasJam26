@@ -1,0 +1,1144 @@
+fileFormatVersion: 2
+guid: dfa01e3e49e9d1f4aabb20132e665218
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2967643068584359005
+    second: RepararMuro_0
+  - first:
+      213: 3609674805971906975
+    second: RepararMuro_1
+  - first:
+      213: -8820379392204827070
+    second: RepararMuro_2
+  - first:
+      213: -2278076357812180735
+    second: RepararMuro_3
+  - first:
+      213: -601466357355711359
+    second: RepararMuro_4
+  - first:
+      213: -6471126836489231468
+    second: RepararMuro_5
+  - first:
+      213: -3901613242461359807
+    second: RepararMuro_6
+  - first:
+      213: 1759421889281617728
+    second: RepararMuro_7
+  - first:
+      213: 7923845003418213303
+    second: RepararMuro_8
+  - first:
+      213: -8144059338433973579
+    second: RepararMuro_9
+  - first:
+      213: -5950049198953754383
+    second: RepararMuro_10
+  - first:
+      213: -7285472606578833069
+    second: RepararMuro_11
+  - first:
+      213: 3135064047759606759
+    second: RepararMuro_12
+  - first:
+      213: -7397043700600061761
+    second: RepararMuro_13
+  - first:
+      213: -1581613567439763982
+    second: RepararMuro_14
+  - first:
+      213: 7136404096881564423
+    second: RepararMuro_15
+  - first:
+      213: -8048099887158431598
+    second: RepararMuro_16
+  - first:
+      213: 7024346081212448108
+    second: RepararMuro_17
+  - first:
+      213: 3043795530201203130
+    second: RepararMuro_18
+  - first:
+      213: 1383403390733143794
+    second: RepararMuro_19
+  - first:
+      213: -3462258440380534148
+    second: RepararMuro_20
+  - first:
+      213: 561191833413760724
+    second: RepararMuro_21
+  - first:
+      213: -3076565125655764454
+    second: RepararMuro_22
+  - first:
+      213: -6852844278959422205
+    second: RepararMuro_23
+  - first:
+      213: -3851716170600630130
+    second: RepararMuro_24
+  - first:
+      213: -4396799079629303084
+    second: RepararMuro_25
+  - first:
+      213: 3581824619925034798
+    second: RepararMuro_26
+  - first:
+      213: 2961406278887004036
+    second: RepararMuro_27
+  - first:
+      213: -2754784637647266795
+    second: RepararMuro_28
+  - first:
+      213: 4959603115344453586
+    second: RepararMuro_29
+  - first:
+      213: -6999153689740630428
+    second: RepararMuro_30
+  - first:
+      213: 6479449431496107439
+    second: RepararMuro_31
+  - first:
+      213: 7785832066164182295
+    second: RepararMuro_32
+  - first:
+      213: 6710158813609240711
+    second: RepararMuro_33
+  - first:
+      213: -3675604217419157744
+    second: RepararMuro_34
+  - first:
+      213: 769198187562474595
+    second: RepararMuro_35
+  - first:
+      213: -918651280811755513
+    second: RepararMuro_36
+  - first:
+      213: -5563355272998189995
+    second: RepararMuro_37
+  - first:
+      213: -3366877836768693651
+    second: RepararMuro_38
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: RepararMuro_0
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 11
+        width: 37
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d54fe1bc5af2f2920800000000000000
+      internalID: 2967643068584359005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_1
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 0
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f91f1a47c14281230800000000000000
+      internalID: 3609674805971906975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_2
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 11
+        width: 37
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2469477dca7b79580800000000000000
+      internalID: -8820379392204827070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_3
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 2
+        width: 38
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 109a3615f95a260e0800000000000000
+      internalID: -2278076357812180735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_4
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 7
+        width: 37
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 184f671e88927a7f0800000000000000
+      internalID: -601466357355711359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_5
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 7
+        width: 37
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 493ef8e7d60f136a0800000000000000
+      internalID: -6471126836489231468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_6
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 7
+        width: 37
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14171287d6faad9c0800000000000000
+      internalID: -3901613242461359807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_7
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 7
+        width: 37
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04f6da0f2e8ba6810800000000000000
+      internalID: 1759421889281617728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_8
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 11
+        width: 40
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bb1ffb5c0727fd60800000000000000
+      internalID: 7923845003418213303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_9
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 11
+        width: 39
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b2b0f64e2d7afe80800000000000000
+      internalID: -8144059338433973579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_10
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 11
+        width: 42
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f0934c37cd2d6da0800000000000000
+      internalID: -5950049198953754383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_11
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 11
+        width: 40
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3598700b34dc4ea90800000000000000
+      internalID: -7285472606578833069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_12
+      rect:
+        serializedVersion: 2
+        x: 751
+        y: 11
+        width: 39
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e34fc2242cf18b20800000000000000
+      internalID: 3135064047759606759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_13
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 11
+        width: 42
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb041bd02fb685990800000000000000
+      internalID: -7397043700600061761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_14
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 7
+        width: 38
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f580d417dafc0ae0800000000000000
+      internalID: -1581613567439763982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_15
+      rect:
+        serializedVersion: 2
+        x: 952
+        y: 7
+        width: 39
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70b944047b9990360800000000000000
+      internalID: 7136404096881564423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_16
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 6
+        width: 42
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2907f051bc76f4090800000000000000
+      internalID: -8048099887158431598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_17
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 7
+        width: 37
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6d33165b8d7b7160800000000000000
+      internalID: 7024346081212448108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_18
+      rect:
+        serializedVersion: 2
+        x: 1153
+        y: 7
+        width: 38
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab1809278ebbd3a20800000000000000
+      internalID: 3043795530201203130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_19
+      rect:
+        serializedVersion: 2
+        x: 1220
+        y: 6
+        width: 42
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fe48b5ed06d23310800000000000000
+      internalID: 1383403390733143794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_20
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 11
+        width: 38
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c723584da4693ffc0800000000000000
+      internalID: -3462258440380534148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_21
+      rect:
+        serializedVersion: 2
+        x: 1354
+        y: 11
+        width: 37
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d63a79cff0c9c700800000000000000
+      internalID: 561191833413760724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_22
+      rect:
+        serializedVersion: 2
+        x: 1419
+        y: 11
+        width: 39
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a12eeec8158dd45d0800000000000000
+      internalID: -3076565125655764454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_23
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 11
+        width: 37
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3054e8baf6ec5e0a0800000000000000
+      internalID: -6852844278959422205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_24
+      rect:
+        serializedVersion: 2
+        x: 1554
+        y: 11
+        width: 38
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e88b8b3dc84fb8ac0800000000000000
+      internalID: -3851716170600630130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_25
+      rect:
+        serializedVersion: 2
+        x: 1621
+        y: 11
+        width: 38
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d25ee5488e6bf2c0800000000000000
+      internalID: -4396799079629303084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_26
+      rect:
+        serializedVersion: 2
+        x: 1688
+        y: 7
+        width: 38
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e275166b38235b130800000000000000
+      internalID: 3581824619925034798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_27
+      rect:
+        serializedVersion: 2
+        x: 1755
+        y: 7
+        width: 38
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 487dba80257091920800000000000000
+      internalID: 2961406278887004036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_28
+      rect:
+        serializedVersion: 2
+        x: 1820
+        y: 6
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51cd450b7f905c9d0800000000000000
+      internalID: -2754784637647266795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_29
+      rect:
+        serializedVersion: 2
+        x: 1889
+        y: 7
+        width: 38
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dfd60d91cc04d440800000000000000
+      internalID: 4959603115344453586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_30
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 7
+        width: 38
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46625a26dc20ede90800000000000000
+      internalID: -6999153689740630428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_31
+      rect:
+        serializedVersion: 2
+        x: 2023
+        y: 6
+        width: 38
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa5ae68ade0abe950800000000000000
+      internalID: 6479449431496107439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_32
+      rect:
+        serializedVersion: 2
+        x: 2091
+        y: 7
+        width: 37
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71dcf885305dc0c60800000000000000
+      internalID: 7785832066164182295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_33
+      rect:
+        serializedVersion: 2
+        x: 2156
+        y: 1
+        width: 39
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 788a2a793e54f1d50800000000000000
+      internalID: 6710158813609240711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_34
+      rect:
+        serializedVersion: 2
+        x: 2222
+        y: 0
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01fadcd3071adfcc0800000000000000
+      internalID: -3675604217419157744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_35
+      rect:
+        serializedVersion: 2
+        x: 2225
+        y: 11
+        width: 37
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36c198b1dadbcaa00800000000000000
+      internalID: 769198187562474595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_36
+      rect:
+        serializedVersion: 2
+        x: 2292
+        y: 11
+        width: 37
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 708f1cef68b4043f0800000000000000
+      internalID: -918651280811755513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_37
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 0
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55485a9eaddfac2b0800000000000000
+      internalID: -5563355272998189995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepararMuro_38
+      rect:
+        serializedVersion: 2
+        x: 2289
+        y: 0
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d62344922727641d0800000000000000
+      internalID: -3366877836768693651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      RepararMuro_0: 2967643068584359005
+      RepararMuro_1: 3609674805971906975
+      RepararMuro_10: -5950049198953754383
+      RepararMuro_11: -7285472606578833069
+      RepararMuro_12: 3135064047759606759
+      RepararMuro_13: -7397043700600061761
+      RepararMuro_14: -1581613567439763982
+      RepararMuro_15: 7136404096881564423
+      RepararMuro_16: -8048099887158431598
+      RepararMuro_17: 7024346081212448108
+      RepararMuro_18: 3043795530201203130
+      RepararMuro_19: 1383403390733143794
+      RepararMuro_2: -8820379392204827070
+      RepararMuro_20: -3462258440380534148
+      RepararMuro_21: 561191833413760724
+      RepararMuro_22: -3076565125655764454
+      RepararMuro_23: -6852844278959422205
+      RepararMuro_24: -3851716170600630130
+      RepararMuro_25: -4396799079629303084
+      RepararMuro_26: 3581824619925034798
+      RepararMuro_27: 2961406278887004036
+      RepararMuro_28: -2754784637647266795
+      RepararMuro_29: 4959603115344453586
+      RepararMuro_3: -2278076357812180735
+      RepararMuro_30: -6999153689740630428
+      RepararMuro_31: 6479449431496107439
+      RepararMuro_32: 7785832066164182295
+      RepararMuro_33: 6710158813609240711
+      RepararMuro_34: -3675604217419157744
+      RepararMuro_35: 769198187562474595
+      RepararMuro_36: -918651280811755513
+      RepararMuro_37: -5563355272998189995
+      RepararMuro_38: -3366877836768693651
+      RepararMuro_4: -601466357355711359
+      RepararMuro_5: -6471126836489231468
+      RepararMuro_6: -3901613242461359807
+      RepararMuro_7: 1759421889281617728
+      RepararMuro_8: 7923845003418213303
+      RepararMuro_9: -8144059338433973579
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

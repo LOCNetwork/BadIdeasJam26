@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Unwrapper
+  - Wrapper
   layers:
   - Default
   - TransparentFX
@@ -12,8 +13,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Boxes
+  - Item
   - 
   - 
   - 
@@ -47,6 +48,12 @@ TagManager:
     locked: 0
   - name: Item
     uniqueID: 715514231
+    locked: 0
+  - name: Player
+    uniqueID: 2218762969
+    locked: 0
+  - name: ParedSuperior
+    uniqueID: 2437238781
     locked: 0
   m_RenderingLayers:
   - Default
