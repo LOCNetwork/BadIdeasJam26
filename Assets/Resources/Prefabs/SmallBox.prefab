@@ -139,8 +139,13 @@ MonoBehaviour:
     front: {fileID: 6951114633567200485, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
     side: {fileID: -7732569738864306783, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
   itemPool:
-  - {fileID: 11400000, guid: 2b93ff2994bac39428323a0f9a859a62, type: 2}
-  - {fileID: 11400000, guid: dd0f00d3ad82935468a7ae4960f38b73, type: 2}
+  - {fileID: 11400000, guid: dd158c7c9623d054bb27702bd76c2ce5, type: 2}
+  - {fileID: 11400000, guid: be328a72887828a4aadeb969f7ff7172, type: 2}
+  playerItemPool: []
+  extraPercentage: 0
+  extraValue: 0
+  value: 0
+  sellTimeIndex: 0
 --- !u!61 &1586956049312863219
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -226,3 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1df90d7ef48e04e8618ac2e9b60793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSortSprite
+  sortingOffset: 0
+  multiplier: 100
+  heldBaseOrder: 700

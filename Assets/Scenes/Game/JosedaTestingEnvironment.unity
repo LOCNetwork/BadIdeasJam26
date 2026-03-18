@@ -205,7 +205,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.4375, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -608,11 +608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   sellManager:
-    sellSpeedArray:
-    - 250
-    - 150
-    - 90
-    - 20
+    sellSpeedArray: []
   gameStats:
     money: 0
     policeRaids: 0
@@ -630,7 +626,7 @@ MonoBehaviour:
   playerSmallBoxPrefab: {fileID: 6567542094978446674, guid: bfb5b1e9c741da445aed5eb0a664f605, type: 3}
   playerMediumBoxPrefab: {fileID: 4146564912385909055, guid: ebcd5e165011707408121c61591a72fa, type: 3}
   playerLargeBoxPrefab: {fileID: 8131115616658087928, guid: 6f4eda43ab834ba4eac65d60965493aa, type: 3}
-  truckObject: {fileID: 683490158}
+  truckObject: {fileID: 105668917}
   truckBodySprite: {fileID: 174985505, guid: 51587cf342735d944903f6a4e7fc49f7, type: 3}
   truckBack: {fileID: 1102863339}
 --- !u!4 &470888713
@@ -1403,7 +1399,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.4375, y: 1.3125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

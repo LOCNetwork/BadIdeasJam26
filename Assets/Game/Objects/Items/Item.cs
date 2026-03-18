@@ -13,7 +13,7 @@ public class Item : ScriptableObject
     public ItemRarity rarity;
 
     [Header("Box / Unwrapper")]
-    [Min(1)]
+    [Min(0)]
     public int boxSlots = 1;
 
     [Header("Attributes")]
@@ -21,6 +21,9 @@ public class Item : ScriptableObject
 
     [Header("Passives")]
     public List<Passive> passives;
+
+    [Header("Passives descriptions")]
+    public List<string> passivesDescriptions;
 
     [Header("Display")]
     public SpriteRenderer spriteRenderer;

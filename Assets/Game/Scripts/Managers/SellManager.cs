@@ -36,6 +36,7 @@ public class SellManager
 
         sellSpeedArray = new float[4];
 
+
         sellSpeedArray[0] = 250f; // VERY SLOW
         sellSpeedArray[1] = 150f; // SLOW
         sellSpeedArray[2] = 90f; // FAST
@@ -105,6 +106,8 @@ public class SellManager
                 if (passive.MeetsCondition(box, item.passivesInfo))
                 {
                    DisplayItemPassive(passive.Display(box, item.passivesInfo));
+                   passive.ExecutePassive(box, item.passivesInfo);
+
                    yield return new WaitForSeconds(2f);
                 }
                     

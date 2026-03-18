@@ -10,20 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93d44f55bb813ae4aa6bd057e91e1b1a, type: 3}
-  m_Name: Pencil
+  m_Name: Short Magazine
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  itemID: PENCIL
-  displayName: Pencil
+  itemID: SHORT_MAGAZINE
+  displayName: Short magazine
   description: 
-  value: 2
+  value: 3
   weight: 0
   rarity: 0
-  boxSlots: 0
+  boxSlots: 1
   attributes:
   - key: 0
-    value: 3
-  - key: 2
-    value: School
+    value: 2
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
   displaySprite: {fileID: 0}
   passivesInfo: []

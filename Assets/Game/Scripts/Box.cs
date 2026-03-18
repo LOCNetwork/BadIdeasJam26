@@ -148,7 +148,7 @@ public class Box : MonoBehaviour
     public List<Item> RollContents(RarityDropRates rarityRates)
     {
         List<Item> result = new List<Item>();
-        int remainingSlots = Capacity;
+        double remainingSlots = Capacity;
         int safety = 100;
 
         List<Item> workingPool = new List<Item>(itemPool);
@@ -173,7 +173,7 @@ public class Box : MonoBehaviour
                 break;
 
             result.Add(selected);
-            remainingSlots -= Mathf.Max(1, selected.boxSlots);
+            remainingSlots -= Mathf.Max(0.5f, selected.boxSlots);
 
             if (!allowRepeatedItems)
             {

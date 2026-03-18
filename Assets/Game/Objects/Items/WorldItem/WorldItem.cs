@@ -18,6 +18,8 @@ public class WorldItem
 
     public List<Passive> passives;
 
+    public List<string> passivesDescriptions;
+
     public SpriteRenderer spriteRenderer;
     public Sprite displaySprite;
 
@@ -41,6 +43,8 @@ public class WorldItem
         displaySprite = item.displaySprite;
 
         passivesInfo = item.passivesInfo;
+
+        passivesDescriptions = item.passivesDescriptions;
     }
 
 
@@ -62,6 +66,8 @@ public class WorldItem
         displaySprite = item.displaySprite;
 
         passivesInfo = item.passivesInfo;
+
+        passivesDescriptions = item.passivesDescriptions;
     }
 
 
