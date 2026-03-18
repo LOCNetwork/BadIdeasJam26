@@ -100,7 +100,6 @@ public class PCShoppingCartManager : MonoBehaviour
     [Header("Catalog items")]
     [SerializeField] private List<CatalogItem> catalogItems = new();
 
-    private int currentMoney;
     private int reservedMoney;
 
     private bool purchaseRunning;
@@ -127,7 +126,6 @@ public class PCShoppingCartManager : MonoBehaviour
 
     private void Start()
     {
-        currentMoney = startingMoney;
         UpdateMoneyUI();
 
         if (pcManager != null)
@@ -152,12 +150,12 @@ public class PCShoppingCartManager : MonoBehaviour
 
     private void UpdateMoneyUI()
     {
-        int remaining = currentMoney - reservedMoney;
+        int remaining = GameManager.instance.gameStats.money - reservedMoney;
 
         if (moneyText != null)
         {
             moneyText.text =
-                $"Money: {currentMoney}\n" +
+                $"Money: {GameManager.instance.gameStats.money}\n" +
                 $"Cart Cost: {reservedMoney}\n" +
                 $"Remaining: {remaining}";
         }
@@ -165,7 +163,7 @@ public class PCShoppingCartManager : MonoBehaviour
 
     private int RemainingMoney()
     {
-        return currentMoney - reservedMoney;
+        return GameManager.instance.gameStats.money - reservedMoney;
     }
 
     private int GetActivePCUpgradeLevel()
@@ -276,9 +274,9 @@ public class PCShoppingCartManager : MonoBehaviour
         activeUICatalog = catalog;
 
         Debug.Log(
-            $"Money Max: {currentMoney}\n" +
+            $"Money Max: {GameManager.instance.gameStats.money}\n" +
             $"Money Spending (cart): {reservedMoney}\n" +
-            $"Money Remaining After Purchase: {currentMoney - reservedMoney}"
+            $"Money Remaining After Purchase: {GameManager.instance.gameStats.money - reservedMoney}"
         );
 
         UpdateMoneyUI();
@@ -378,13 +376,13 @@ public class PCShoppingCartManager : MonoBehaviour
         pcLocked = true;
 
         int spentThisPurchase = reservedMoney;
-        currentMoney -= spentThisPurchase;
+        GameManager.instance.gameStats.money -= spentThisPurchase;
 
         Debug.Log(
             $"PURCHASE CONFIRMED\n" +
-            $"Money Max: {currentMoney + spentThisPurchase}\n" +
+            $"Money Max: {GameManager.instance.gameStats.money + spentThisPurchase}\n" +
             $"Money Spent This Purchase: {spentThisPurchase}\n" +
-            $"Money Remaining: {currentMoney}"
+            $"Money Remaining: {GameManager.instance.gameStats.money}"
         );
 
         UpdateMoneyUI();

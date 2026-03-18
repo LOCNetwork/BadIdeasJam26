@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 8921641477676107467}
   - component: {fileID: 4665495644076084627}
   - component: {fileID: 6759473366898312859}
-  - component: {fileID: 375217720020200495}
   - component: {fileID: 5813449537634375607}
   - component: {fileID: 3693968250030706815}
   - component: {fileID: 8591484089865859929}
+  - component: {fileID: 994689565294339444}
   m_Layer: 7
   m_Name: Item
   m_TagString: Untagged
@@ -153,28 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemGenerator
   itemGameObject: {fileID: 3856065095803039457}
---- !u!114 &375217720020200495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3856065095803039457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 673b700cb745000419d83f2ee5e04336, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WorldItem
-  itemID: 
-  displayName: 
-  description: 
-  value: 0
-  weight: 0
-  rarity: 0
-  boxSlots: 0
-  attributes: []
-  spriteRenderer: {fileID: 0}
-  displaySprite: {fileID: 0}
 --- !u!58 &5813449537634375607
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -272,3 +250,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.64429855, y: 0.6442986}
   m_EdgeRadius: 0
+--- !u!114 &994689565294339444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856065095803039457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4b696ac5f46ead4e88609a74ab1ccb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldItemComponent
+  data:
+    itemID: 
+    displayName: 
+    description: 
+    value: 0
+    weight: 0
+    rarity: 0
+    boxSlots: 0
+    attributes: []
+    passivesDescriptions: []
+    spriteRenderer: {fileID: 0}
+    displaySprite: {fileID: 0}
+    passivesInfo: []
