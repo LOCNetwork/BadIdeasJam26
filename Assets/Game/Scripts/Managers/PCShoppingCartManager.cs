@@ -101,7 +101,6 @@ public class PCShoppingCartManager : MonoBehaviour
 
     private readonly List<CatalogItem> cart = new();
 
-
     public static bool IsGloballyLocked =>
         Instance != null && Instance.IsPCLocked();
 
@@ -230,18 +229,10 @@ public class PCShoppingCartManager : MonoBehaviour
         return bestBinding != null ? bestBinding.visualParent : null;
     }
 
-    // ============================
-    // ACTIVE PAGE FOR UI
-    // ============================
-
     public void SetActivePagePaper() => activeUICatalog = CatalogType.Paper;
     public void SetActivePageClothing() => activeUICatalog = CatalogType.Clothing;
     public void SetActivePageTech() => activeUICatalog = CatalogType.Tech;
     public void SetActivePageDark() => activeUICatalog = CatalogType.Dark;
-
-    // ============================
-    // ADD TO CART
-    // ============================
 
     private void AddToCart(CatalogType catalog, BoxSizes size)
     {
@@ -306,13 +297,8 @@ public class PCShoppingCartManager : MonoBehaviour
         if (rect != null)
             rect.anchoredPosition = binding.visualSpawnPoint.anchoredPosition;
 
-       
         pcManager.visualObjects.Add(obj);
     }
-
-    // ============================
-    // BUTTON METHODS - ADD
-    // ============================
 
     public void AddPaperSmall() => AddToCart(CatalogType.Paper, BoxSizes.Small);
     public void AddPaperMedium() => AddToCart(CatalogType.Paper, BoxSizes.Medium);
@@ -329,10 +315,6 @@ public class PCShoppingCartManager : MonoBehaviour
     public void AddDarkSmall() => AddToCart(CatalogType.Dark, BoxSizes.Small);
     public void AddDarkMedium() => AddToCart(CatalogType.Dark, BoxSizes.Medium);
     public void AddDarkLarge() => AddToCart(CatalogType.Dark, BoxSizes.Large);
-
-    // ============================
-    // PURCHASE BUTTONS
-    // ============================
 
     public void Purchase()
     {
@@ -380,6 +362,9 @@ public class PCShoppingCartManager : MonoBehaviour
         if (binding != null && binding.uiPurchaseAnimator != null && !string.IsNullOrEmpty(purchaseTrigger))
             binding.uiPurchaseAnimator.SetTrigger(purchaseTrigger);
 
+        // Destruir visuals justo al arrancar la compra
+        ClearOnlyVisuals();
+
         yield return new WaitForSeconds(purchaseDuration);
 
         if (pcManager != null)
@@ -394,6 +379,9 @@ public class PCShoppingCartManager : MonoBehaviour
 
         SpawnDelivery();
 
+        if (deliveryAnimator != null && !string.IsNullOrEmpty(repairTrigger))
+            deliveryAnimator.SetTrigger(repairTrigger);
+
         if (repairAnimator != null && !string.IsNullOrEmpty(repairTrigger))
             repairAnimator.SetTrigger(repairTrigger);
 
@@ -403,10 +391,6 @@ public class PCShoppingCartManager : MonoBehaviour
         ClearCart();
         purchaseRunning = false;
     }
-
-    // ============================
-    // DELIVERY
-    // ============================
 
     private void SpawnDelivery()
     {
@@ -435,14 +419,10 @@ public class PCShoppingCartManager : MonoBehaviour
         }
     }
 
-    // ============================
-    // CLEAR CART
-    // ============================
-
-    public void ClearCart()
+    private void ClearOnlyVisuals()
     {
-        reservedMoney = 0;
-        cart.Clear();
+        if (pcManager == null || pcManager.visualObjects == null)
+            return;
 
         foreach (var obj in pcManager.visualObjects)
         {
@@ -451,12 +431,16 @@ public class PCShoppingCartManager : MonoBehaviour
         }
 
         pcManager.visualObjects.Clear();
-        UpdateMoneyUI();
     }
 
-    // ============================
-    // LOCK PC INTERACTION
-    // ============================
+    public void ClearCart()
+    {
+        reservedMoney = 0;
+        cart.Clear();
+
+        ClearOnlyVisuals();
+        UpdateMoneyUI();
+    }
 
     public bool IsPCLocked()
     {
