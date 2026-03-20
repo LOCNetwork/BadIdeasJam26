@@ -139,8 +139,8 @@ MonoBehaviour:
     front: {fileID: 6951114633567200485, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
     side: {fileID: -7732569738864306783, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
   itemPool:
+  - {fileID: 11400000, guid: 8123706f4b3092d4e830921e71f2381d, type: 2}
   - {fileID: 11400000, guid: dd158c7c9623d054bb27702bd76c2ce5, type: 2}
-  - {fileID: 11400000, guid: be328a72887828a4aadeb969f7ff7172, type: 2}
   playerItemPool: []
   extraPercentage: 0
   extraValue: 0

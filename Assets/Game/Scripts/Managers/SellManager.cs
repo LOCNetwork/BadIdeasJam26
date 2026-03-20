@@ -99,13 +99,18 @@ public class SellManager
         foreach (WorldItem item in box.playerItemPool)
         {
 
+            Debug.Log("Checking item: " + item.displayName);
             if (item.passives == null) continue;
 
+            Debug.Log("PASS " + item.displayName);
             foreach (Passive passive in item.passives)
             {
+                Debug.Log("A");
                 if (passive.MeetsCondition(box, item.passivesInfo))
                 {
-                   DisplayItemPassive(passive.Display(box, item.passivesInfo));
+                    container.gameObject.SetActive(true);
+                    Debug.Log("B");
+                    DisplayItemPassive(passive.Display(item, box, item.passivesInfo));
                    passive.ExecutePassive(box, item.passivesInfo);
 
                    yield return new WaitForSeconds(2f);
@@ -115,6 +120,13 @@ public class SellManager
 
         }
 
+
+        for (int i = container.childCount - 1; i >= 0; --i)
+        {
+            UnityEngine.Object.Destroy(container.GetChild(i).gameObject);
+        }
+
+        container.gameObject.SetActive(false);
 
         UnityEngine.Object.Destroy(boxesQueue.Dequeue());
 

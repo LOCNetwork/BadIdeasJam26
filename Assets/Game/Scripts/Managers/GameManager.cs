@@ -6,12 +6,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private Dictionary<string, Item> loadedItems;
+    public Dictionary<string, Item> loadedItems;
 
     public static GameManager instance;
 
     // Managers
     public SellManager sellManager;
+    public ItemManager itemManager;
 
     // Game stats
     public GameStats gameStats;
@@ -29,7 +30,6 @@ public class GameManager : MonoBehaviour
     // Box sell animation
     public RectTransform container; // Parent
 
-    private bool test = false;
 
     // Box prefabs
     public GameObject playerSmallBoxPrefab;
@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         
         LoadItems();
         
+        itemManager = new ItemManager();
     }
 
 
@@ -59,12 +60,6 @@ public class GameManager : MonoBehaviour
     {
         currentTimer += Time.deltaTime;
         timer += Time.deltaTime;
-
-        if (!test)
-        {
-            test = true;
-            sellManager.DisplayItemPassive("TEST 1 [50:CALCULATOR:50] [0:PENCIL:50] This is a test to render a pencil object [50:PENCIL:0]");
-        }
 
 
         HandleSells();
@@ -102,6 +97,7 @@ public class GameManager : MonoBehaviour
 
         foreach (Item item in itemsLoaded)
         {
+            item.passives = new List<Passive>();
             loadedItems.Add(item.itemID, item);
         }
     }

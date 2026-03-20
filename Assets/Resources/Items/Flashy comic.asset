@@ -10,21 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93d44f55bb813ae4aa6bd057e91e1b1a, type: 3}
-  m_Name: Pen
+  m_Name: Flashy comic
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  itemID: PEN
-  displayName: Pen
+  itemID: FLASHY_COMIC
+  displayName: Flashy comic
   description: 
-  value: 2
+  value: 15
   weight: 0
-  rarity: 0
-  boxSlots: 0
+  rarity: 1
+  boxSlots: 2
   attributes:
   - key: 0
-    value: 3
-  - key: 2
-    value: School
+    value: 2
   passivesDescriptions: []
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 360050356498797049, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
+  displaySprite: {fileID: 0}
   passivesInfo: []

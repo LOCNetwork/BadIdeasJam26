@@ -26,8 +26,6 @@ public class Wrapper : Interactable
     [SerializeField] private Animator animator;
     [SerializeField] private List<BoxAnimationProfile> animationProfiles = new List<BoxAnimationProfile>();
 
-    private List<WorldItem> currentItemsInWrapper = new List<WorldItem>();
-
     public BoxSize AVAILABLE_BOX_SIZE = BoxSize.Medium;
 
     private GameObject currentBox;
@@ -50,7 +48,7 @@ public class Wrapper : Interactable
 
         if (!player.ReturnHeldItem(out GameObject item, out WorldItem itemData))
         {
-            if (currentItemsInWrapper.Count == 0)
+            if (currentBox == null || currentBox.GetComponent<Box>().playerItemPool.Count == 0)
             {
                 Debug.Log("El Wrapper no tiene items insertados.");
                 return;
@@ -104,7 +102,9 @@ public class Wrapper : Interactable
                 yield return new WaitForSeconds(profile.introDuration);
 
 
-            currentItemsInWrapper.Add(worldItemCopy);
+            currentBox.GetComponent<Box>().playerItemPool.Add(worldItemCopy);
+
+            ModifyItemsInWrapper();
 
             if (currentCapacityFilled + boxSlots == boxCapacity)
             {
@@ -135,10 +135,7 @@ public class Wrapper : Interactable
             CalculatePrice();
             CalculateSellTime();
 
-            // Add items stacked in wrapper to box and clear items in wrapper
-            boxData.playerItemPool.AddRange(currentItemsInWrapper);
-
-            currentItemsInWrapper.Clear();
+   
 
             Debug.Log("Caja spawneada");
 
@@ -189,7 +186,7 @@ public class Wrapper : Interactable
     {
         int capacity = 0;
 
-        foreach (var item in currentItemsInWrapper)
+        foreach (var item in currentBox.GetComponent<Box>().playerItemPool)
         {
             capacity += item.boxSlots;
         }
@@ -202,9 +199,9 @@ public class Wrapper : Interactable
     {
         // Reset items to initial values
         List<WorldItem> itemsCopy = new List<WorldItem>();
-        itemsCopy.AddRange(currentItemsInWrapper);
+        itemsCopy.AddRange(currentBox.GetComponent<Box>().playerItemPool);
 
-        currentItemsInWrapper.Clear();
+        currentBox.GetComponent<Box>().playerItemPool.Clear();
 
         foreach (WorldItem item in itemsCopy)
         {
@@ -213,7 +210,7 @@ public class Wrapper : Interactable
             WorldItem worldItem = new WorldItem();
             worldItem.Setup(itemData);
 
-            currentItemsInWrapper.Add(worldItem);
+            currentBox.GetComponent<Box>().playerItemPool.Add(worldItem);
         }
 
 
@@ -225,9 +222,10 @@ public class Wrapper : Interactable
     {
         Box box = currentBox.GetComponent<Box>();
 
-        foreach (WorldItem item in currentItemsInWrapper)
+        foreach (WorldItem item in currentBox.GetComponent<Box>().playerItemPool)
         {
             foreach (Passive passive in item.passives) {
+                Debug.Log($"Aplicando pasiva {passive.GetType().Name} al item {item.displayName}");
                 passive.ExecutePassive(box, item.passivesInfo);
             }
         }
@@ -239,7 +237,7 @@ public class Wrapper : Interactable
         Box box = currentBox.GetComponent<Box>();
         int totalPrice = 0;
 
-        foreach (WorldItem item in currentItemsInWrapper)
+        foreach (WorldItem item in currentBox.GetComponent<Box>().playerItemPool)
         {
             totalPrice += item.value;
         }
@@ -253,12 +251,12 @@ public class Wrapper : Interactable
         double sellTimeIndex = 0;
        
 
-        foreach (WorldItem item in currentItemsInWrapper)
+        foreach (WorldItem item in currentBox.GetComponent<Box>().playerItemPool)
         {
             sellTimeIndex += int.Parse(item.GetAttribute(Attributes.SELL_TIME).value);
         }
 
-        sellTimeIndex /= currentItemsInWrapper.Count;
+        sellTimeIndex /= currentBox.GetComponent<Box>().playerItemPool.Count;
 
         int finalIndex = (int) Math.Round(sellTimeIndex);
 
