@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
     {
         if (moneyUI != null)
         {
-            moneyUI.text = $"{gameStats.money} $";
+            moneyUI.text = $"{gameStats.money}";
         }
 
     }

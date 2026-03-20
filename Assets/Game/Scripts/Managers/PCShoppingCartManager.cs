@@ -58,9 +58,6 @@ public class PCShoppingCartManager : MonoBehaviour
 {
     public static PCShoppingCartManager Instance { get; private set; }
 
-    [Header("DEBUG MONEY")]
-    [SerializeField] private int startingMoney = 100;
-
     [Header("Money UI")]
     [SerializeField] private TMP_Text moneyText;
 
@@ -146,6 +143,9 @@ public class PCShoppingCartManager : MonoBehaviour
         }
 
         wasPcOpenLastFrame = isCurrentlyOpen;
+
+        // Para que el TMP se active/desactive también al cambiar de página sin comprar nada
+        RefreshMoneyTextVisibility();
     }
 
     private void UpdateMoneyUI()
@@ -154,11 +154,59 @@ public class PCShoppingCartManager : MonoBehaviour
 
         if (moneyText != null)
         {
-            moneyText.text =
-                $"Money: {GameManager.instance.gameStats.money}\n" +
-                $"Cart Cost: {reservedMoney}\n" +
-                $"Remaining: {remaining}";
+            moneyText.text = $"Cart Cost: {reservedMoney}";
         }
+
+        RefreshMoneyTextVisibility();
+    }
+
+    private void RefreshMoneyTextVisibility()
+    {
+        if (moneyText == null)
+            return;
+
+        bool shouldBeVisible = IsOnAnyCatalogPage();
+        if (moneyText.gameObject.activeSelf != shouldBeVisible)
+            moneyText.gameObject.SetActive(shouldBeVisible);
+    }
+
+    private bool IsOnAnyCatalogPage()
+    {
+        if (pcManager == null)
+            return false;
+
+        System.Type pcType = pcManager.GetType();
+        FieldInfo catalogsField = pcType.GetField("catalogs", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        if (catalogsField == null)
+            return false;
+
+        object catalogsObject = catalogsField.GetValue(pcManager);
+        if (catalogsObject == null)
+            return false;
+
+        IList catalogsList = catalogsObject as IList;
+        if (catalogsList == null)
+            return false;
+
+        for (int i = 0; i < catalogsList.Count; i++)
+        {
+            object entry = catalogsList[i];
+            if (entry == null)
+                continue;
+
+            System.Type entryType = entry.GetType();
+            FieldInfo pageBarField = entryType.GetField("pageBarObject", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+            if (pageBarField == null)
+                continue;
+
+            GameObject pageBar = pageBarField.GetValue(entry) as GameObject;
+            if (pageBar != null && pageBar.activeInHierarchy)
+                return true;
+        }
+
+        return false;
     }
 
     private int RemainingMoney()
