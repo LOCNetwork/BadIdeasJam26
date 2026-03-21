@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SellMachine : Interactable
@@ -10,6 +11,9 @@ public class SellMachine : Interactable
 
     [Header("Interaction Cooldown")]
     [SerializeField] private float interactCooldown = 1.0f;
+
+    [Header("Delay")]
+    [SerializeField] private float delay = 1.0f;
 
     private bool isBusy = false;
 
@@ -34,13 +38,23 @@ public class SellMachine : Interactable
 
         player.TryTakeTopHeldBox(out GameObject boxObj, out Box boxToSell);
 
-        if (boxObj != null && boxToSell != null)
-        {
-            GameManager.instance.sellManager.PutBoxToSell(boxObj, boxToSell);
-        }
+        StartCoroutine(sellEnumerator(boxObj, boxToSell));
 
         StartCoroutine(BusyCooldownRoutine());
     }
+
+    IEnumerator sellEnumerator(GameObject boxObj, Box boxToSell)
+    {
+        boxObj.SetActive(false);
+        yield return new WaitForSeconds(delay);
+
+        if (boxObj != null && boxToSell != null)
+        {
+            boxObj.SetActive(true);
+            GameManager.instance.sellManager.PutBoxToSell(boxObj, boxToSell);
+        }
+    }
+
 
     private void TriggerSellAnimation(Box boxData)
     {
