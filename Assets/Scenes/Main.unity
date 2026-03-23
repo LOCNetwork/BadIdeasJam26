@@ -4770,6 +4770,19 @@ MonoBehaviour:
   wrapSmallDuration: 1.2
   wrapMediumDuration: 1.2
   wrapLargeDuration: 1.2
+  extractCooldown: 1.2
+  slotsText: {fileID: 1842136653}
+  normalSlotsColor: {r: 0, g: 0, b: 0, a: 1}
+  errorSlotsColor: {r: 1, g: 0, b: 0, a: 1}
+  successSquashDuration: 0.08
+  successSettleDuration: 0.1
+  successStartScale: {x: 0.1, y: 0.1, z: 1}
+  successOvershootScale: {x: 0.1, y: 0.08, z: 1}
+  successShakeDuration: 0.1
+  successShakeStrength: 1.19
+  failShakeDuration: 0.12
+  failShakeStrength: 0.48
+  failColorDuration: 0.2
   AVAILABLE_BOX_SIZE: 0
 --- !u!212 &752036110
 SpriteRenderer:
@@ -8694,7 +8707,7 @@ Transform:
   m_GameObject: {fileID: 1236020402}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0.45, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10909,7 +10922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &1514256734
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14215,8 +14228,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.4887, y: -0.04}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 1.1968, y: -0.08}
+  m_SizeDelta: {x: 15.1252, y: 7.2493}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1842136653
 MonoBehaviour:
@@ -14304,7 +14317,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.51688, z: 0, w: 0}
+  m_margin: {x: 0, y: 0.51688, z: 0, w: 0.08613014}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -14357,9 +14370,9 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1857728515
-  m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 3
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1844165689

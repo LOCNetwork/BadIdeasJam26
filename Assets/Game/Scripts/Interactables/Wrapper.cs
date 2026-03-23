@@ -29,11 +29,59 @@ public class Wrapper : Interactable
     [SerializeField] private float wrapMediumDuration = 0.5f;
     [SerializeField] private float wrapLargeDuration = 0.5f;
 
+    [Header("Extraction Cooldown")]
+    [SerializeField] private float extractCooldown = 0.4f;
+
+    [Header("Slots UI")]
+    [SerializeField] private TMP_Text slotsText;
+    [SerializeField] private Color normalSlotsColor = Color.white;
+    [SerializeField] private Color errorSlotsColor = Color.red;
+
+    [Header("Slots UI Juice - Success")]
+    [SerializeField] private float successSquashDuration = 0.08f;
+    [SerializeField] private float successSettleDuration = 0.10f;
+    [SerializeField] private Vector3 successStartScale = new Vector3(1.15f, 0.85f, 1f);
+    [SerializeField] private Vector3 successOvershootScale = new Vector3(0.95f, 1.08f, 1f);
+    [SerializeField] private float successShakeDuration = 0.10f;
+    [SerializeField] private float successShakeStrength = 4f;
+
+    [Header("Slots UI Juice - Fail")]
+    [SerializeField] private float failShakeDuration = 0.18f;
+    [SerializeField] private float failShakeStrength = 12f;
+    [SerializeField] private float failColorDuration = 0.20f;
+
     public BoxSize AVAILABLE_BOX_SIZE = BoxSize.Medium;
 
     private GameObject currentBox;
-
     private bool isBusy = false;
+
+    private RectTransform slotsRect;
+    private Vector3 slotsBaseScale = Vector3.one;
+    private Vector2 slotsBaseAnchoredPos = Vector2.zero;
+    private Coroutine slotsJuiceRoutine;
+    private Coroutine slotsErrorRoutine;
+
+    private void Awake()
+    {
+        if (slotsText != null)
+        {
+            slotsRect = slotsText.GetComponent<RectTransform>();
+            if (slotsRect != null)
+                slotsBaseAnchoredPos = slotsRect.anchoredPosition;
+
+            slotsBaseScale = slotsText.transform.localScale;
+        }
+    }
+
+    private void Start()
+    {
+        RefreshSlotsText();
+    }
+
+    private void OnEnable()
+    {
+        RefreshSlotsText();
+    }
 
     public override void Interact(Player player)
     {
@@ -57,7 +105,7 @@ public class Wrapper : Interactable
                 return;
             }
 
-            StartCoroutine(SpawnBoxRoutine(AVAILABLE_BOX_SIZE));
+            StartCoroutine(SpawnBoxRoutine(AVAILABLE_BOX_SIZE, true));
             return;
         }
 
@@ -92,9 +140,13 @@ public class Wrapper : Interactable
 
             ModifyItemsInWrapper();
 
+            RefreshSlotsText();
+            PlaySuccessSlotsJuice();
+
             if (currentCapacityFilled + boxSlots == boxCapacity)
             {
-                yield return StartCoroutine(SpawnBoxRoutine(AVAILABLE_BOX_SIZE));
+                yield return StartCoroutine(SpawnBoxRoutine(AVAILABLE_BOX_SIZE, true));
+                yield break;
             }
 
             Debug.Log($"Estadisticas Wrapper --> ESPACIO RELLENO: {currentCapacityFilled + boxSlots}, TOTAL SLOTS CAJA: {boxCapacity}, SOBRANTE: {boxCapacity - (currentCapacityFilled + boxSlots)}");
@@ -102,15 +154,18 @@ public class Wrapper : Interactable
         else
         {
             Debug.Log($"La caja está llena.");
+            PlayFailSlotsJuice();
         }
 
         isBusy = false;
     }
 
-    private IEnumerator SpawnBoxRoutine(BoxSize boxSize)
+    private IEnumerator SpawnBoxRoutine(BoxSize boxSize, bool applyCooldownAfterSpawn)
     {
-        if (isBusy && currentBox == null)
+        if (currentBox == null)
             yield break;
+
+        isBusy = true;
 
         TriggerWrapAnimation(boxSize);
 
@@ -119,6 +174,12 @@ public class Wrapper : Interactable
             yield return new WaitForSeconds(waitTime);
 
         SpawnBox(boxSize);
+        RefreshSlotsText();
+
+        if (applyCooldownAfterSpawn && extractCooldown > 0f)
+            yield return new WaitForSeconds(extractCooldown);
+
+        isBusy = false;
     }
 
     private void TriggerWrapAnimation(BoxSize boxSize)
@@ -204,6 +265,9 @@ public class Wrapper : Interactable
 
     private int GetItemCapacity()
     {
+        if (currentBox == null)
+            return 0;
+
         int capacity = 0;
 
         foreach (var item in currentBox.GetComponent<Box>().playerItemPool)
@@ -212,6 +276,152 @@ public class Wrapper : Interactable
         }
 
         return capacity;
+    }
+
+    private int GetMaxCapacity()
+    {
+        switch (AVAILABLE_BOX_SIZE)
+        {
+            case BoxSize.Small:
+                return GetPrefabBoxCapacity(playerSmallBoxPrefab, BoxSize.Small);
+            case BoxSize.Medium:
+                return GetPrefabBoxCapacity(playerMediumBoxPrefab, BoxSize.Medium);
+            case BoxSize.Large:
+                return GetPrefabBoxCapacity(playerLargeBoxPrefab, BoxSize.Large);
+        }
+
+        return 0;
+    }
+
+    private int GetPrefabBoxCapacity(GameObject prefab, BoxSize size)
+    {
+        if (prefab == null)
+            return 0;
+
+        Box box = prefab.GetComponent<Box>();
+        if (box == null)
+            return 0;
+
+        return box.GetCapacityBySize(size);
+    }
+
+    private void RefreshSlotsText()
+    {
+        if (slotsText == null)
+            return;
+
+        int used = GetItemCapacity();
+        int max = GetMaxCapacity();
+
+        slotsText.text = $"{used}/{max}";
+        slotsText.color = normalSlotsColor;
+
+        if (slotsRect != null)
+            slotsRect.anchoredPosition = slotsBaseAnchoredPos;
+
+        slotsText.transform.localScale = slotsBaseScale;
+    }
+
+    private void PlaySuccessSlotsJuice()
+    {
+        if (slotsText == null)
+            return;
+
+        if (slotsJuiceRoutine != null)
+            StopCoroutine(slotsJuiceRoutine);
+
+        if (slotsErrorRoutine != null)
+            StopCoroutine(slotsErrorRoutine);
+
+        slotsText.color = normalSlotsColor;
+        slotsJuiceRoutine = StartCoroutine(SuccessSlotsJuiceRoutine());
+    }
+
+    private void PlayFailSlotsJuice()
+    {
+        if (slotsText == null)
+            return;
+
+        if (slotsJuiceRoutine != null)
+            StopCoroutine(slotsJuiceRoutine);
+
+        if (slotsErrorRoutine != null)
+            StopCoroutine(slotsErrorRoutine);
+
+        slotsErrorRoutine = StartCoroutine(FailSlotsJuiceRoutine());
+    }
+
+    private IEnumerator SuccessSlotsJuiceRoutine()
+    {
+        float t = 0f;
+
+        while (t < successSquashDuration)
+        {
+            t += Time.deltaTime;
+            float n = Mathf.Clamp01(t / successSquashDuration);
+            slotsText.transform.localScale = Vector3.LerpUnclamped(slotsBaseScale, Vector3.Scale(slotsBaseScale, successStartScale), n);
+            yield return null;
+        }
+
+        t = 0f;
+        while (t < successSettleDuration)
+        {
+            t += Time.deltaTime;
+            float n = Mathf.Clamp01(t / successSettleDuration);
+            slotsText.transform.localScale = Vector3.LerpUnclamped(
+                Vector3.Scale(slotsBaseScale, successStartScale),
+                Vector3.Scale(slotsBaseScale, successOvershootScale),
+                n
+            );
+            yield return null;
+        }
+
+        float shakeTimer = 0f;
+        while (shakeTimer < successShakeDuration)
+        {
+            shakeTimer += Time.deltaTime;
+
+            if (slotsRect != null)
+            {
+                Vector2 offset = UnityEngine.Random.insideUnitCircle * successShakeStrength;
+                slotsRect.anchoredPosition = slotsBaseAnchoredPos + offset;
+            }
+
+            yield return null;
+        }
+
+        if (slotsRect != null)
+            slotsRect.anchoredPosition = slotsBaseAnchoredPos;
+
+        slotsText.transform.localScale = slotsBaseScale;
+        slotsJuiceRoutine = null;
+    }
+
+    private IEnumerator FailSlotsJuiceRoutine()
+    {
+        slotsText.color = errorSlotsColor;
+
+        float shakeTimer = 0f;
+        while (shakeTimer < failShakeDuration)
+        {
+            shakeTimer += Time.deltaTime;
+
+            if (slotsRect != null)
+            {
+                Vector2 offset = UnityEngine.Random.insideUnitCircle * failShakeStrength;
+                slotsRect.anchoredPosition = slotsBaseAnchoredPos + offset;
+            }
+
+            yield return null;
+        }
+
+        if (slotsRect != null)
+            slotsRect.anchoredPosition = slotsBaseAnchoredPos;
+
+        yield return new WaitForSeconds(failColorDuration);
+
+        slotsText.color = normalSlotsColor;
+        slotsErrorRoutine = null;
     }
 
     private void ModifyItemsInWrapper()
