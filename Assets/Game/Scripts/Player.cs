@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
         {
             if (!moving)
                 return AnimState.HoldingIdle;
-
+    
             return goingUp ? AnimState.HoldingBack : AnimState.HoldingFront;
         }
 
