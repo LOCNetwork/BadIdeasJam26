@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
     // Game stats
     public GameStats gameStats;
 
+    [Header("Day System")]
+    public int currentDay = 0;
+    public float dayDurationSeconds = 120f;
+
     public float currentTimer; // Timer that starts in the beginning of each day (Resets each day)
     public float timer; // Timer that never resets (Game timer)
 
@@ -26,10 +30,8 @@ public class GameManager : MonoBehaviour
     // Interfaces
     public TextMeshProUGUI moneyUI;
 
-
     // Box sell animation
     public RectTransform container; // Parent
-
 
     // Box prefabs
     public GameObject playerSmallBoxPrefab;
@@ -41,32 +43,26 @@ public class GameManager : MonoBehaviour
     public Sprite truckBodySprite;
     public GameObject truckBack;
 
-  
-
     void Start()
     {
         instance = this;
         gameStats = new GameStats();
-        
+
         sellManager = new SellManager(container, fontAsset, this);
-        
+
         LoadItems();
-        
+
         itemManager = new ItemManager();
     }
-
 
     void Update()
     {
         currentTimer += Time.deltaTime;
         timer += Time.deltaTime;
 
-
         HandleSells();
         UpdateMoneyUI();
     }
-
-
 
     public string GetTimeFormat()
     {
@@ -78,17 +74,22 @@ public class GameManager : MonoBehaviour
         return timeFormatted;
     }
 
-
     public Item GetItemByID(string itemID)
     {
         return loadedItems.GetValueOrDefault(itemID, null);
     }
-    
-    
-    
-    
 
-    // Load all scriptable objects from Resources/Items folder so it can be accessed from the list
+    public void ResetCurrentDayTimer()
+    {
+        currentTimer = 0f;
+    }
+
+    public void AdvanceDay()
+    {
+        currentDay++;
+        currentTimer = 0f;
+    }
+
     private void LoadItems()
     {
         loadedItems = new Dictionary<string, Item>();
@@ -104,30 +105,28 @@ public class GameManager : MonoBehaviour
 
     private void HandleSells()
     {
-
         if (sellManager.boxesQueue.Count == 0) return;
 
         GameObject boxObject = sellManager.boxesQueue.Peek();
 
         Box box = boxObject.GetComponent<Box>();
 
-        if (!sellManager.boxesOnSale.ContainsKey(box.guid)) // This box is on animation
+        if (!sellManager.boxesOnSale.ContainsKey(box.guid))
         {
             return;
         }
-
 
         sellManager.boxesOnSale.TryGetValue(box.guid, out KeyValuePair<Box, float> info);
 
         Debug.Log(info.Value + sellManager.sellSpeedArray[box.sellTimeIndex]);
         Debug.Log(timer);
         Debug.Log(info.Value + sellManager.sellSpeedArray[box.sellTimeIndex] <= timer);
+
         if (info.Value + sellManager.sellSpeedArray[box.sellTimeIndex] <= timer)
         {
             Debug.Log("SOLD BOX");
             sellManager.CompleteBoxSale(info.Key);
         }
-
     }
 
     public void UpdateMoneyUI()
@@ -136,7 +135,5 @@ public class GameManager : MonoBehaviour
         {
             moneyUI.text = $"{gameStats.money}";
         }
-
     }
-
 }
