@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     }
 
     [Header("Movement")]
-    [SerializeField] private float speed = 5f;
+    [SerializeField] public float speed = 5f;
 
     [Header("Interaction")]
     [SerializeField] private KeyCode interactKey = KeyCode.E;
@@ -36,8 +36,19 @@ public class Player : MonoBehaviour
     [SerializeField] private float indicatorBobSpeed = 3.5f;
     [SerializeField] private Color indicatorNormalColor = Color.white;
     [SerializeField] private Color indicatorBlockedColor = Color.red;
+    [SerializeField] private Color indicatorInteractingColor = Color.gray;
+    [SerializeField] private float indicatorInteractingScaleMultiplier = 0.88f;
     [SerializeField] private float blockedShakeDuration = 0.16f;
     [SerializeField] private float blockedShakeStrength = 0.14f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip blockedIndicatorClip;
+    [SerializeField] private AudioClip holdClip;
+    [SerializeField] private AudioClip dropClip;
+    [SerializeField][Range(0f, 1f)] private float blockedVolume = 1f;
+    [SerializeField][Range(0f, 1f)] private float holdVolume = 1f;
+    [SerializeField][Range(0f, 1f)] private float dropVolume = 1f;
 
     [Header("Drop")]
     [SerializeField] private Transform dropOrigin;
@@ -92,6 +103,7 @@ public class Player : MonoBehaviour
     private readonly List<SpriteRenderer> cachedIndicatorRenderers = new();
     private Coroutine indicatorShakeRoutine;
     private Vector3 indicatorBaseLocalPos;
+    private Vector3 indicatorBaseLocalScale = Vector3.one;
 
     private readonly Dictionary<Transform, Coroutine> activeDropJuices = new();
     private readonly Dictionary<Transform, Vector3> cachedOriginalScales = new();
@@ -104,6 +116,9 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
 
         if (holdTarget == null)
             Debug.LogWarning($"{name}: HoldTarget no asignado. Se usará el transform del player.");
@@ -409,6 +424,7 @@ public class Player : MonoBehaviour
 
         target.PickUpToStack(HoldTarget, localOffset);
         RefreshStackVisuals();
+        PlayOneShot(holdClip, holdVolume);
     }
 
     private Interactable PopLastFromStack()
@@ -505,6 +521,7 @@ public class Player : MonoBehaviour
                     Vector3 randomDropPos = GetRandomDropPosition();
                     last.DropTo(randomDropPos, last.transform.rotation);
                     StartDropJuiceIfObject(last);
+                    PlayOneShot(dropClip, dropVolume);
                 }
             }
             return;
@@ -546,6 +563,7 @@ public class Player : MonoBehaviour
         {
             top.DropTo(dropPos, dropRot);
             StartDropJuiceIfObject(top);
+            PlayOneShot(dropClip, dropVolume);
         }
 
         PushToStack(target);
@@ -697,7 +715,8 @@ public class Player : MonoBehaviour
             currentTargetIndicator = Instantiate(selectedTargetPrefab);
             currentTargetIndicator.transform.SetParent(target.transform, false);
             currentTargetIndicator.transform.localRotation = Quaternion.identity;
-            currentTargetIndicator.transform.localScale = Vector3.one;
+            indicatorBaseLocalScale = Vector3.one;
+            currentTargetIndicator.transform.localScale = indicatorBaseLocalScale;
             indicatorBaseLocalPos = new Vector3(0f, selectedTargetYOffset, 0f);
             currentTargetIndicator.transform.localPosition = indicatorBaseLocalPos;
 
@@ -740,6 +759,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void ApplyIndicatorScale(Vector3 scale)
+    {
+        if (currentTargetIndicator == null)
+            return;
+
+        currentTargetIndicator.transform.localScale = scale;
+    }
+
     private void ClearTargetVisuals()
     {
         if (indicatorShakeRoutine != null)
@@ -766,8 +793,22 @@ public class Player : MonoBehaviour
         if (indicatorShakeRoutine != null)
             return;
 
+        bool isBlocked = !IsTargetInteractableNow(lastVisualTarget);
+        bool isActivelyInteracting = !isBlocked && Input.GetKey(interactKey);
+
         float bob = Mathf.Sin(Time.time * indicatorBobSpeed) * indicatorBobAmplitude;
         currentTargetIndicator.transform.localPosition = indicatorBaseLocalPos + new Vector3(0f, bob, 0f);
+
+        if (isActivelyInteracting)
+        {
+            ApplyIndicatorColor(indicatorInteractingColor);
+            ApplyIndicatorScale(indicatorBaseLocalScale * indicatorInteractingScaleMultiplier);
+        }
+        else
+        {
+            ApplyIndicatorColor(isBlocked ? indicatorBlockedColor : indicatorNormalColor);
+            ApplyIndicatorScale(indicatorBaseLocalScale);
+        }
     }
 
     private void PlayBlockedIndicatorFeedback()
@@ -776,6 +817,8 @@ public class Player : MonoBehaviour
             return;
 
         UpdateIndicatorBlockedColor(true);
+        ApplyIndicatorScale(indicatorBaseLocalScale);
+        PlayOneShot(blockedIndicatorClip, blockedVolume);
 
         if (indicatorShakeRoutine != null)
             StopCoroutine(indicatorShakeRoutine);
@@ -793,6 +836,10 @@ public class Player : MonoBehaviour
             Vector2 offset = Random.insideUnitCircle * blockedShakeStrength;
             currentTargetIndicator.transform.localPosition =
                 indicatorBaseLocalPos + new Vector3(offset.x, offset.y, 0f);
+
+            ApplyIndicatorColor(indicatorBlockedColor);
+            ApplyIndicatorScale(indicatorBaseLocalScale);
+
             yield return null;
         }
 
@@ -802,6 +849,7 @@ public class Player : MonoBehaviour
         {
             float bob = Mathf.Sin(Time.time * indicatorBobSpeed) * indicatorBobAmplitude;
             currentTargetIndicator.transform.localPosition = indicatorBaseLocalPos + new Vector3(0f, bob, 0f);
+            ApplyIndicatorScale(indicatorBaseLocalScale);
         }
     }
 
@@ -876,6 +924,12 @@ public class Player : MonoBehaviour
                     return false;
             }
 
+            if (type.Name == "QuotaDepositMachine")
+            {
+                if (GameManager.instance == null || GameManager.instance.gameStats == null || GameManager.instance.gameStats.money <= 0)
+                    return false;
+            }
+
             FieldInfo isBusyField = type.GetField("isBusy", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             if (isBusyField != null && isBusyField.FieldType == typeof(bool))
             {
@@ -889,6 +943,14 @@ public class Player : MonoBehaviour
             {
                 bool busy = (bool)isBusyProperty.GetValue(behaviour);
                 if (busy)
+                    return false;
+            }
+
+            MethodInfo isInteractionLockedMethod = type.GetMethod("IsInteractionLocked", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (isInteractionLockedMethod != null && isInteractionLockedMethod.ReturnType == typeof(bool))
+            {
+                bool locked = (bool)isInteractionLockedMethod.Invoke(behaviour, null);
+                if (locked)
                     return false;
             }
 
@@ -918,6 +980,14 @@ public class Player : MonoBehaviour
             return false;
 
         return box.playerItemPool.Count > 0;
+    }
+
+    private void PlayOneShot(AudioClip clip, float volume)
+    {
+        if (clip == null || audioSource == null)
+            return;
+
+        audioSource.PlayOneShot(clip, volume);
     }
 
     public bool TryTakeTopHeldBox(out GameObject boxGameObject, out Box boxData)

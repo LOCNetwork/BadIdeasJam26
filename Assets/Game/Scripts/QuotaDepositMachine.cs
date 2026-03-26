@@ -44,9 +44,14 @@ public class QuotaDepositMachine : Interactable
     [Header("Completion / Lock")]
     [SerializeField] private float quotaReachedCooldown = 1.25f;
 
-    [Header("UI")]
+    [Header("UI Sliders")]
     [SerializeField] private Slider quotaSlider;
+    [SerializeField] private Slider currentTimerSlider;
+
+    [Header("UI Texts")]
     [SerializeField] private TMP_Text quotaDebugText;
+    [SerializeField] private TMP_Text dayText;
+    [SerializeField] private TMP_Text quotaText;
 
     [Header("Object Animator (briefcase / object)")]
     [SerializeField] private Animator objectAnimator;
@@ -90,7 +95,8 @@ public class QuotaDepositMachine : Interactable
         if (gameManager == null)
             gameManager = GameManager.instance;
 
-        UpdateQuotaUI(true);
+        ResetForNewDayVisualAndLogic();
+        RefreshAllUI(true);
     }
 
     private void Update()
@@ -100,6 +106,9 @@ public class QuotaDepositMachine : Interactable
 
         if (gameManager == null)
             return;
+
+        UpdateTimerUI();
+        UpdateDayAndQuotaTexts();
 
         CheckTimeThresholdTriggers();
         CheckDayFail();
@@ -159,7 +168,6 @@ public class QuotaDepositMachine : Interactable
         heldTime = 0f;
         tickTimer = 0f;
 
-        // Primer ingreso inmediato
         TryDeposit(GetCurrentDepositAmount());
     }
 
@@ -198,7 +206,7 @@ public class QuotaDepositMachine : Interactable
         int playerMoney = gameManager.gameStats.money;
         if (playerMoney <= 0)
         {
-            UpdateQuotaUI();
+            RefreshAllUI();
             return;
         }
 
@@ -215,7 +223,7 @@ public class QuotaDepositMachine : Interactable
 
         if (amountToDeposit <= 0)
         {
-            UpdateQuotaUI();
+            RefreshAllUI();
             return;
         }
 
@@ -224,7 +232,7 @@ public class QuotaDepositMachine : Interactable
 
         Debug.Log($"Dinero insertado / cuota: {currentDeposited}/{currentQuota}");
 
-        UpdateQuotaUI();
+        RefreshAllUI();
         CheckQuotaThresholds();
 
         if (currentDeposited >= currentQuota)
@@ -293,22 +301,16 @@ public class QuotaDepositMachine : Interactable
         StopHoldingInteraction();
 
         TriggerUIAnimator(uiEndTrigger);
-
         Debug.Log("Elegir mejora");
 
         yield return new WaitForSeconds(quotaReachedCooldown);
 
         if (gameManager != null)
-        {
             gameManager.AdvanceDay();
-        }
 
-        currentDeposited = 0;
+        ResetForNewDayVisualAndLogic();
+        RefreshAllUI(true);
 
-        ResetThresholdFlags();
-        UpdateQuotaUI(true);
-
-        dayResolved = false;
         interactionLocked = false;
     }
 
@@ -364,21 +366,53 @@ public class QuotaDepositMachine : Interactable
         return Mathf.Clamp01((float)currentDeposited / quota);
     }
 
-    private void UpdateQuotaUI(bool forceResetSlider = false)
+    private void UpdateQuotaSlider(bool forceReset = false)
     {
-        float progress = forceResetSlider ? 0f : GetQuotaProgress01();
+        if (quotaSlider == null)
+            return;
+
+        float progress = forceReset ? 0f : GetQuotaProgress01();
+
+        quotaSlider.minValue = 0f;
+        quotaSlider.maxValue = 1f;
+        quotaSlider.value = progress;
+    }
+
+    private void UpdateTimerUI()
+    {
+        if (currentTimerSlider == null || gameManager == null)
+            return;
+
+        float duration = Mathf.Max(0.0001f, gameManager.dayDurationSeconds);
+        float remaining01 = Mathf.Clamp01((duration - gameManager.currentTimer) / duration);
+
+        currentTimerSlider.minValue = 0f;
+        currentTimerSlider.maxValue = 1f;
+        currentTimerSlider.value = remaining01;
+    }
+
+    private void UpdateDayAndQuotaTexts()
+    {
+        int day = gameManager != null ? gameManager.currentDay : 0;
         int quota = GetCurrentQuota();
 
-        if (quotaSlider != null)
-        {
-            quotaSlider.minValue = 0f;
-            quotaSlider.maxValue = 1f;
-            quotaSlider.value = progress;
-        }
+        if (dayText != null)
+            dayText.text = $"Day: {day}";
+
+        if (quotaText != null)
+            quotaText.text = $"Quote: {currentDeposited}/{quota}";
 
         if (quotaDebugText != null)
             quotaDebugText.text = $"{currentDeposited}/{quota}";
+    }
 
+    private void RefreshAllUI(bool forceResetQuotaSlider = false)
+    {
+        UpdateQuotaSlider(forceResetQuotaSlider);
+        UpdateTimerUI();
+        UpdateDayAndQuotaTexts();
+
+        int quota = GetCurrentQuota();
         Debug.Log($"Dinero insertado / cuota: {currentDeposited}/{quota}");
     }
 
@@ -391,6 +425,18 @@ public class QuotaDepositMachine : Interactable
 
         triggeredTime33 = false;
         triggeredTime66 = false;
+    }
+
+    private void ResetForNewDayVisualAndLogic()
+    {
+        currentDeposited = 0;
+        heldTime = 0f;
+        tickTimer = 0f;
+        dayResolved = false;
+        isHoldingInteraction = false;
+        activePlayer = null;
+
+        ResetThresholdFlags();
     }
 
     public int GetCurrentQuota()
