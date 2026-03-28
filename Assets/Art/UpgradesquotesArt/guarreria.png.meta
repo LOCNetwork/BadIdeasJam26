@@ -1,0 +1,447 @@
+fileFormatVersion: 2
+guid: 3e449bee8c067ba4d9aa7d4d5876c202
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7710795504550841932
+    second: guarreria_0
+  - first:
+      213: 5162696923021601757
+    second: guarreria_1
+  - first:
+      213: -3497404386593323613
+    second: guarreria_2
+  - first:
+      213: 1416164317842400146
+    second: guarreria_3
+  - first:
+      213: -3342496350786010384
+    second: guarreria_4
+  - first:
+      213: 7699609580886801387
+    second: guarreria_5
+  - first:
+      213: 1616711780178736270
+    second: guarreria_6
+  - first:
+      213: 463686630251923262
+    second: guarreria_7
+  - first:
+      213: -8613371503558251494
+    second: guarreria_8
+  - first:
+      213: -3829023038944336445
+    second: guarreria_9
+  - first:
+      213: 3840886129305877930
+    second: guarreria_10
+  - first:
+      213: -3898321494369536980
+    second: guarreria_11
+  - first:
+      213: 8177235712409482726
+    second: guarreria_12
+  - first:
+      213: 8525225878753767118
+    second: guarreria_13
+  - first:
+      213: -4160664607754227931
+    second: guarreria_14
+  - first:
+      213: 5469685517405921969
+    second: guarreria_15
+  - first:
+      213: -3597886866270922984
+    second: guarreria_16
+  - first:
+      213: 5155765973824071650
+    second: guarreria_17
+  - first:
+      213: -1103789232013259624
+    second: guarreria_18
+  - first:
+      213: -345266694179168795
+    second: guarreria_19
+  - first:
+      213: -8027468109580657011
+    second: guarreria_20
+  - first:
+      213: 3592486073609783810
+    second: guarreria_21
+  - first:
+      213: -3668050889811894369
+    second: guarreria_22
+  - first:
+      213: 693290084555419051
+    second: guarreria_23
+  - first:
+      213: -396117945896044778
+    second: guarreria_24
+  - first:
+      213: -137632089021015493
+    second: guarreria_25
+  - first:
+      213: -7274863348767133521
+    second: guarreria_26
+  - first:
+      213: -7260064670157924561
+    second: guarreria_27
+  - first:
+      213: 8230770928090358131
+    second: guarreria_28
+  - first:
+      213: -3486825018669879719
+    second: guarreria_29
+  - first:
+      213: 4587375555739016470
+    second: guarreria_30
+  - first:
+      213: 1230070483416757423
+    second: guarreria_31
+  - first:
+      213: -2388366425011275082
+    second: guarreria_32
+  - first:
+      213: -8861842539498826239
+    second: guarreria_33
+  - first:
+      213: -8423701477887119054
+    second: guarreria_34
+  - first:
+      213: -930147166878363370
+    second: guarreria_35
+  - first:
+      213: -8110995813206499786
+    second: guarreria_36
+  - first:
+      213: -1601724848536382500
+    second: guarreria_37
+  - first:
+      213: 5635843336924160742
+    second: guarreria_38
+  - first:
+      213: 3929808048239513687
+    second: guarreria_39
+  - first:
+      213: -2318514309996738506
+    second: guarreria_40
+  - first:
+      213: 7426013648250347464
+    second: guarreria_41
+  - first:
+      213: -5560797976832509558
+    second: guarreria_42
+  - first:
+      213: -8169642414406999271
+    second: guarreria_43
+  - first:
+      213: -1723136887358350431
+    second: guarreria_44
+  - first:
+      213: -931347989318241418
+    second: guarreria_45
+  - first:
+      213: -6865596703875399108
+    second: guarreria_46
+  - first:
+      213: -1437230855694601224
+    second: guarreria_47
+  - first:
+      213: 4443464297155493606
+    second: guarreria_48
+  - first:
+      213: 8254554288103126266
+    second: guarreria_49
+  - first:
+      213: -6895674820432228619
+    second: guarreria_50
+  - first:
+      213: 8007772848076971224
+    second: guarreria_51
+  - first:
+      213: -6398191956129147664
+    second: guarreria_52
+  - first:
+      213: -4048790558384661543
+    second: guarreria_53
+  - first:
+      213: 6810471445580293055
+    second: guarreria_54
+  - first:
+      213: 4535068006391192888
+    second: guarreria_55
+  - first:
+      213: 531367933763102941
+    second: guarreria_56
+  - first:
+      213: 9118458223652539571
+    second: guarreria_57
+  - first:
+      213: -351558404417573414
+    second: guarreria_58
+  - first:
+      213: 7913479402107960657
+    second: guarreria_59
+  - first:
+      213: -3955693735511461375
+    second: guarreria_60
+  - first:
+      213: 3951422419516063723
+    second: guarreria_61
+  - first:
+      213: 7418405029782143647
+    second: guarreria_62
+  - first:
+      213: 2008839714642747879
+    second: guarreria_63
+  - first:
+      213: -8626633334343163198
+    second: guarreria_64
+  - first:
+      213: -5320949733488906864
+    second: guarreria_65
+  - first:
+      213: -5354882286978239657
+    second: guarreria_66
+  - first:
+      213: -5615589974423513538
+    second: guarreria_67
+  - first:
+      213: -7209851989974981889
+    second: guarreria_68
+  - first:
+      213: 6849233927249328880
+    second: guarreria_69
+  - first:
+      213: 3249391769595440484
+    second: guarreria_70
+  - first:
+      213: -1112662658320194079
+    second: guarreria_71
+  - first:
+      213: -3789680849328838833
+    second: guarreria_72
+  - first:
+      213: 9023154641898042150
+    second: guarreria_73
+  - first:
+      213: -1321961434346088632
+    second: guarreria_74
+  - first:
+      213: 565728633800679087
+    second: guarreria_75
+  - first:
+      213: 3207272501515815952
+    second: guarreria_76
+  - first:
+      213: 3789681420177160000
+    second: guarreria_77
+  - first:
+      213: -6249915955654881540
+    second: guarreria_78
+  - first:
+      213: 177513553922772250
+    second: guarreria_79
+  - first:
+      213: -5313926308865435265
+    second: guarreria_80
+  - first:
+      213: 5390851928099197425
+    second: guarreria_81
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: guarreria_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 340
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4e8e6868af320b60800000000000000
+      internalID: 7710795504550841932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: guarreria_1
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 0
+        width: 340
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddb64b39f7595a740800000000000000
+      internalID: 5162696923021601757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: guarreria_2
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 0
+        width: 340
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a5463d8d39b67fc0800000000000000
+      internalID: -3497404386593323613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: b931a7267aa3d6c48ba7fb4c2bc0bc84
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":340.0,"y":200.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      guarreria_0: 7710795504550841932
+      guarreria_1: 5162696923021601757
+      guarreria_2: -3497404386593323613
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
