@@ -1,22 +1,13 @@
 fileFormatVersion: 2
-guid: cb42ec721d2c82e42a4926454759f1f0
+guid: 78e860ffa07dc564d9414449eea1ffb3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5803357238175327652
-    second: Sprite01-Sheet_0
+      213: -8125266919818116183
+    second: SombrasCajassss_0
   - first:
-      213: -2782980114015213083
-    second: Sprite01-Sheet_1
-  - first:
-      213: -7290176359902696649
-    second: Sprite01-Sheet_2
-  - first:
-      213: 9168539172272477306
-    second: Sprite01-Sheet_3
-  - first:
-      213: 6538701403647124906
-    second: Sprite01-Sheet_4
+      213: 9112264210909664957
+    second: SombrasCajassss_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -125,111 +116,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprite01-Sheet_0
+      name: SombrasCajassss_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 26
-        height: 123
-      alignment: 9
-      pivot: {x: 0.535, y: 0.093}
+        x: 47
+        y: 26
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c5a1ed1e655567fa0800000000000000
-      internalID: -5803357238175327652
+      spriteID: 9a3420339c04d3f80800000000000000
+      internalID: -8125266919818116183
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite01-Sheet_1
+      name: SombrasCajassss_1
       rect:
         serializedVersion: 2
-        x: 26
-        y: 0
-        width: 26
-        height: 123
-      alignment: 9
-      pivot: {x: 0.535, y: 0.093}
+        x: 20
+        y: 7
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5e9a527c45ed069d0800000000000000
-      internalID: -2782980114015213083
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprite01-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 52
-        y: 0
-        width: 26
-        height: 123
-      alignment: 9
-      pivot: {x: 0.535, y: 0.093}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 73bac06c93714da90800000000000000
-      internalID: -7290176359902696649
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprite01-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 78
-        y: 0
-        width: 26
-        height: 123
-      alignment: 9
-      pivot: {x: 0.535, y: 0.093}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a741e88dcc13d3f70800000000000000
-      internalID: 9168539172272477306
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprite01-Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 104
-        y: 0
-        width: 26
-        height: 123
-      alignment: 9
-      pivot: {x: 0.535, y: 0.093}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: aa52cb878422eba50800000000000000
-      internalID: 6538701403647124906
+      spriteID: db696ce5504457e70800000000000000
+      internalID: 9112264210909664957
       vertices: []
       indices: 
       edges: []
@@ -238,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 52a00d63e2301b64889512262c6f35d6
+    spriteID: 784e51ebaf6b92543a4e35903d92be47
     internalID: 0
     vertices: []
     indices: 
@@ -248,13 +173,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":26.0,"y":123.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Sprite01-Sheet_0: -5803357238175327652
-      Sprite01-Sheet_1: -2782980114015213083
-      Sprite01-Sheet_2: -7290176359902696649
-      Sprite01-Sheet_3: 9168539172272477306
-      Sprite01-Sheet_4: 6538701403647124906
+      SombrasCajassss_0: -8125266919818116183
+      SombrasCajassss_1: 9112264210909664957
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
