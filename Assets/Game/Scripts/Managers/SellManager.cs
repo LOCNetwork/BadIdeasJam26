@@ -83,6 +83,19 @@ public class SellManager
 
         go.GetComponent<Box>().guid = box.guid;
 
+        GameObject text = new GameObject();
+        text.transform.parent = go.transform;
+
+        TextMeshPro textMesh = text.AddComponent<TextMeshPro>();
+        textMesh.text = "" + box.sellTime;
+        textMesh.autoSizeTextContainer = true;
+        textMesh.alignment = TextAlignmentOptions.Center;
+        textMesh.font = fontAsset;
+        textMesh.fontSize = 50;
+        textMesh.color = Color.white;
+        textMesh.transform.localPosition += new Vector3(0, 10, 0);
+
+
         boxesQueue.Enqueue(go);
 
         UpdateTruck();

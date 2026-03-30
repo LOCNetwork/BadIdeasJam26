@@ -8260,7 +8260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &846317470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12302,6 +12302,7 @@ GameObject:
   - component: {fileID: 1173562088}
   - component: {fileID: 1173562091}
   - component: {fileID: 1173562092}
+  - component: {fileID: 1173562093}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -13306,6 +13307,19 @@ MonoBehaviour:
   lossTickClip: {fileID: 8300000, guid: acdb06701743721498e97c6c90badef2, type: 3}
   lossTickVolume: 0.6
   lossPitchRange: {x: 0.65, y: 0.8}
+--- !u!114 &1173562093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173562083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bebc4d987d19bd43ac6b65c05b25a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerESCMenu
+  ESCMenu: {fileID: 0}
 --- !u!1 &1188180425
 GameObject:
   m_ObjectHideFlags: 0
@@ -21715,7 +21729,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 9999
   m_TargetDisplay: 0
 --- !u!224 &1814095597
 RectTransform:
@@ -25237,6 +25251,6 @@ SceneRoots:
   - {fileID: 1609834943}
   - {fileID: 1001961727}
   - {fileID: 1866225370}
-  - {fileID: 1814095597}
   - {fileID: 2093975885}
   - {fileID: 846317473}
+  - {fileID: 1814095597}

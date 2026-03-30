@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
 
     public static UIManager Instance { get; private set; }
 
+    [SerializeField] private GameObject soundOptions;
+    [SerializeField] private GameObject displayOptions;
+
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject mainMenu;
 
@@ -49,6 +52,20 @@ public class UIManager : MonoBehaviour
     }
 
 
+
+    public void TransitionForced(bool inout)
+    {
+
+        if (!inout)
+        {
+            StartCoroutine(SlidePanelsToCenterOptionsOutroAndLoad(0.5f));
+        } else
+        {
+            StartCoroutine(SlidePanelsToCenterOptionsIntroAndLoad(0.5f));
+        }
+
+
+    }
 
     public void TransitionToMicroSceneAnimation(string sceneName)
     {
@@ -99,7 +116,7 @@ public class UIManager : MonoBehaviour
 
 
     // X MOVEMENT
-    private IEnumerator SlidePanelsToCenterOptionsIntroAndLoad(float duration)
+    public IEnumerator SlidePanelsToCenterOptionsIntroAndLoad(float duration)
     {
         float elapsed = 0f;
 
@@ -118,16 +135,20 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
-        mainMenu.SetActive(false);
-        optionsMenu.SetActive(true);
+        if (mainMenu != null) mainMenu.SetActive(false);
+        if (optionsMenu != null) optionsMenu.SetActive(true);
 
         currentPosition = "OptionsMenu";
+   
     }
 
-    private IEnumerator SlidePanelsToCenterOptionsOutroAndLoad(float duration)
+    public IEnumerator SlidePanelsToCenterOptionsOutroAndLoad(float duration)
     {
-        optionsMenu.SetActive(false);
-        mainMenu.SetActive(true);
+        if (optionsMenu != null) optionsMenu.SetActive(false);
+        if (mainMenu != null) mainMenu.SetActive(true);
+
+        displayOptions.SetActive(false);
+        soundOptions.SetActive(false);
 
         float elapsed = 0f;
 
@@ -146,8 +167,10 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
+      
 
         currentPosition = "MainMenu";
+
     }
 
     // FADES
