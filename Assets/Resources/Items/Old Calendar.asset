@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemID: OLD_CALENDAR
   displayName: Old calendar
-  description: 
+  description: This reads the year "1983" and has a day marked as the "Happiest day"...
+    Not sure what that is all about.
   value: 4
   weight: 0
   rarity: 0
@@ -22,7 +23,11 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 2
-  passivesDescriptions: []
+  passivesDescriptions:
+  - +0.25$ for each calendar sold
+  - -40% item value if this is sold with a phone
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: 750459713095403657, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - SYNERGY:SECONDHAND_PHONE-1:MULTIPLIER:-0.40
+  - EXTRA_VALUE:ADDITIVE:0.25

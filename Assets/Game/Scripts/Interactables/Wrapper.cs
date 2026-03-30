@@ -1,7 +1,9 @@
+using NUnit.Framework;
 using NUnit.Framework.Internal.Execution;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -50,6 +52,10 @@ public class Wrapper : Interactable
     [SerializeField] private float failShakeStrength = 12f;
     [SerializeField] private float failColorDuration = 0.20f;
 
+    [Header("Wrapper UI")]
+    [SerializeField] private GameObject wrapperUI;
+    [SerializeField] private GameObject itemsPanelUI;
+
     public BoxSize AVAILABLE_BOX_SIZE = BoxSize.Medium;
 
     private GameObject currentBox;
@@ -61,6 +67,8 @@ public class Wrapper : Interactable
     private Coroutine slotsJuiceRoutine;
     private Coroutine slotsErrorRoutine;
 
+    GameObject[,] itemsUIMatrix = new GameObject[3,10];
+
     private void Awake()
     {
         if (slotsText != null)
@@ -71,6 +79,84 @@ public class Wrapper : Interactable
 
             slotsBaseScale = slotsText.transform.localScale;
         }
+    }
+
+    private void Update()
+    {
+        Interactable interactable = GameManager.instance.player.GetComponent<Player>().CurrentTarget;
+
+        if (interactable != null && interactable.CompareTag("Wrapper") && currentBox != null)
+        {
+            wrapperUI.SetActive(true);
+        } else
+        {
+            wrapperUI.SetActive(false);
+        }
+
+
+    }
+
+    private void UpdateItemsUI()
+    {
+
+        for (int i = 0; i < itemsUIMatrix.GetLength(1); i++) // columns
+        {
+            for (int j = 0; j < itemsUIMatrix.GetLength(0); j++) // rows
+            {
+                GameObject go = itemsUIMatrix[j,i];
+
+               
+                if (go != null)
+                {
+                    Destroy(go);
+                }
+
+                itemsUIMatrix[j, i] = null;
+            }
+
+        }
+
+
+
+        // Add new items
+        if (currentBox == null) return;
+
+        List<WorldItem> items = new List<WorldItem>(currentBox.GetComponent<Box>().playerItemPool);
+
+        for (int i = 0; i < itemsUIMatrix.GetLength(1); i++) // columns
+        {
+            for (int j = 0; j < itemsUIMatrix.GetLength(0); j++) // rows
+            {
+                if (currentBox != null)
+                {
+                    if (items.Count <= 0)
+                    {
+                        break;
+                    }
+
+                    WorldItem item = items[0];
+
+                    GameObject gameObject = new GameObject(item.displayName);
+                    gameObject.transform.parent = itemsPanelUI.transform;
+          
+
+                    SpriteRenderer sr = gameObject.AddComponent<SpriteRenderer>();
+                    sr.sprite = item.displaySprite;
+                    sr.sortingLayerID = itemsPanelUI.GetComponent<SpriteRenderer>().sortingLayerID;
+                    sr.sortingLayerName = itemsPanelUI.GetComponent<SpriteRenderer>().sortingLayerName;
+                    sr.sortingOrder = 3;
+
+                    gameObject.transform.localPosition = new Vector3(-0.3f + j * 0.275f, 0.19f + -i * 0.19f, 0);
+                    Debug.Log(sr.bounds.size * 0.2f);
+                    gameObject.transform.localScale = new Vector2(1.2f, 1f) * 0.2f;
+
+                    itemsUIMatrix[j, i] = gameObject;
+
+                    items.Remove(item);
+                }
+            }
+        }
+
     }
 
     private void Start()
@@ -148,6 +234,8 @@ public class Wrapper : Interactable
                 yield return StartCoroutine(SpawnBoxRoutine(AVAILABLE_BOX_SIZE, true));
                 yield break;
             }
+
+            UpdateItemsUI();
 
             Debug.Log($"Estadisticas Wrapper --> ESPACIO RELLENO: {currentCapacityFilled + boxSlots}, TOTAL SLOTS CAJA: {boxCapacity}, SOBRANTE: {boxCapacity - (currentCapacityFilled + boxSlots)}");
         }
@@ -233,13 +321,13 @@ public class Wrapper : Interactable
 
             Debug.Log("Caja spawneada");
 
-            ChooseBoxTag();
-
             boxData.guid = Guid.NewGuid(); // Unique identifier for the box, used to track it in the sell system
 
             currentBox.SetActive(true);
 
             currentBox = null;
+
+            UpdateItemsUI();
             return;
         }
 
@@ -431,10 +519,12 @@ public class Wrapper : Interactable
         itemsCopy.AddRange(currentBox.GetComponent<Box>().playerItemPool);
 
         currentBox.GetComponent<Box>().playerItemPool.Clear();
+        currentBox.GetComponent<Box>().extraPercentage = 0.0;
+        currentBox.GetComponent<Box>().extraValue = 0;
 
         foreach (WorldItem item in itemsCopy)
         {
-            Item itemData = Resources.Load<Item>("Items/" + item.itemID);
+            Item itemData = GameManager.instance.GetItemByID(item.itemID);
 
             WorldItem worldItem = new WorldItem();
             worldItem.Setup(itemData);
@@ -442,6 +532,7 @@ public class Wrapper : Interactable
             currentBox.GetComponent<Box>().playerItemPool.Add(worldItem);
         }
 
+       
         // Modify items with new passives
         ApplyPassives();
     }
@@ -450,14 +541,40 @@ public class Wrapper : Interactable
     {
         Box box = currentBox.GetComponent<Box>();
 
+        List<Passive> passives = new List<Passive>();
+        Dictionary<Passive, List<WorldItem>> relationMap = new Dictionary<Passive, List<WorldItem>>();
+
         foreach (WorldItem item in currentBox.GetComponent<Box>().playerItemPool)
         {
             foreach (Passive passive in item.passives)
             {
-                Debug.Log($"Aplicando pasiva {passive.GetType().Name} al item {item.displayName}");
-                passive.ExecutePassive(box, item.passivesInfo);
+                passives.Add(passive);
+
+                relationMap.TryGetValue(passive, out List<WorldItem> relatedItems);
+
+                if (relatedItems == null) relatedItems = new List<WorldItem>();
+
+                relatedItems.Add(item);
+
+                relationMap.Add(passive, relatedItems);
             }
         }
+
+        List<Passive> orderedPassives = passives.OrderByDescending(x => x.priority).ToList();
+
+        foreach (Passive passive in orderedPassives)
+        {
+
+            List<WorldItem> relatedItems = relationMap[passive];
+
+            foreach (WorldItem item in relatedItems)
+            {
+                Debug.Log($"Aplicando pasiva {passive.GetType().Name} al item {item.displayName}");
+                passive.ExecutePassive(item, box, item.passivesInfo);
+            }
+
+        }
+
     }
 
     private void CalculatePrice()
@@ -471,46 +588,22 @@ public class Wrapper : Interactable
         }
 
         box.value = (int)Math.Round(totalPrice * (1 + box.extraPercentage) + box.extraValue);
+
+        if (box.value < 0) box.value = 0;
     }
 
     private void CalculateSellTime()
     {
         Box box = currentBox.GetComponent<Box>();
-        double sellTimeIndex = 0;
+        int time = 0;
 
         foreach (WorldItem item in currentBox.GetComponent<Box>().playerItemPool)
         {
-            sellTimeIndex += int.Parse(item.GetAttribute(Attributes.SELL_TIME).value);
+            time += (int) GameManager.instance.sellManager.GetSellTimeByIndex(int.Parse(item.GetAttribute(Attributes.SELL_TIME).value));
         }
 
-        sellTimeIndex /= currentBox.GetComponent<Box>().playerItemPool.Count;
 
-        int finalIndex = (int)Math.Round(sellTimeIndex);
-
-        box.sellTimeIndex = finalIndex;
+        box.sellTime = time;
     }
 
-    private void ChooseBoxTag()
-    {
-        Box box = currentBox.GetComponent<Box>();
-        String tag = "";
-
-        switch (box.sellTimeIndex)
-        {
-            case 0:
-                tag = "Very Slow";
-                break;
-            case 1:
-                tag = "Slow";
-                break;
-            case 2:
-                tag = "Fast";
-                break;
-            case 3:
-                tag = "Very Fast";
-                break;
-        }
-
-        GameObject go = new GameObject("BoxTag");
-    }
 }

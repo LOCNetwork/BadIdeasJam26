@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemID: ERASABLE_INK_PEN
   displayName: Erasable ink pen
-  description: 
+  description: You know, I always thought whoever bought this as a kid had way too
+    much money to spare.
   value: 5
   weight: 0
   rarity: 1
@@ -24,7 +25,9 @@ MonoBehaviour:
     value: 3
   - key: 2
     value: School
-  passivesDescriptions: []
+  passivesDescriptions:
+  - +5% kit value if sold with 3 or more other pens
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: -2850474970934854566, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - SYNERGY:PEN-3:MULTIPLIER:0.05

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d44f55bb813ae4aa6bd057e91e1b1a, type: 3}
+  m_Name: Old toaster
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  itemID: OLD_TOASTER
+  displayName: Old toaster
+  description: You know what they say! All toasters toast... toast? That seems like
+    the wrong saying.
+  value: 25
+  weight: 1
+  rarity: 0
+  boxSlots: 2
+  attributes:
+  - key: 0
+    value: 1
+  - key: 2
+    value: Technology
+  passivesDescriptions:
+  - Increases a delivery speed for each old toaster in the kit
+  spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
+  displaySprite: {fileID: -3224513642963328378, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - CHANGE_DS:OLD_TOASTER:1

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemID: PENCIL_SHARPENER
   displayName: Pencil sharpener
-  description: 
+  description: I remember borrowing some of these as a kid and never returning them
+    back. I just forgot to return them -that's all...
   value: 1
   weight: 0
   rarity: 0
@@ -22,7 +23,11 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 3
-  passivesDescriptions: []
+  - key: 2
+    value: School
+  passivesDescriptions:
+  - +0.05$ for every pencil sold before this kit
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: 263907083015699324, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - EXTRA_VALUE:ADDITIVE:0.05

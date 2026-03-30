@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemID: ENCYCLOPEDIA
   displayName: Encyclopedia
-  description: 
+  description: These are always useful for searching up literally ANYTHING. It's
+    also fun to flip the pages and find random stuff.
   value: 12
   weight: 1
   rarity: 1
@@ -22,7 +23,9 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 2
-  passivesDescriptions: []
+  passivesDescriptions:
+  - '+5% kit value for each different notebook in this kit '
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: 6639462018890194108, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - SYNERGY:NOTEBOOK-1:MULTIPLIER:0.05

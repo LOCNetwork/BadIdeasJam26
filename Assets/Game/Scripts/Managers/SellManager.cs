@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 
 [System.Serializable]
@@ -15,7 +17,7 @@ public class SellManager
     public Dictionary<Guid, KeyValuePair<Box, float>> boxesOnSale;
     public Queue<GameObject> boxesQueue;
 
-    public float[] sellSpeedArray;
+    public int[] sellSpeedArray;
 
     private RectTransform container;
 
@@ -34,13 +36,13 @@ public class SellManager
         boxesOnSale = new Dictionary<Guid, KeyValuePair<Box, float>>();
         boxesQueue = new Queue<GameObject>();
 
-        sellSpeedArray = new float[4];
+        sellSpeedArray = new int[4];
 
 
-        sellSpeedArray[0] = 250f; // VERY SLOW
-        sellSpeedArray[1] = 150f; // SLOW
-        sellSpeedArray[2] = 90f; // FAST
-        sellSpeedArray[3] = 20f; // VERY FAST
+        sellSpeedArray[0] = 8; // VERY SLOW
+        sellSpeedArray[1] = 5; // SLOW
+        sellSpeedArray[2] = 3; // FAST
+        sellSpeedArray[3] = 1; // VERY FAST
 
         this.container = container;
         this.fontAsset = fontAsset;
@@ -51,6 +53,13 @@ public class SellManager
         this.mono = mono;
 
         this.truckBodyModules = new Stack<GameObject>();
+    }
+
+    public int GetSellTimeByIndex(int index)
+    {
+        if (index < 0 || index >= sellSpeedArray.Length) return 1; // Default value if index is out of range
+
+        return sellSpeedArray[index];
     }
 
 
@@ -99,21 +108,27 @@ public class SellManager
         foreach (WorldItem item in box.playerItemPool)
         {
 
-            Debug.Log("Checking item: " + item.displayName);
+            // Add to items sold stats
+            GameManager.instance.gameStats.itemsSold.TryGetValue(item.itemID, out int sells);
+            GameManager.instance.gameStats.itemsSold[item.itemID] = sells + 1;
+            //
+
             if (item.passives == null) continue;
 
-            Debug.Log("PASS " + item.displayName);
             foreach (Passive passive in item.passives)
             {
-                Debug.Log("A");
-                if (passive.MeetsCondition(box, item.passivesInfo))
+                if (passive.MeetsCondition(item, box, item.passivesInfo))
                 {
                     container.gameObject.SetActive(true);
-                    Debug.Log("B");
-                    DisplayItemPassive(passive.Display(item, box, item.passivesInfo));
-                   passive.ExecutePassive(box, item.passivesInfo);
 
-                   yield return new WaitForSeconds(2f);
+                    string passiveDisplay = passive.Display(item, box, item.passivesInfo);
+
+                    if (passiveDisplay.Equals(string.Empty)) continue;
+
+                    DisplayItemPassive(passiveDisplay);
+                    passive.ExecutePassive(item, box, item.passivesInfo);
+
+                    yield return new WaitForSeconds(2f);
                 }
                     
             }
@@ -198,6 +213,7 @@ public class SellManager
             UnityEngine.Object.Destroy(container.GetChild(i).gameObject);
         }
 
+
         string[] words = displayText.Split(' ');
 
         GameObject lastObject = null;
@@ -208,12 +224,6 @@ public class SellManager
 
             if (word.Contains("["))
             {
-
-                if (lastObject != null && lastObject.name.Contains("Text"))
-                {
-                    float width = lastObject.GetComponent<TextMeshProUGUI>().GetPreferredValues(lastObject.GetComponent<TextMeshProUGUI>().text).x;
-                    lastObject.transform.localPosition = lastObject.transform.localPosition + new Vector3(width / 2f, 0, 0);
-                }
 
 
                 GameObject go = new GameObject("Icon");
@@ -226,35 +236,56 @@ public class SellManager
                 string itemID = info[1];
                 string separation2 = info[2];
 
+               
 
                 Sprite itemSprite = GameManager.instance.GetItemByID(itemID).displaySprite;
 
-                if (lastObject != null)
-                {
-                    go.transform.localPosition = lastObject.transform.localPosition + new Vector3(float.Parse(separation1) + spacing, 0, 0);
-                } else
-                {
-                    go.transform.localPosition = new Vector3(-container.rect.width / 2.1f, 0, 0);
-                }
 
-                if (lastObject != null && lastObject.name.Contains("Text"))
-                {
-                    float width = lastObject.GetComponent<TextMeshProUGUI>().GetPreferredValues(lastObject.GetComponent<TextMeshProUGUI>().text).x;
-                    go.transform.localPosition = go.transform.localPosition + new Vector3(width / 2f, 0, 0);
-                }
-
-
-                lastObject = go;
                     
                 Canvas canvas = go.AddComponent<Canvas>();
 
-                Image image = canvas.AddComponent<Image>();
+                UnityEngine.UI.Image image = canvas.AddComponent<UnityEngine.UI.Image>();
                 image.transform.SetParent(canvas.transform);
 
                 image.sprite = itemSprite;
                 image.preserveAspect = true;
                 RectTransform rt = image.GetComponent<RectTransform>();
+                rt.pivot = new Vector2(0f, 0f);
+                rt.anchorMin = new Vector2(0f, 0f);
+                rt.anchorMax = new Vector2(0f, 0f);
+
                 rt.sizeDelta = new Vector2(64, 64);
+
+                
+
+                if (lastObject != null)
+                {
+                    go.transform.localPosition = new Vector3(lastObject.transform.localPosition.x + float.Parse(separation1) + spacing, 41, 0);
+                } else
+                {
+                    go.transform.localPosition = new Vector3(0, 41, 0);
+                }
+
+
+                if (lastObject != null && lastObject.name.Contains("Text"))
+                {
+                    lastObject.GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
+
+                    var info1 = lastObject.GetComponent<TextMeshProUGUI>().textInfo;
+                    int last = info1.characterCount - 1;
+
+                    while (last >= 0 && !info1.characterInfo[last].isVisible)
+                        last--;
+
+                    if (last < 0) return;
+
+                    // End of the visible text in first's local space
+                    Vector3 end = info1.characterInfo[last].bottomRight;
+
+                    go.transform.localPosition = new Vector3(end.x - 40, 41, 0);
+                }
+
+                lastObject = go;
 
                 spacing = float.Parse(separation2);
 
@@ -267,12 +298,22 @@ public class SellManager
 
             if (lastObject != null && lastObject.name.Contains("Icon"))
             {
-               textObject = new GameObject("Text");
-               textObject.transform.SetParent(container);
-               textObject.transform.localPosition = lastObject.transform.localPosition + new Vector3(spacing, 0, 0);
-               lastObject = textObject;
-               spacing = 0f;
-               textObject.AddComponent<TextMeshProUGUI>();
+                textObject = new GameObject("Text");
+                textObject.transform.SetParent(container);
+                Debug.Log("SEPARATING " + spacing);
+                Debug.Log(lastObject.transform.localPosition);
+
+                textObject.AddComponent<TextMeshProUGUI>();
+
+                RectTransform rt = textObject.GetComponent<TextMeshProUGUI>().rectTransform;
+                rt.pivot = new Vector2(0f, 0f);
+                rt.anchorMin = new Vector2(0f, 0f);
+                rt.anchorMax = new Vector2(0f, 0.6f);
+
+                rt.localPosition = new Vector3(lastObject.transform.localPosition.x + spacing, 0, 0);
+
+                lastObject = textObject;
+                spacing = 0f;
             } else if (lastObject != null && lastObject.name.Contains("Text"))
             {
                 textObject = lastObject;
@@ -280,10 +321,20 @@ public class SellManager
             {
                 textObject = new GameObject("Text");
                 textObject.transform.SetParent(container);
-                textObject.transform.localPosition = new Vector3(-container.rect.width / 2.1f, 0, 0);
+
+                textObject.AddComponent<TextMeshProUGUI>();
+
+                RectTransform rt = textObject.GetComponent<RectTransform>();
+                rt.pivot = new Vector2(0f, 0f);
+                rt.anchorMin = new Vector2(0f, 0f);
+                rt.anchorMax = new Vector2(0f, 0.6f);
+
+                rt.localPosition = new Vector3(0, 0, 0);
+
+                Debug.Log(rt.localPosition);
+
                 lastObject = textObject;
                 spacing = 0f;
-                textObject.AddComponent<TextMeshProUGUI>();
             }
 
 
@@ -296,13 +347,6 @@ public class SellManager
             textMesh.color = Color.white;
         }
 
-
-        if (lastObject != null && lastObject.name.Contains("Text"))
-        {
-            float width = lastObject.GetComponent<TextMeshProUGUI>().GetPreferredValues(lastObject.GetComponent<TextMeshProUGUI>().text).x;
-            
-            lastObject.transform.localPosition = lastObject.transform.localPosition + new Vector3(width / 2f, 0, 0);
-        }
 
 
     }

@@ -22,6 +22,9 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 2
+  passivesDescriptions:
+  - +30% kit value if sold with a minimum of 3 items with the school attribute
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: -6249167507019051144, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - SYNERGY:TYPE-School-3:MULTIPLIER:0.30

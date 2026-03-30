@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
     public bool IsMovementLocked => movementLocked;
     public Transform HoldTarget => holdTarget != null ? holdTarget : transform;
     public Transform DropOrigin => dropOrigin != null ? dropOrigin : transform;
+    public Interactable CurrentTarget => currentTarget;
 
     private void Awake()
     {

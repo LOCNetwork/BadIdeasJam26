@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemID: COMPRESSOR_TOOL
   displayName: Compressor tool
-  description: 
+  description: Maybe it's better not to tell the buyer that there's an unlimited
+    free trial...
   value: 30
   weight: 0
   rarity: 2
@@ -22,7 +23,11 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 2
-  passivesDescriptions: []
+  passivesDescriptions:
+  - -1 slot occupied by other non-Compressor tool items (Max. 3 times per kit)
+  - +15% added value to items from the Electronics catalog
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: -4019052279006995309, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - SLOT_REDUCER:FALSE:3:1
+  - SYNERGY:TYPE-ELECTRONIC-1:MULTIPLIER:0.15

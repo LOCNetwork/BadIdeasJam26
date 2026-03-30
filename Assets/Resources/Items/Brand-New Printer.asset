@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemID: BRANDNEW_PRINTER
   displayName: Brand-New Printer
-  description: 
+  description: Now THIS is a rare find! But now I'm wondering how all of this is
+    going to fit into a single box... Although I don't think two boxes would help
+    much either.
   value: 100
   weight: 2
   rarity: 2
@@ -22,7 +24,10 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 1
-  passivesDescriptions: []
+  passivesDescriptions:
+  - +30% item value if sold with Paper stacks or Printer ink
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: 3261792100686597837, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - SYNERGY:PAPER_STACK-1:MULTIPLIER:0.3
+  - SYNERGY:PRINTER_INK-1:MULTIPLIER:0.3

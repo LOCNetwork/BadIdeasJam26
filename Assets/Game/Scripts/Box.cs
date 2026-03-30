@@ -76,7 +76,7 @@ public class Box : MonoBehaviour
     public int value;
 
     [Tooltip("Box sell time")]
-    public int sellTimeIndex;
+    public int sellTime;
 
     private SpriteRenderer sr;
 
@@ -250,7 +250,7 @@ public class Box : MonoBehaviour
         clone.extraPercentage = this.extraPercentage;
         clone.extraValue = this.extraValue;
         clone.value = this.value;
-        clone.sellTimeIndex = this.sellTimeIndex;
+        clone.sellTime = this.sellTime;
 
         // guid handling
         clone.guid = copyGuid ? this.guid : Guid.NewGuid();

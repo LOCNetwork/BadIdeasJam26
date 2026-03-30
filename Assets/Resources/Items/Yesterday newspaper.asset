@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemID: YESTERDAY_NEWSPAPER
   displayName: Yesterday's newspaper
-  description: 
+  description: I guess someone might need them for an art project, right?
   value: 3
   weight: 0
   rarity: 0
@@ -22,6 +22,9 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 2
+  passivesDescriptions: []
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: 4974120649395770556, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - SYNERGY:PEN-1:MULTIPLIER:0.30
+  - SYNERGY:PENCIL-1:MULTIPLIER:0.30

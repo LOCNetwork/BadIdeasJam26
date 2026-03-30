@@ -139,8 +139,23 @@ MonoBehaviour:
     front: {fileID: 6951114633567200485, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
     side: {fileID: -7732569738864306783, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
   itemPool:
-  - {fileID: 11400000, guid: 2b93ff2994bac39428323a0f9a859a62, type: 2}
-  - {fileID: 11400000, guid: dd0f00d3ad82935468a7ae4960f38b73, type: 2}
+  - {fileID: 11400000, guid: eb930d5d75a284942926566e9c95b0bf, type: 2}
+  - {fileID: 11400000, guid: eea6388f074f5494590cfb7174ebdbe0, type: 2}
+  - {fileID: 11400000, guid: e8dc08696c35a07489202a9ce7ccd4ed, type: 2}
+  - {fileID: 11400000, guid: 7014cf8116e19614a98567adb7e8136d, type: 2}
+  - {fileID: 11400000, guid: 07130f73351006148bb1a9fc0ef54521, type: 2}
+  - {fileID: 11400000, guid: 2630244f7b1c5414983a64f4c4c014e2, type: 2}
+  - {fileID: 11400000, guid: 3eed496e60bda4f4e860793bf9f58fdf, type: 2}
+  - {fileID: 11400000, guid: c8dca96f1dc6a954896cb4fd9ebf27bc, type: 2}
+  - {fileID: 11400000, guid: 319db62bdbbf1d342b030bfd097d4bab, type: 2}
+  - {fileID: 11400000, guid: eeedf2066859e044f8188d74e81a51e9, type: 2}
+  - {fileID: 11400000, guid: dc82770d4ce8d174c856286526e5006f, type: 2}
+  - {fileID: 11400000, guid: e4460b0abe3108c4486d883f23c426f7, type: 2}
+  playerItemPool: []
+  extraPercentage: 0
+  extraValue: 0
+  value: 0
+  sellTimeIndex: 0
 --- !u!61 &2581942408372732687
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -226,3 +241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1df90d7ef48e04e8618ac2e9b60793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSortSprite
+  sortingOffset: 0
+  multiplier: 100
+  heldBaseOrder: 700

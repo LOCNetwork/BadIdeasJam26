@@ -139,8 +139,34 @@ MonoBehaviour:
     front: {fileID: 6951114633567200485, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
     side: {fileID: -7732569738864306783, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
   itemPool:
-  - {fileID: 11400000, guid: 2b93ff2994bac39428323a0f9a859a62, type: 2}
-  - {fileID: 11400000, guid: dd0f00d3ad82935468a7ae4960f38b73, type: 2}
+  - {fileID: 11400000, guid: 8123706f4b3092d4e830921e71f2381d, type: 2}
+  - {fileID: 11400000, guid: dd158c7c9623d054bb27702bd76c2ce5, type: 2}
+  - {fileID: 11400000, guid: be328a72887828a4aadeb969f7ff7172, type: 2}
+  - {fileID: 11400000, guid: 707df2feccc9be14083cfc37408c91d3, type: 2}
+  - {fileID: 11400000, guid: f3cc4abd2b7f00a4990440327f78a7e9, type: 2}
+  - {fileID: 11400000, guid: 5d08531f0258a8943a167e7d0a79222f, type: 2}
+  - {fileID: 11400000, guid: 6226ac2201f79b942a8b5272e8911ded, type: 2}
+  - {fileID: 11400000, guid: 9226cf6fdf475784c8cb902eb6f4d238, type: 2}
+  - {fileID: 11400000, guid: a2394a051eec1b3428b7438ae39f55e8, type: 2}
+  - {fileID: 11400000, guid: ddb2ec62844d337418c62a4ae6478d0d, type: 2}
+  - {fileID: 11400000, guid: e32a4af46314383449a71a352d140c6f, type: 2}
+  - {fileID: 11400000, guid: 261737b7ced71704182c775300b65e6e, type: 2}
+  - {fileID: 11400000, guid: 3f779fdede6c2f44f8c0e7395aaa7233, type: 2}
+  - {fileID: 11400000, guid: 2522aa43d2216e94e9e858dccae01435, type: 2}
+  - {fileID: 11400000, guid: 4da801db81800b542a8bd64d15a16a50, type: 2}
+  - {fileID: 11400000, guid: b682f65b57e5b4240a23c8e53e316249, type: 2}
+  - {fileID: 11400000, guid: e936157a3c0217341807a17e52d5b15b, type: 2}
+  - {fileID: 11400000, guid: 91ec6820c81d58d4fa84090a3824645d, type: 2}
+  - {fileID: 11400000, guid: bfbb09c12ab843848a9db2ef32c69826, type: 2}
+  - {fileID: 11400000, guid: 79273795d60c0924cb924b5bc0d5a2ea, type: 2}
+  - {fileID: 11400000, guid: 73370d0a576fb194a8226d4284ad41ec, type: 2}
+  - {fileID: 11400000, guid: 0183def09f096594badd16295945535a, type: 2}
+  - {fileID: 11400000, guid: edd6ffd750fd7bd4997b45f0b1d5c530, type: 2}
+  playerItemPool: []
+  extraPercentage: 0
+  extraValue: 0
+  value: 0
+  sellTimeIndex: 0
 --- !u!61 &5980226537000158994
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -226,3 +252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1df90d7ef48e04e8618ac2e9b60793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSortSprite
+  sortingOffset: 0
+  multiplier: 100
+  heldBaseOrder: 700

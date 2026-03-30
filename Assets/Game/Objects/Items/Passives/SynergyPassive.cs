@@ -13,32 +13,37 @@ public class SynergyPassive : Passive
      * 
      * SYNERGY PARSER: 
      * 
-     * SYNERGY:<ITEM_TO_SELL_WITH>-<MIN_AMOUNT>:<ADDITIVE/MULTIPLIER>:<VALUE>
+     * SYNERGY:<ITEM_TO_SELL_WITH>-<MIN_AMOUNT>:<ADDITIVE/MULTIPLIER[-ITEM]>:<VALUE>
      * 
      * <ITEM_TO_SELL_WITH> can be either an item ID or an item type. If it's an item type, specify TYPE-<ITEM_TYPE>, e.g. TYPE-School
      * 
      */
 
 
-
+    public new int priority = 0;
 
     public override string Display(WorldItem worldItem, Box box, List<string> info)
     {
         
         Dictionary<string, int> itemCounts = GetItemCounts(box, info);
 
+        if (itemCounts.Count == 0) return "";
+
+        string message = $"Item [10:{worldItem.itemID}:40] has synergized with";
+
         foreach (KeyValuePair<string, int> pair in itemCounts)
         {
             string itemID = pair.Key;
             int count = pair.Value;
-        
-            return $"[60:{worldItem.itemID}:40] synergy with [50:{itemID}:50]";
+
+            for (int i = 0; i < count; i++)
+                message += $" [10:{itemID}:40]";
         }
 
-        return "";
+        return message;
     }
 
-    public override void ExecutePassive(Box box, List<string> info)
+    public override void ExecutePassive(WorldItem worldItem, Box box, List<string> info)
     {
         List<string> synergyPassives = new List<string>();
 
@@ -71,7 +76,7 @@ public class SynergyPassive : Passive
                 foreach (WorldItem i in box.playerItemPool)
                 {
                     Attribute att = i.GetAttribute(Attributes.ITEM_TYPE);
-                    if (att != null && att.value.Equals(itemType))
+                    if (att != null && att.value.Contains(itemType))
                     {
                         count++;
                     }
@@ -81,18 +86,31 @@ public class SynergyPassive : Passive
 
                 if (count >= int.Parse(itemToSellWith.Split('-')[2]))
                 {
-                    string rewardType = parts[2];
 
-                    Debug.Log($"Reward type: {rewardType}, reward value: {parts[3]}");
-                    if (rewardType.Equals("ADDITIVE"))
+                    for (int i = 0; i < count; i++)
                     {
-                        int rewardValue = int.Parse(parts[3], CultureInfo.InvariantCulture);
-                        box.extraValue += rewardValue;
-                    } else if (rewardType.Equals("MULTIPLIER"))
-                    {
-                        double rewardValue = double.Parse(parts[3], CultureInfo.InvariantCulture);
-                        box.extraPercentage += rewardValue;
+                        string rewardType = parts[2];
+
+                        Debug.Log($"Reward type: {rewardType}, reward value: {parts[3]}");
+                        if (rewardType.Equals("ADDITIVE"))
+                        {
+                            int rewardValue = int.Parse(parts[3], CultureInfo.InvariantCulture);
+                            box.extraValue += rewardValue;
+                        } else if (rewardType.Equals("MULTIPLIER"))
+                        {
+                            double rewardValue = double.Parse(parts[3], CultureInfo.InvariantCulture);
+                            box.extraPercentage += rewardValue;
+                        } else if (rewardType.Equals("ADDITIVE-ITEM"))
+                        {
+                            double rewardValue = double.Parse(parts[3], CultureInfo.InvariantCulture);
+                            worldItem.value += (int)rewardValue;
+                        } else if (rewardType.Equals("MULTIPLIER-ITEM"))
+                        {
+                            double rewardValue = double.Parse(parts[3], CultureInfo.InvariantCulture);
+                            worldItem.value += (int)(worldItem.value * rewardValue);
+                        }
                     }
+                    
                 }
             } else
             {
@@ -110,21 +128,32 @@ public class SynergyPassive : Passive
                     }
                 }
 
-                Debug.Log($"Count for item {itemID}: {count}, needed: {itemAmount}");   
+                Debug.Log($"Count for item {itemID}: {count}, needed: {itemAmount}");
 
-                if (count >= int.Parse(itemAmount))
+                for (int i = 0; i < count; i++)
                 {
-                    string rewardType = parts[2];
+                    if (count >= int.Parse(itemAmount))
+                    {
+                        string rewardType = parts[2];
 
-                    Debug.Log($"Reward type: {rewardType}, reward value: {parts[3]}");  
-                    if (rewardType.Equals("ADDITIVE"))
-                    {
-                        int rewardValue = int.Parse(parts[3], CultureInfo.InvariantCulture);
-                        box.extraValue += rewardValue;
-                    } else if (rewardType.Equals("MULTIPLIER"))
-                    {
-                        double rewardValue = double.Parse(parts[3], CultureInfo.InvariantCulture);
-                        box.extraPercentage += rewardValue;
+                        Debug.Log($"Reward type: {rewardType}, reward value: {parts[3]}");
+                        if (rewardType.Equals("ADDITIVE"))
+                        {
+                            int rewardValue = int.Parse(parts[3], CultureInfo.InvariantCulture);
+                            box.extraValue += rewardValue;
+                        } else if (rewardType.Equals("MULTIPLIER"))
+                        {
+                            double rewardValue = double.Parse(parts[3], CultureInfo.InvariantCulture);
+                            box.extraPercentage += rewardValue;
+                        } else if (rewardType.Equals("ADDITIVE-ITEM"))
+                        {
+                            double rewardValue = double.Parse(parts[3], CultureInfo.InvariantCulture);
+                            worldItem.value += (int)rewardValue;
+                        } else if (rewardType.Equals("MULTIPLIER-ITEM"))
+                        {
+                            double rewardValue = double.Parse(parts[3], CultureInfo.InvariantCulture);
+                            worldItem.value += (int)(worldItem.value * rewardValue);
+                        }
                     }
                 }
             }
@@ -135,7 +164,7 @@ public class SynergyPassive : Passive
 
     }
 
-    public override bool MeetsCondition(Box box, List<string> info)
+    public override bool MeetsCondition(WorldItem worldItem, Box box, List<string> info)
     {
         if (GetItemCounts(box, info).Count > 0) return true;
 
@@ -179,7 +208,7 @@ public class SynergyPassive : Passive
                 foreach (WorldItem i in box.playerItemPool)
                 {
                     Attribute att = i.GetAttribute(Attributes.ITEM_TYPE);
-                    if (att != null && att.value.Equals(itemType))
+                    if (att != null && att.value.Contains(itemType))
                     {
                         midItems.Add(i.itemID);
                         count++;
@@ -190,7 +219,7 @@ public class SynergyPassive : Passive
                 {
                     foreach (string midItem in midItems)
                     {
-                        if (!itemCounts.ContainsKey(midItem)) itemCounts.Add(item, 1);
+                        itemCounts.Add(midItem, count);
                     }
                     
                 }
@@ -211,7 +240,7 @@ public class SynergyPassive : Passive
 
                 if (count >= int.Parse(itemAmount))
                 {
-                    itemCounts.Add(itemID, int.Parse(itemAmount));
+                    itemCounts.Add(itemID, count);
                 }
             }
 

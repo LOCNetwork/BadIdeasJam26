@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemID: SHORT_MAGAZINE
   displayName: Short magazine
-  description: 
+  description: These are fun for a while, but there's not much re-read value.
   value: 3
   weight: 0
   rarity: 0
@@ -22,6 +22,9 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 2
+  passivesDescriptions:
+  - +10% kit value if sold with other Magazines
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: -4765436259334159882, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - SYNERGY:SHORT_MAGAZINE-1:MULTIPLIER:0.10

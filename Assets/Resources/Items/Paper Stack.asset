@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemID: PAPER_STACK
   displayName: Paper stack
-  description: 
+  description: A bunch of papers. Thats it.
   value: 2
   weight: 0
   rarity: 0
@@ -22,7 +22,10 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 2
-  passivesDescriptions: []
+  passivesDescriptions:
+  - +10% kit value if sold with a Pen or Pencil
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: -8561421167357734810, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - SYNERGY:PEN-1:MULTIPLIER:0.10
+  - SYNERGY:PENCIL-1:MULTIPLIER:0.10

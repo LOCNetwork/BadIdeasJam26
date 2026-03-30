@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemID: CORRECTION_TAPE
   displayName: Correction tape
-  description: 
+  description: Sometimes I wish fixing mistakes were as easy as using this...
   value: 2
   weight: 0
   rarity: 0
@@ -24,7 +24,10 @@ MonoBehaviour:
     value: 3
   - key: 2
     value: School
-  passivesDescriptions: []
+  passivesDescriptions:
+  - +20% kit value if sold with other of this item or pens
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
-  displaySprite: {fileID: 0}
-  passivesInfo: []
+  displaySprite: {fileID: -4117376581909057648, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
+  passivesInfo:
+  - SYNERGY:PEN-1:MULTIPLIER:0.2
+  - SYNERGY:CORRECTION_TAPE-1:MULTIPLIER:0.2

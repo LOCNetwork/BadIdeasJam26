@@ -368,7 +368,7 @@ public class HeldInfoUIController : MonoBehaviour
             weightText.text = string.Empty;
 
         if (sellTimeText != null)
-            sellTimeText.text = $"Sell Time: {FormatSellTime(box.sellTimeIndex)}";
+            sellTimeText.text = $"Sell Time: {FormatSellTime(box.sellTime)}";
 
         if (playerBoxItemsText != null)
             playerBoxItemsText.text = $"Items in player box: {FormatPlayerBoxItems(box.playerItemPool)}";
@@ -443,7 +443,7 @@ public class HeldInfoUIController : MonoBehaviour
         int count = box.playerItemPool != null ? box.playerItemPool.Count : 0;
         int usedSlots = GetUsedSlots(box.playerItemPool);
 
-        return $"BOX|{box.GetInstanceID()}|{box.Size}|{box.sellTimeIndex}|{count}|{usedSlots}";
+        return $"BOX|{box.GetInstanceID()}|{box.Size}|{box.sellTime}|{count}|{usedSlots}";
     }
 
     private string FormatAttributes(List<Attribute> attributes)

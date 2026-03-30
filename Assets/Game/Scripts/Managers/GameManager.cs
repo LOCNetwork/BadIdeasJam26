@@ -1,14 +1,19 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public Dictionary<string, Item> loadedItems;
 
     public static GameManager instance;
+
+    // Player object
+    public GameObject player;
 
     // Managers
     public SellManager sellManager;
@@ -41,10 +46,18 @@ public class GameManager : MonoBehaviour
     public Sprite truckBodySprite;
     public GameObject truckBack;
 
-  
+    // Game over UI
+    [SerializeField] private GameObject gameOverScreen;
+
+    // Fade
+    [SerializeField] private Image fadeImage;
+
+
 
     void Start()
     {
+        StartCoroutine(UIManager.FadeInCoroutine(fadeImage, 250f));
+
         instance = this;
         gameStats = new GameStats();
         
@@ -53,6 +66,8 @@ public class GameManager : MonoBehaviour
         LoadItems();
         
         itemManager = new ItemManager();
+
+        player.GetComponent<Player>().SetMovementLocked(false);
     }
 
 
@@ -65,6 +80,44 @@ public class GameManager : MonoBehaviour
         HandleSells();
         UpdateMoneyUI();
     }
+
+
+    public void GameOver()
+    {
+        // Stop player movement
+        player.GetComponent<Player>().SetMovementLocked(true);
+
+        // Play Game Over animation
+        GameOverVisuals();
+    }
+
+
+    private IEnumerator GameOverVisuals()
+    {
+        // Pre-animation start time?
+        yield return new WaitForSeconds(2f);
+
+
+        // Play animation
+        gameOverScreen.SetActive(true);
+        // REPLACE WITH ANIMATION CODE
+
+
+
+        yield return new WaitForSeconds(2f);
+
+        BackToMainMenu();
+
+
+    }
+
+
+    private void BackToMainMenu()
+    {
+        
+    }
+
+
 
 
 
@@ -119,10 +172,7 @@ public class GameManager : MonoBehaviour
 
         sellManager.boxesOnSale.TryGetValue(box.guid, out KeyValuePair<Box, float> info);
 
-        Debug.Log(info.Value + sellManager.sellSpeedArray[box.sellTimeIndex]);
-        Debug.Log(timer);
-        Debug.Log(info.Value + sellManager.sellSpeedArray[box.sellTimeIndex] <= timer);
-        if (info.Value + sellManager.sellSpeedArray[box.sellTimeIndex] <= timer)
+        if (info.Value + box.sellTime <= timer)
         {
             Debug.Log("SOLD BOX");
             sellManager.CompleteBoxSale(info.Key);
