@@ -118,9 +118,14 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void BackToMainMenu()
+    public void BackToMainMenu()
     {
         
+    }
+
+    public void Restart()
+    {
+
     }
 
 
