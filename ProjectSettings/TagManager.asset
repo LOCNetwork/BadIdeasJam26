@@ -43,6 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Shadow
+    uniqueID: 3918651285
+    locked: 0
+  - name: Machines
+    uniqueID: 3650640401
+    locked: 0
   - name: Boxes
     uniqueID: 1004800591
     locked: 0

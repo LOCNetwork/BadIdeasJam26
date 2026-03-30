@@ -130,10 +130,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 35
-        height: 50
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 26
+        height: 123
+      alignment: 9
+      pivot: {x: 0.535, y: 0.093}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -150,12 +150,12 @@ TextureImporter:
       name: Sprite01-Sheet_1
       rect:
         serializedVersion: 2
-        x: 35
+        x: 26
         y: 0
-        width: 35
-        height: 50
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 26
+        height: 123
+      alignment: 9
+      pivot: {x: 0.535, y: 0.093}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -172,12 +172,12 @@ TextureImporter:
       name: Sprite01-Sheet_2
       rect:
         serializedVersion: 2
-        x: 70
+        x: 52
         y: 0
-        width: 35
-        height: 50
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 26
+        height: 123
+      alignment: 9
+      pivot: {x: 0.535, y: 0.093}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -194,12 +194,12 @@ TextureImporter:
       name: Sprite01-Sheet_3
       rect:
         serializedVersion: 2
-        x: 105
+        x: 78
         y: 0
-        width: 35
-        height: 50
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 26
+        height: 123
+      alignment: 9
+      pivot: {x: 0.535, y: 0.093}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -216,12 +216,12 @@ TextureImporter:
       name: Sprite01-Sheet_4
       rect:
         serializedVersion: 2
-        x: 140
+        x: 104
         y: 0
-        width: 35
-        height: 50
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 26
+        height: 123
+      alignment: 9
+      pivot: {x: 0.535, y: 0.093}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -248,7 +248,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":35.0,"y":50.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":26.0,"y":123.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Sprite01-Sheet_0: -5803357238175327652
       Sprite01-Sheet_1: -2782980114015213083

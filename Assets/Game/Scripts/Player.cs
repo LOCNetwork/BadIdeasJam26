@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -17,15 +19,49 @@ public class Player : MonoBehaviour
     }
 
     [Header("Movement")]
-    [SerializeField] private float speed = 5f;
+    [SerializeField] public float speed = 5f;
 
     [Header("Interaction")]
     [SerializeField] private KeyCode interactKey = KeyCode.E;
     [SerializeField] private Transform holdTarget;
 
+    [Header("Interaction Target Preference")]
+    [SerializeField] private float directionalPreferenceWeight = 1.25f;
+    [SerializeField] private float lastInputDeadZone = 0.05f;
+
+    [Header("Target Indicator")]
+    [SerializeField] private GameObject selectedTargetPrefab;
+    [SerializeField] private float selectedTargetYOffset = 0.75f;
+    [SerializeField] private float indicatorBobAmplitude = 0.08f;
+    [SerializeField] private float indicatorBobSpeed = 3.5f;
+    [SerializeField] private Color indicatorNormalColor = Color.white;
+    [SerializeField] private Color indicatorBlockedColor = Color.red;
+    [SerializeField] private Color indicatorInteractingColor = Color.gray;
+    [SerializeField] private float indicatorInteractingScaleMultiplier = 0.88f;
+    [SerializeField] private float blockedShakeDuration = 0.16f;
+    [SerializeField] private float blockedShakeStrength = 0.14f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip blockedIndicatorClip;
+    [SerializeField] private AudioClip holdClip;
+    [SerializeField] private AudioClip dropClip;
+    [SerializeField][Range(0f, 1f)] private float blockedVolume = 1f;
+    [SerializeField][Range(0f, 1f)] private float holdVolume = 1f;
+    [SerializeField][Range(0f, 1f)] private float dropVolume = 1f;
+
     [Header("Drop")]
     [SerializeField] private Transform dropOrigin;
     [SerializeField] private float dropRadius = 1.25f;
+    [SerializeField][Range(0f, 180f)] private float dropPreferredAngle = 60f;
+    [SerializeField] private float dropMinDistanceFactor = 0.35f;
+
+    [Header("Drop Juice")]
+    [SerializeField] private float dropLandingDelay = 0.08f;
+    [SerializeField] private float dropSquashDuration = 0.08f;
+    [SerializeField] private float dropStretchDuration = 0.10f;
+    [SerializeField] private Vector3 dropSquashScale = new Vector3(1.15f, 0.82f, 1f);
+    [SerializeField] private Vector3 dropStretchScale = new Vector3(0.92f, 1.12f, 1f);
 
     [Header("Holding Capacity")]
     [SerializeField] private int maxHolding = 3;
@@ -50,6 +86,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 moveDirection;
+    private Vector2 lastInputDirection = Vector2.down;
 
     private readonly List<Interactable> inRange = new();
     [SerializeField] private List<Interactable> heldStack = new();
@@ -59,6 +96,17 @@ public class Player : MonoBehaviour
 
     private AnimState currentAnimState = AnimState.Idle;
     private bool movementLocked = false;
+
+    private GameObject currentTargetIndicator;
+    private Interactable lastVisualTarget;
+    private bool lastIndicatorBlocked;
+    private readonly List<SpriteRenderer> cachedIndicatorRenderers = new();
+    private Coroutine indicatorShakeRoutine;
+    private Vector3 indicatorBaseLocalPos;
+    private Vector3 indicatorBaseLocalScale = Vector3.one;
+
+    private readonly Dictionary<Transform, Coroutine> activeDropJuices = new();
+    private readonly Dictionary<Transform, Vector3> cachedOriginalScales = new();
 
     private bool IsHolding => heldStack.Count > 0;
     public bool IsMovementLocked => movementLocked;
@@ -70,6 +118,9 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
         if (holdTarget == null)
             Debug.LogWarning($"{name}: HoldTarget no asignado. Se usará el transform del player.");
 
@@ -80,21 +131,40 @@ public class Player : MonoBehaviour
     private void Start()
     {
         ForcePlayAnimationState(GetTargetAnimState());
+        RefreshTargetVisuals();
     }
 
     private void Update()
     {
         HandleMovementInput();
         UpdateClosestTarget();
+        RefreshTargetVisuals();
         UpdateAnimationState();
 
         if (Input.GetKeyDown(interactKey))
             HandleInteraction();
     }
 
+    private void LateUpdate()
+    {
+        UpdateTargetIndicatorMotion();
+    }
+
     private void FixedUpdate()
     {
         rb.linearVelocity = movementLocked ? Vector2.zero : moveDirection * speed;
+    }
+
+    private void OnDisable()
+    {
+        ClearTargetVisuals();
+        StopAllDropJuices();
+    }
+
+    private void OnDestroy()
+    {
+        ClearTargetVisuals();
+        StopAllDropJuices();
     }
 
     public void SetMovementLocked(bool locked)
@@ -122,6 +192,9 @@ public class Player : MonoBehaviour
 
         Vector2 input = new Vector2(x, y);
         moveDirection = input.sqrMagnitude > 0.01f ? input.normalized : Vector2.zero;
+
+        if (input.sqrMagnitude > lastInputDeadZone * lastInputDeadZone)
+            lastInputDirection = input.normalized;
     }
 
     private AnimState GetTargetAnimState()
@@ -221,6 +294,9 @@ public class Player : MonoBehaviour
 
         if (currentTarget == i)
             currentTarget = null;
+
+        if (lastVisualTarget == i)
+            ClearTargetVisuals();
     }
 
     private void UpdateClosestTarget()
@@ -237,18 +313,30 @@ public class Player : MonoBehaviour
             return;
         }
 
-        float bestDistance = float.MaxValue;
         Interactable bestTarget = null;
+        float bestScore = float.MinValue;
         Vector2 playerPos = transform.position;
+        bool hasDirectionalPreference = lastInputDirection.sqrMagnitude > 0.0001f;
 
         foreach (var interactable in inRange)
         {
-            if (interactable == null) continue;
+            if (interactable == null)
+                continue;
 
-            float dist = ((Vector2)interactable.transform.position - playerPos).sqrMagnitude;
-            if (dist < bestDistance)
+            Vector2 toTarget = (Vector2)interactable.transform.position - playerPos;
+            float sqrDist = toTarget.sqrMagnitude;
+            float score = -sqrDist;
+
+            if (hasDirectionalPreference && sqrDist > 0.0001f)
             {
-                bestDistance = dist;
+                Vector2 dirToTarget = toTarget.normalized;
+                float dot = Vector2.Dot(lastInputDirection, dirToTarget);
+                score += dot * directionalPreferenceWeight;
+            }
+
+            if (score > bestScore)
+            {
+                bestScore = score;
                 bestTarget = interactable;
             }
         }
@@ -326,6 +414,8 @@ public class Player : MonoBehaviour
         if (heldCategory == HoldCategory.None)
             heldCategory = CategoryOf(target);
 
+        CancelDropJuice(target);
+
         heldStack.Add(target);
         currentWeight += WeightOf(target);
 
@@ -335,6 +425,7 @@ public class Player : MonoBehaviour
 
         target.PickUpToStack(HoldTarget, localOffset);
         RefreshStackVisuals();
+        PlayOneShot(holdClip, holdVolume);
     }
 
     private Interactable PopLastFromStack()
@@ -373,19 +464,47 @@ public class Player : MonoBehaviour
 
     private Vector3 GetRandomDropPosition()
     {
-        Vector2 randomOffset = Random.insideUnitCircle * Mathf.Max(0f, dropRadius);
         Vector3 origin = DropOrigin.position;
 
-        return new Vector3(
-            origin.x + randomOffset.x,
-            origin.y + randomOffset.y,
-            origin.z
-        );
+        if (lastInputDirection.sqrMagnitude <= lastInputDeadZone * lastInputDeadZone)
+        {
+            Vector2 randomOffset = Random.insideUnitCircle * Mathf.Max(0f, dropRadius);
+            return new Vector3(origin.x + randomOffset.x, origin.y + randomOffset.y, origin.z);
+        }
+
+        Vector2 dir = lastInputDirection.normalized;
+        float halfAngle = dropPreferredAngle * 0.5f;
+        float randomAngle = Random.Range(-halfAngle, halfAngle);
+        Vector2 preferredDir = RotateVector(dir, randomAngle);
+
+        float minDistance = Mathf.Clamp01(dropMinDistanceFactor) * dropRadius;
+        float distance = Random.Range(minDistance, Mathf.Max(minDistance, dropRadius));
+        Vector2 offset = preferredDir * distance;
+
+        return new Vector3(origin.x + offset.x, origin.y + offset.y, origin.z);
+    }
+
+    private Vector2 RotateVector(Vector2 vector, float angleDegrees)
+    {
+        float radians = angleDegrees * Mathf.Deg2Rad;
+        float cos = Mathf.Cos(radians);
+        float sin = Mathf.Sin(radians);
+
+        return new Vector2(
+            vector.x * cos - vector.y * sin,
+            vector.x * sin + vector.y * cos
+        ).normalized;
     }
 
     private void HandleInteraction()
     {
         Interactable target = currentTarget;
+
+        if (target != null && !IsTargetInteractableNow(target))
+        {
+            PlayBlockedIndicatorFeedback();
+            return;
+        }
 
         if (target != null && !IsPickable(target))
         {
@@ -402,6 +521,8 @@ public class Player : MonoBehaviour
                 {
                     Vector3 randomDropPos = GetRandomDropPosition();
                     last.DropTo(randomDropPos, last.transform.rotation);
+                    StartDropJuiceIfObject(last);
+                    PlayOneShot(dropClip, dropVolume);
                 }
             }
             return;
@@ -440,9 +561,434 @@ public class Player : MonoBehaviour
         PopLastFromStack();
 
         if (top != null)
+        {
             top.DropTo(dropPos, dropRot);
+            StartDropJuiceIfObject(top);
+            PlayOneShot(dropClip, dropVolume);
+        }
 
         PushToStack(target);
+    }
+
+    private void StartDropJuiceIfObject(Interactable interactable)
+    {
+        if (interactable == null)
+            return;
+
+        if (!interactable.IsBox && !interactable.IsItem)
+            return;
+
+        Transform t = interactable.transform;
+
+        CancelDropJuice(interactable);
+
+        cachedOriginalScales[t] = t.localScale;
+
+        Coroutine routine = StartCoroutine(DropJuiceRoutine(t));
+        activeDropJuices[t] = routine;
+    }
+
+    private void CancelDropJuice(Interactable interactable)
+    {
+        if (interactable == null)
+            return;
+
+        Transform t = interactable.transform;
+        if (activeDropJuices.TryGetValue(t, out Coroutine routine))
+        {
+            if (routine != null)
+                StopCoroutine(routine);
+
+            activeDropJuices.Remove(t);
+        }
+
+        if (t != null && cachedOriginalScales.TryGetValue(t, out Vector3 originalScale))
+            t.localScale = originalScale;
+    }
+
+    private void StopAllDropJuices()
+    {
+        List<Transform> keys = new List<Transform>(activeDropJuices.Keys);
+        for (int i = 0; i < keys.Count; i++)
+        {
+            Transform t = keys[i];
+            if (t == null)
+                continue;
+
+            if (activeDropJuices.TryGetValue(t, out Coroutine routine) && routine != null)
+                StopCoroutine(routine);
+
+            if (cachedOriginalScales.TryGetValue(t, out Vector3 originalScale))
+                t.localScale = originalScale;
+        }
+
+        activeDropJuices.Clear();
+    }
+
+    private IEnumerator DropJuiceRoutine(Transform droppedTransform)
+    {
+        if (droppedTransform == null)
+            yield break;
+
+        if (!cachedOriginalScales.TryGetValue(droppedTransform, out Vector3 originalScale))
+            originalScale = droppedTransform.localScale;
+
+        if (dropLandingDelay > 0f)
+            yield return new WaitForSeconds(dropLandingDelay);
+
+        Vector3 squashScale = Vector3.Scale(originalScale, dropSquashScale);
+        Vector3 stretchScale = Vector3.Scale(originalScale, dropStretchScale);
+
+        float t = 0f;
+        while (t < dropSquashDuration)
+        {
+            if (droppedTransform == null)
+                yield break;
+
+            t += Time.deltaTime;
+            float n = Mathf.Clamp01(t / dropSquashDuration);
+            droppedTransform.localScale = Vector3.LerpUnclamped(originalScale, squashScale, n);
+            yield return null;
+        }
+
+        t = 0f;
+        while (t < dropStretchDuration)
+        {
+            if (droppedTransform == null)
+                yield break;
+
+            t += Time.deltaTime;
+            float n = Mathf.Clamp01(t / dropStretchDuration);
+
+            if (n < 0.5f)
+            {
+                float phase = n / 0.5f;
+                droppedTransform.localScale = Vector3.LerpUnclamped(squashScale, stretchScale, phase);
+            }
+            else
+            {
+                float phase = (n - 0.5f) / 0.5f;
+                droppedTransform.localScale = Vector3.LerpUnclamped(stretchScale, originalScale, phase);
+            }
+
+            yield return null;
+        }
+
+        if (droppedTransform != null)
+            droppedTransform.localScale = originalScale;
+
+        activeDropJuices.Remove(droppedTransform);
+    }
+
+    private void RefreshTargetVisuals()
+    {
+        Interactable target = currentTarget;
+
+        if (target == null)
+        {
+            ClearTargetVisuals();
+            return;
+        }
+
+        bool isBlocked = !IsTargetInteractableNow(target);
+
+        if (lastVisualTarget != target)
+        {
+            ClearTargetVisuals();
+            ApplyTargetVisuals(target, isBlocked);
+            return;
+        }
+
+        if (lastIndicatorBlocked != isBlocked)
+            UpdateIndicatorBlockedColor(isBlocked);
+    }
+
+    private void ApplyTargetVisuals(Interactable target, bool blocked)
+    {
+        if (target == null)
+            return;
+
+        lastVisualTarget = target;
+        lastIndicatorBlocked = blocked;
+
+        if (selectedTargetPrefab != null)
+        {
+            currentTargetIndicator = Instantiate(selectedTargetPrefab);
+            currentTargetIndicator.transform.SetParent(target.transform, false);
+            currentTargetIndicator.transform.localRotation = Quaternion.identity;
+            indicatorBaseLocalScale = Vector3.one;
+            currentTargetIndicator.transform.localScale = indicatorBaseLocalScale;
+            indicatorBaseLocalPos = new Vector3(0f, selectedTargetYOffset, 0f);
+            currentTargetIndicator.transform.localPosition = indicatorBaseLocalPos;
+
+            CacheIndicatorRenderers();
+            ApplyIndicatorColor(blocked ? indicatorBlockedColor : indicatorNormalColor);
+        }
+    }
+
+    private void UpdateIndicatorBlockedColor(bool blocked)
+    {
+        lastIndicatorBlocked = blocked;
+        ApplyIndicatorColor(blocked ? indicatorBlockedColor : indicatorNormalColor);
+    }
+
+    private void CacheIndicatorRenderers()
+    {
+        cachedIndicatorRenderers.Clear();
+
+        if (currentTargetIndicator == null)
+            return;
+
+        SpriteRenderer[] renderers = currentTargetIndicator.GetComponentsInChildren<SpriteRenderer>(true);
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i] == null)
+                continue;
+
+            cachedIndicatorRenderers.Add(renderers[i]);
+        }
+    }
+
+    private void ApplyIndicatorColor(Color color)
+    {
+        for (int i = 0; i < cachedIndicatorRenderers.Count; i++)
+        {
+            if (cachedIndicatorRenderers[i] == null)
+                continue;
+
+            cachedIndicatorRenderers[i].color = color;
+        }
+    }
+
+    private void ApplyIndicatorScale(Vector3 scale)
+    {
+        if (currentTargetIndicator == null)
+            return;
+
+        currentTargetIndicator.transform.localScale = scale;
+    }
+
+    private void ClearTargetVisuals()
+    {
+        if (indicatorShakeRoutine != null)
+        {
+            StopCoroutine(indicatorShakeRoutine);
+            indicatorShakeRoutine = null;
+        }
+
+        cachedIndicatorRenderers.Clear();
+
+        if (currentTargetIndicator != null)
+            Destroy(currentTargetIndicator);
+
+        currentTargetIndicator = null;
+        lastVisualTarget = null;
+        lastIndicatorBlocked = false;
+    }
+
+    private void UpdateTargetIndicatorMotion()
+    {
+        if (currentTargetIndicator == null || lastVisualTarget == null)
+            return;
+
+        if (indicatorShakeRoutine != null)
+            return;
+
+        bool isBlocked = !IsTargetInteractableNow(lastVisualTarget);
+        bool isActivelyInteracting = !isBlocked && Input.GetKey(interactKey);
+
+        float bob = Mathf.Sin(Time.time * indicatorBobSpeed) * indicatorBobAmplitude;
+        currentTargetIndicator.transform.localPosition = indicatorBaseLocalPos + new Vector3(0f, bob, 0f);
+
+        if (isActivelyInteracting)
+        {
+            ApplyIndicatorColor(indicatorInteractingColor);
+            ApplyIndicatorScale(indicatorBaseLocalScale * indicatorInteractingScaleMultiplier);
+        }
+        else
+        {
+            ApplyIndicatorColor(isBlocked ? indicatorBlockedColor : indicatorNormalColor);
+            ApplyIndicatorScale(indicatorBaseLocalScale);
+        }
+    }
+
+    private void PlayBlockedIndicatorFeedback()
+    {
+        if (currentTargetIndicator == null)
+            return;
+
+        UpdateIndicatorBlockedColor(true);
+        ApplyIndicatorScale(indicatorBaseLocalScale);
+        PlayOneShot(blockedIndicatorClip, blockedVolume);
+
+        if (indicatorShakeRoutine != null)
+            StopCoroutine(indicatorShakeRoutine);
+
+        indicatorShakeRoutine = StartCoroutine(BlockedIndicatorShakeRoutine());
+    }
+
+    private IEnumerator BlockedIndicatorShakeRoutine()
+    {
+        float elapsed = 0f;
+
+        while (elapsed < blockedShakeDuration)
+        {
+            elapsed += Time.deltaTime;
+            Vector2 offset = Random.insideUnitCircle * blockedShakeStrength;
+            currentTargetIndicator.transform.localPosition =
+                indicatorBaseLocalPos + new Vector3(offset.x, offset.y, 0f);
+
+            ApplyIndicatorColor(indicatorBlockedColor);
+            ApplyIndicatorScale(indicatorBaseLocalScale);
+
+            yield return null;
+        }
+
+        indicatorShakeRoutine = null;
+
+        if (currentTargetIndicator != null)
+        {
+            float bob = Mathf.Sin(Time.time * indicatorBobSpeed) * indicatorBobAmplitude;
+            currentTargetIndicator.transform.localPosition = indicatorBaseLocalPos + new Vector3(0f, bob, 0f);
+            ApplyIndicatorScale(indicatorBaseLocalScale);
+        }
+    }
+
+    private bool IsTargetInteractableNow(Interactable target)
+    {
+        if (target == null)
+            return false;
+
+        if (IsPickable(target))
+            return CanInteractWithPickableTarget(target);
+
+        return IsNonPickableTargetAvailable(target);
+    }
+
+    private bool CanInteractWithPickableTarget(Interactable target)
+    {
+        if (target == null)
+            return false;
+
+        if (heldStack.Count == 0)
+            return CanAdd(target);
+
+        HoldCategory targetCategory = CategoryOf(target);
+        if (heldCategory != targetCategory)
+            return false;
+
+        if (CanAdd(target))
+            return true;
+
+        Interactable top = heldStack[heldStack.Count - 1];
+        if (top == null)
+            return false;
+
+        int topWeight = WeightOf(top);
+        int targetWeight = WeightOf(target);
+        return (currentWeight - topWeight + targetWeight) <= maxHolding;
+    }
+
+    private bool IsNonPickableTargetAvailable(Interactable target)
+    {
+        if (target == null)
+            return false;
+
+        MonoBehaviour[] behaviours = target.GetComponents<MonoBehaviour>();
+
+        for (int i = 0; i < behaviours.Length; i++)
+        {
+            MonoBehaviour behaviour = behaviours[i];
+            if (behaviour == null)
+                continue;
+
+            System.Type type = behaviour.GetType();
+
+            if (type.Name == "SellMachine")
+            {
+                if (!ReturnHeldBox(out _, out Box heldBox) || heldBox == null || heldBox.Type != BoxType.Player)
+                    return false;
+            }
+
+            if (type.Name == "Wrapper")
+            {
+                bool holdsItem = ReturnHeldItem(out _, out _);
+                bool wrapperHasPreparedBox = WrapperHasPreparedBox(behaviour);
+
+                if (!holdsItem && !wrapperHasPreparedBox)
+                    return false;
+            }
+
+            if (type.Name == "Unwrapper")
+            {
+                if (!ReturnHeldBox(out _, out _))
+                    return false;
+            }
+
+            if (type.Name == "QuotaDepositMachine")
+            {
+                if (GameManager.instance == null || GameManager.instance.gameStats == null || GameManager.instance.gameStats.money <= 0)
+                    return false;
+            }
+
+            FieldInfo isBusyField = type.GetField("isBusy", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (isBusyField != null && isBusyField.FieldType == typeof(bool))
+            {
+                bool busy = (bool)isBusyField.GetValue(behaviour);
+                if (busy)
+                    return false;
+            }
+
+            PropertyInfo isBusyProperty = type.GetProperty("IsBusy", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (isBusyProperty != null && isBusyProperty.PropertyType == typeof(bool) && isBusyProperty.CanRead)
+            {
+                bool busy = (bool)isBusyProperty.GetValue(behaviour);
+                if (busy)
+                    return false;
+            }
+
+            MethodInfo isInteractionLockedMethod = type.GetMethod("IsInteractionLocked", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (isInteractionLockedMethod != null && isInteractionLockedMethod.ReturnType == typeof(bool))
+            {
+                bool locked = (bool)isInteractionLockedMethod.Invoke(behaviour, null);
+                if (locked)
+                    return false;
+            }
+
+            if (type.Name.Contains("PC") && PCShoppingCartManager.IsGloballyLocked)
+                return false;
+        }
+
+        return true;
+    }
+
+    private bool WrapperHasPreparedBox(MonoBehaviour wrapperBehaviour)
+    {
+        if (wrapperBehaviour == null)
+            return false;
+
+        System.Type type = wrapperBehaviour.GetType();
+        FieldInfo currentBoxField = type.GetField("currentBox", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (currentBoxField == null)
+            return false;
+
+        GameObject currentBoxObject = currentBoxField.GetValue(wrapperBehaviour) as GameObject;
+        if (currentBoxObject == null)
+            return false;
+
+        Box box = currentBoxObject.GetComponent<Box>();
+        if (box == null || box.playerItemPool == null)
+            return false;
+
+        return box.playerItemPool.Count > 0;
+    }
+
+    private void PlayOneShot(AudioClip clip, float volume)
+    {
+        if (clip == null || audioSource == null)
+            return;
+
+        audioSource.PlayOneShot(clip, volume);
     }
 
     public bool TryTakeTopHeldBox(out GameObject boxGameObject, out Box boxData)
@@ -461,6 +1007,8 @@ public class Player : MonoBehaviour
         Box foundBox = top.GetComponent<Box>();
         if (foundBox == null)
             return false;
+
+        CancelDropJuice(top);
 
         PopLastFromStack();
 
@@ -531,6 +1079,8 @@ public class Player : MonoBehaviour
         WorldItemComponent foundItem = last.GetComponent<WorldItemComponent>();
         if (foundItem == null)
             return false;
+
+        CancelDropJuice(last);
 
         PopLastFromStack();
 
