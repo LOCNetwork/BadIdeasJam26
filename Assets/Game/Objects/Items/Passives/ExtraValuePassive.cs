@@ -53,11 +53,11 @@ public class ExtraValuePassive : Passive
 
         if (option == "ADDITIVE")
         {
-            return $"<color=green>+{int.Parse(value) * amountOfSells} item value</color> from selling [40:{finalItem}:40] X{amountOfSells} times";
+            return $"<color=green>+{int.Parse(value) * amountOfSells} item value</color> from selling [10:{finalItem}:10] X{amountOfSells} times";
         }
         else if (option == "MULTIPLIER")
         {
-            return $"<color=green>+{Mathf.RoundToInt(worldItem.value * float.Parse(value) * amountOfSells)} item value</color> [40:{finalItem}:40] X{amountOfSells} times.";
+            return $"<color=green>+{Mathf.RoundToInt(worldItem.value * float.Parse(value) * amountOfSells)} item value</color> [10:{finalItem}:10] X{amountOfSells} times.";
         }
 
         return "";

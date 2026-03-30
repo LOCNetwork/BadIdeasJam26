@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
     // Game stats
     public GameStats gameStats;
 
+    [Header("Day System")]
+    public int currentDay = 0;
+    public float dayDurationSeconds = 120f;
+
+
     public float currentTimer; // Timer that starts in the beginning of each day (Resets each day)
     public float timer; // Timer that never resets (Game timer)
 
@@ -51,6 +56,7 @@ public class GameManager : MonoBehaviour
 
     // Fade
     [SerializeField] private Image fadeImage;
+
 
 
 
@@ -136,10 +142,20 @@ public class GameManager : MonoBehaviour
     {
         return loadedItems.GetValueOrDefault(itemID, null);
     }
-    
-    
-    
-    
+
+
+    public void ResetCurrentDayTimer()
+    {
+        currentTimer = 0f;
+    }
+
+    public void AdvanceDay()
+    {
+        currentDay++;
+        currentTimer = 0f;
+    }
+
+
 
     // Load all scriptable objects from Resources/Items folder so it can be accessed from the list
     private void LoadItems()

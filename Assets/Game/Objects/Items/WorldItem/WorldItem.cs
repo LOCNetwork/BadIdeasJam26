@@ -30,6 +30,7 @@ public class WorldItem
     {
         itemID = item.itemID;
         displayName = item.displayName;
+        description = item.description;
         value = item.value;
         weight = item.weight;
         rarity = item.rarity;
@@ -58,6 +59,7 @@ public class WorldItem
     {
         itemID = item.itemID;
         displayName = item.displayName;
+        description = item.description;
         value = item.value;
         weight = item.weight;
         rarity = item.rarity;

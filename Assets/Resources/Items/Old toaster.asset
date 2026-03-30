@@ -22,7 +22,7 @@ MonoBehaviour:
   boxSlots: 2
   attributes:
   - key: 0
-    value: 1
+    value: 0
   - key: 2
     value: Technology
   passivesDescriptions:

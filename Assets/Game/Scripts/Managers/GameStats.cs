@@ -22,7 +22,7 @@ public class GameStats
 
     public GameStats()
     {
-        money = 0;
+        money = 25;
         itemsSold = new Dictionary<string, int>();
         itemsObtained = new Dictionary<string, int>();
         policeRaids = 0;
