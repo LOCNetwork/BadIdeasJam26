@@ -8260,7 +8260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &846317470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12302,6 +12302,7 @@ GameObject:
   - component: {fileID: 1173562088}
   - component: {fileID: 1173562091}
   - component: {fileID: 1173562092}
+  - component: {fileID: 1173562093}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -12334,7 +12335,7 @@ MonoBehaviour:
     unlockedCatalogues:
     - STATIONERY
   currentDay: 0
-  dayDurationSeconds: 120
+  dayDurationSeconds: 14.1
   currentTimer: 0
   timer: 0
   fontAsset: {fileID: 11400000, guid: e1bb70acdcd05f948b5cabebcf42c541, type: 2}
@@ -13291,9 +13292,9 @@ MonoBehaviour:
   gainColor: {r: 0, g: 1, b: 0, a: 1}
   lossColor: {r: 1, g: 0, b: 0, a: 1}
   mainMoneyColor: {r: 0.32156864, g: 0.7647059, b: 0.32156864, a: 1}
-  initialStepDelay: 0.05
-  minStepDelay: 0.008
-  accelerationPerStep: 0.08
+  totalGainTransferDuration: 2
+  totalLossTransferDuration: 2
+  minimumStepDelay: 5e-15
   lossAccumulationWindow: 0.12
   shakeDuration: 0.12
   shakeStrength: 8
@@ -13306,6 +13307,37 @@ MonoBehaviour:
   lossTickClip: {fileID: 8300000, guid: acdb06701743721498e97c6c90badef2, type: 3}
   lossTickVolume: 0.6
   lossPitchRange: {x: 0.65, y: 0.8}
+--- !u!114 &1173562093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173562083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff1ab73722201db47b6a101b608290e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOverManager
+  player: {fileID: 1798789838}
+  quotaManager: {fileID: 944592965}
+  spriteRendererToDisable: {fileID: 1798789841}
+  spriteRendererToDisable2: {fileID: 958695637}
+  firstObjectToActivate: {fileID: 1055039007}
+  secondObjectToActivate: {fileID: 846317469}
+  thirdObjectToFadeIn: {fileID: 1574889902}
+  fourthObjectToFadeIn: {fileID: 1608004424}
+  firstDelay: 2
+  secondDelay: 5
+  finalFadeDuration: 2
+  managerAudioSource: {fileID: 0}
+  firstLoopClip: {fileID: 0}
+  secondLoopClip: {fileID: 0}
+  firstLoopVolume: 1
+  secondLoopVolume: 1
+  stopAllOtherAudioSources: 1
+  muteAllOtherAudioListeners: 0
+  detectedByLog: 0
 --- !u!1 &1188180425
 GameObject:
   m_ObjectHideFlags: 0

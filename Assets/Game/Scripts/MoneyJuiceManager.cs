@@ -18,10 +18,10 @@ public class MoneyJuiceManager : MonoBehaviour
     [SerializeField] private Color lossColor = Color.red;
     [SerializeField] private Color mainMoneyColor = Color.white;
 
-    [Header("Step Timing")]
-    [SerializeField] private float initialStepDelay = 0.08f;
-    [SerializeField] private float minStepDelay = 0.008f;
-    [SerializeField] private float accelerationPerStep = 0.92f;
+    [Header("Transfer Duration")]
+    [SerializeField] private float totalGainTransferDuration = 3f;
+    [SerializeField] private float totalLossTransferDuration = 3f;
+    [SerializeField] private float minimumStepDelay = 0.005f;
 
     [Header("Loss Accumulation")]
     [SerializeField] private float lossAccumulationWindow = 0.12f;
@@ -190,7 +190,7 @@ public class MoneyJuiceManager : MonoBehaviour
         PrepareDeltaTextForGain(amount);
 
         int remainingGain = amount;
-        float currentDelay = initialStepDelay;
+        float stepDelay = GetStepDelayForAmount(amount, totalGainTransferDuration);
 
         while (remainingGain > 0)
         {
@@ -198,13 +198,16 @@ public class MoneyJuiceManager : MonoBehaviour
             displayedMoney++;
 
             deltaMoneyText.text = $"{remainingGain}";
-
             PlayTick(gainTickClip, gainTickVolume, gainPitchRange);
 
-            yield return StartCoroutine(ShakeDeltaRoutine(shakeDuration, shakeStrength));
+            if (shakeDuration > 0f && shakeStrength > 0f)
+                yield return StartCoroutine(ShakeDeltaRoutine(shakeDuration, shakeStrength));
+            else
+                yield return null;
 
-            yield return new WaitForSecondsRealtime(currentDelay);
-            currentDelay = Mathf.Max(minStepDelay, currentDelay * accelerationPerStep);
+            float waitTime = Mathf.Max(0f, stepDelay - shakeDuration);
+            if (waitTime > 0f)
+                yield return new WaitForSecondsRealtime(waitTime);
         }
 
         if (postAnimationHold > 0f)
@@ -227,7 +230,7 @@ public class MoneyJuiceManager : MonoBehaviour
         PrepareDeltaTextForLoss(amount);
 
         int progressedLoss = 0;
-        float currentDelay = initialStepDelay;
+        float stepDelay = GetStepDelayForAmount(amount, totalLossTransferDuration);
 
         while (progressedLoss < amount)
         {
@@ -236,19 +239,33 @@ public class MoneyJuiceManager : MonoBehaviour
 
             int remainingToDisplay = amount - progressedLoss;
             deltaMoneyText.text = $"- {remainingToDisplay}";
-
             PlayTick(lossTickClip, lossTickVolume, lossPitchRange);
 
-            yield return StartCoroutine(ShakeDeltaRoutine(shakeDuration, shakeStrength));
+            if (shakeDuration > 0f && shakeStrength > 0f)
+                yield return StartCoroutine(ShakeDeltaRoutine(shakeDuration, shakeStrength));
+            else
+                yield return null;
 
-            yield return new WaitForSecondsRealtime(currentDelay);
-            currentDelay = Mathf.Max(minStepDelay, currentDelay * accelerationPerStep);
+            float waitTime = Mathf.Max(0f, stepDelay - shakeDuration);
+            if (waitTime > 0f)
+                yield return new WaitForSecondsRealtime(waitTime);
         }
 
         if (postAnimationHold > 0f)
             yield return new WaitForSecondsRealtime(postAnimationHold);
 
         yield return StartCoroutine(FadeOutDeltaRoutine());
+    }
+
+    private float GetStepDelayForAmount(int amount, float totalDuration)
+    {
+        if (amount <= 0)
+            return minimumStepDelay;
+
+        if (totalDuration <= 0f)
+            return minimumStepDelay;
+
+        return Mathf.Max(minimumStepDelay, totalDuration / amount);
     }
 
     private void PrepareDeltaTextForGain(int amount)
