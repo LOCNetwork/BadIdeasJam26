@@ -151,6 +151,7 @@ public class GameManager : MonoBehaviour
         foreach (Item item in itemsLoaded)
         {
             item.passives = new List<Passive>();
+
             loadedItems.Add(item.itemID, item);
         }
     }

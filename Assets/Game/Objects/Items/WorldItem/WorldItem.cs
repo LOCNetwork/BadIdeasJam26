@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -35,7 +36,12 @@ public class WorldItem
 
         boxSlots = item.boxSlots;
 
-        attributes = item.attributes;
+        attributes = new List<Attribute>();
+
+        foreach (Attribute attribute in item.attributes)
+        {
+            attributes.Add(attribute.Clone());
+        }
 
         passives = item.passives;
 
@@ -58,7 +64,12 @@ public class WorldItem
 
         boxSlots = item.boxSlots;
 
-        attributes = item.attributes;
+        attributes = new List<Attribute>();
+
+        foreach (Attribute attribute in item.attributes)
+        {
+            attributes.Add(attribute.Clone());
+        }
 
         passives = item.passives;
 

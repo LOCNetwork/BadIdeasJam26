@@ -556,7 +556,7 @@ public class Wrapper : Interactable
 
                 relatedItems.Add(item);
 
-                relationMap.Add(passive, relatedItems);
+                relationMap[passive] = relatedItems;
             }
         }
 
@@ -599,9 +599,8 @@ public class Wrapper : Interactable
 
         foreach (WorldItem item in currentBox.GetComponent<Box>().playerItemPool)
         {
-            time += (int) GameManager.instance.sellManager.GetSellTimeByIndex(int.Parse(item.GetAttribute(Attributes.SELL_TIME).value));
+            time += GameManager.instance.sellManager.GetSellTimeByIndex(int.Parse(item.GetAttribute(Attributes.SELL_TIME).value));
         }
-
 
         box.sellTime = time;
     }

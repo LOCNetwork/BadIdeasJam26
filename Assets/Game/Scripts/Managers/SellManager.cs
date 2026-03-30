@@ -57,7 +57,10 @@ public class SellManager
 
     public int GetSellTimeByIndex(int index)
     {
-        if (index < 0 || index >= sellSpeedArray.Length) return 1; // Default value if index is out of range
+        if (index < 0 || index >= sellSpeedArray.Length) 
+        {
+            return 1;
+        }
 
         return sellSpeedArray[index];
     }

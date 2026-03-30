@@ -368,7 +368,7 @@ public class HeldInfoUIController : MonoBehaviour
             weightText.text = string.Empty;
 
         if (sellTimeText != null)
-            sellTimeText.text = $"Sell Time: {FormatSellTime(box.sellTime)}";
+            sellTimeText.text = $"Sell Time: {box.sellTime}s";
 
         if (playerBoxItemsText != null)
             playerBoxItemsText.text = $"Items in player box: {FormatPlayerBoxItems(box.playerItemPool)}";

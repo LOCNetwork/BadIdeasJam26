@@ -52,7 +52,7 @@ public class ChangeDeliverySpeedPassive : Passive
 
         string speed = "";
 
-        switch (current + change)
+        switch (UnityEngine.Mathf.Min(3, UnityEngine.Mathf.Max(0, current + change)))
         {
             case 0:
                 speed = "Very slow";
@@ -140,7 +140,7 @@ public class ChangeDeliverySpeedPassive : Passive
         int changeAmount = int.Parse(requiredInfo[2]);
 
 
-        int count = 0;
+        int count = -1;
 
         foreach (WorldItem it in box.playerItemPool)
         {
@@ -152,6 +152,6 @@ public class ChangeDeliverySpeedPassive : Passive
 
         int change = count * changeAmount;
 
-        return change != 0;
+        return change > 0;
     }
 }

@@ -8289,9 +8289,9 @@ MonoBehaviour:
   tweenTime: 0.15
   requireUnwrapperTag: 1
   rarityRates:
-    common: 16.3
-    rare: 0
-    legendary: 0
+    common: 80
+    rare: 18
+    legendary: 2
   itemPrefab: {fileID: 3856065095803039457, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
   spawnPoints:
   - {fileID: 546684086}
@@ -12085,7 +12085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c68eca8073ce9340afe803f6787d8b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  speed: 2
+  speed: 8
   interactKey: 101
   holdTarget: {fileID: 728790166}
   dropOrigin: {fileID: 919265955}
