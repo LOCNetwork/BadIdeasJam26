@@ -1,0 +1,940 @@
+fileFormatVersion: 2
+guid: e5f550a16b30111498c942232792a009
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5930510986578172060
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_0
+  - first:
+      213: -6217585883541113632
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_1
+  - first:
+      213: -6242224529001549343
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_2
+  - first:
+      213: -501915737364583985
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_3
+  - first:
+      213: 2115336459912952770
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_4
+  - first:
+      213: -4411410740662671953
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_5
+  - first:
+      213: 9167583233228535117
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_6
+  - first:
+      213: -4054491107133604954
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_7
+  - first:
+      213: 4893624485982647284
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_8
+  - first:
+      213: 1778222839509306326
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_9
+  - first:
+      213: -7853098359162825538
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_10
+  - first:
+      213: -3936873443490779592
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_11
+  - first:
+      213: -1471069893949009433
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_12
+  - first:
+      213: 3492890294115299151
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_13
+  - first:
+      213: 5107341417155803732
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_14
+  - first:
+      213: -4683124695782824043
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_15
+  - first:
+      213: 8621850703417771129
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_16
+  - first:
+      213: 88954385021782329
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_17
+  - first:
+      213: -5926987202655354777
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_18
+  - first:
+      213: -5479197037069461859
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_19
+  - first:
+      213: 2670792814935442763
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_20
+  - first:
+      213: 2076785897704371413
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_21
+  - first:
+      213: 6246312917345491169
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_22
+  - first:
+      213: 7681776415483251659
+    second: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c981b8332586d4250800000000000000
+      internalID: 5930510986578172060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_1
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e47c03c492b6b9a0800000000000000
+      internalID: -6217585883541113632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_2
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e1f1a41dd92f59a0800000000000000
+      internalID: -6242224529001549343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_3
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc9a43fcb46d809f0800000000000000
+      internalID: -501915737364583985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_4
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cb3b818d4f2b5d10800000000000000
+      internalID: 2115336459912952770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_5
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa56574dd4587c2c0800000000000000
+      internalID: -4411410740662671953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_6
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d45f961f06cc93f70800000000000000
+      internalID: 9167583233228535117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_7
+      rect:
+        serializedVersion: 2
+        x: 2240
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ab3256d1dd8bb7c0800000000000000
+      internalID: -4054491107133604954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_8
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f3362fda85a9e340800000000000000
+      internalID: 4893624485982647284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_9
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6db407840448da810800000000000000
+      internalID: 1778222839509306326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_10
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb495eb56a0340390800000000000000
+      internalID: -7853098359162825538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_11
+      rect:
+        serializedVersion: 2
+        x: 3520
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83e201b267a6d59c0800000000000000
+      internalID: -3936873443490779592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_12
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e1d56bb9b5b59be0800000000000000
+      internalID: -1471069893949009433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_13
+      rect:
+        serializedVersion: 2
+        x: 4160
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4fe624673d397030800000000000000
+      internalID: 3492890294115299151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_14
+      rect:
+        serializedVersion: 2
+        x: 4480
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45a363485fbe0e640800000000000000
+      internalID: 5107341417155803732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_15
+      rect:
+        serializedVersion: 2
+        x: 4800
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5976105c6e2320fb0800000000000000
+      internalID: -4683124695782824043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_16
+      rect:
+        serializedVersion: 2
+        x: 5120
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9740ba3c887f6a770800000000000000
+      internalID: 8621850703417771129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_17
+      rect:
+        serializedVersion: 2
+        x: 5440
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 939cf68ba870c3100800000000000000
+      internalID: 88954385021782329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_18
+      rect:
+        serializedVersion: 2
+        x: 5760
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 760017daa8c1fbda0800000000000000
+      internalID: -5926987202655354777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_19
+      rect:
+        serializedVersion: 2
+        x: 6080
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d961a17235bf5f3b0800000000000000
+      internalID: -5479197037069461859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_20
+      rect:
+        serializedVersion: 2
+        x: 6400
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4584ea2aef801520800000000000000
+      internalID: 2670792814935442763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_21
+      rect:
+        serializedVersion: 2
+        x: 6720
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d4b53b45c932dc10800000000000000
+      internalID: 2076785897704371413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_22
+      rect:
+        serializedVersion: 2
+        x: 7040
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e8df42018c5fa650800000000000000
+      internalID: 6246312917345491169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_23
+      rect:
+        serializedVersion: 2
+        x: 7360
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcb4ad833f62b9a60800000000000000
+      internalID: 7681776415483251659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_24
+      rect:
+        serializedVersion: 2
+        x: 7680
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 876c02bdf13691e428229e503b254f26
+      internalID: 1099971510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_25
+      rect:
+        serializedVersion: 2
+        x: 8000
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16e00b0491f465c479a35a317d04ade1
+      internalID: 559927936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_26
+      rect:
+        serializedVersion: 2
+        x: 8320
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37b0a035744c1f344ac4f9e24d6fdf45
+      internalID: 1410347568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_27
+      rect:
+        serializedVersion: 2
+        x: 8640
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0179d759466e56b47a356009979115d9
+      internalID: 1493230430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_28
+      rect:
+        serializedVersion: 2
+        x: 8960
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e8e609955f5f6945bfa9b41397100f4
+      internalID: 970579495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_29
+      rect:
+        serializedVersion: 2
+        x: 9280
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 015b7052f76c68741ab5421f373372b8
+      internalID: -1770057047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_30
+      rect:
+        serializedVersion: 2
+        x: 9600
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c66adaef4248e9d4e8ea25f59c74f6f5
+      internalID: 863177655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_31
+      rect:
+        serializedVersion: 2
+        x: 9920
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a34c1e9ecec10e4a82ae5b808f24f54
+      internalID: -809445615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 6ea183aa8978e2743a104ef1fee3b21c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":320.0,"y":180.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_0: 5930510986578172060
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_1: -6217585883541113632
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_10: -7853098359162825538
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_11: -3936873443490779592
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_12: -1471069893949009433
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_13: 3492890294115299151
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_14: 5107341417155803732
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_15: -4683124695782824043
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_16: 8621850703417771129
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_17: 88954385021782329
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_18: -5926987202655354777
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_19: -5479197037069461859
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_2: -6242224529001549343
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_20: 2670792814935442763
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_21: 2076785897704371413
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_22: 6246312917345491169
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_23: 7681776415483251659
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_24: 1099971510
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_25: 559927936
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_26: 1410347568
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_27: 1493230430
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_28: 970579495
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_29: -1770057047
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_3: -501915737364583985
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_30: 863177655
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_31: -809445615
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_4: 2115336459912952770
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_5: -4411410740662671953
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_6: 9167583233228535117
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_7: -4054491107133604954
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_8: 4893624485982647284
+      tocado_y_hundiiiiiiiiiiiiiidooooooooooooooooooooooooooooooooooooooooooooooooooooo_9: 1778222839509306326
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
