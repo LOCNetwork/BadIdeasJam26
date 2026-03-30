@@ -116,24 +116,40 @@ public class SellManager
             GameManager.instance.gameStats.itemsSold[item.itemID] = sells + 1;
             //
 
-            if (item.passives == null) continue;
+            bool activatesPassives = false;
 
-            foreach (Passive passive in item.passives)
+            if (item.passives != null)
             {
-                if (passive.MeetsCondition(item, box, item.passivesInfo))
+
+                foreach (Passive passive in item.passives)
                 {
-                    container.gameObject.SetActive(true);
+                    if (passive.MeetsCondition(item, box, item.passivesInfo))
+                    {
+                        activatesPassives = true;
+                        container.gameObject.SetActive(true);
 
-                    string passiveDisplay = passive.Display(item, box, item.passivesInfo);
+                        string passiveDisplay = passive.Display(item, box, item.passivesInfo);
 
-                    if (passiveDisplay.Equals(string.Empty)) continue;
+                        if (passiveDisplay.Equals(string.Empty)) continue;
 
-                    DisplayItemPassive(passiveDisplay);
-                    passive.ExecutePassive(item, box, item.passivesInfo);
+                        DisplayInfo(passiveDisplay);
+                        passive.ExecutePassive(item, box, item.passivesInfo);
 
-                    yield return new WaitForSeconds(2f);
+                        yield return new WaitForSeconds(2f);
+                    }
+
                 }
-                    
+            }
+
+            if (!activatesPassives)
+            {
+                container.gameObject.SetActive(true);
+
+                string display = $"[20:{item.itemID}:40] <color=green>+{item.value} $</color>";
+
+                DisplayInfo(display);
+
+                yield return new WaitForSeconds(2f);
             }
 
         }
@@ -208,7 +224,7 @@ public class SellManager
 
 
 
-    public void DisplayItemPassive(string displayText)
+    public void DisplayInfo(string displayText)
     {
 
         for (int i = container.childCount - 1; i >= 0; --i)
@@ -261,32 +277,22 @@ public class SellManager
 
                 
 
-                if (lastObject != null)
+                if (lastObject != null && lastObject.name.Contains("Icon"))
                 {
                     go.transform.localPosition = new Vector3(lastObject.transform.localPosition.x + float.Parse(separation1) + spacing, 41, 0);
+                } else if (lastObject != null && lastObject.name.Contains("Text"))
+                {
+                    RectTransform rtText = lastObject.GetComponent<TextMeshProUGUI>().rectTransform;
+ 
+                    float width = lastObject.GetComponent<TextMeshProUGUI>().GetPreferredValues(lastObject.GetComponent<TextMeshProUGUI>().text).x;
+
+                    go.transform.localPosition = new Vector3(rtText.localScale.x * width + lastObject.transform.localPosition.x + float.Parse(separation1), 41, 0);
                 } else
                 {
-                    go.transform.localPosition = new Vector3(0, 41, 0);
+                    go.transform.localPosition = new Vector3(float.Parse(separation1), 41, 0);
                 }
 
 
-                if (lastObject != null && lastObject.name.Contains("Text"))
-                {
-                    lastObject.GetComponent<TextMeshProUGUI>().ForceMeshUpdate();
-
-                    var info1 = lastObject.GetComponent<TextMeshProUGUI>().textInfo;
-                    int last = info1.characterCount - 1;
-
-                    while (last >= 0 && !info1.characterInfo[last].isVisible)
-                        last--;
-
-                    if (last < 0) return;
-
-                    // End of the visible text in first's local space
-                    Vector3 end = info1.characterInfo[last].bottomRight;
-
-                    go.transform.localPosition = new Vector3(end.x - 40, 41, 0);
-                }
 
                 lastObject = go;
 
@@ -303,8 +309,6 @@ public class SellManager
             {
                 textObject = new GameObject("Text");
                 textObject.transform.SetParent(container);
-                Debug.Log("SEPARATING " + spacing);
-                Debug.Log(lastObject.transform.localPosition);
 
                 textObject.AddComponent<TextMeshProUGUI>();
 

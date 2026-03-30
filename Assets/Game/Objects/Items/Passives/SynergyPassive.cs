@@ -18,8 +18,6 @@ public class SynergyPassive : Passive
      * <ITEM_TO_SELL_WITH> can be either an item ID or an item type. If it's an item type, specify TYPE-<ITEM_TYPE>, e.g. TYPE-School
      * 
      */
-
-
     public new int priority = 0;
 
     public override string Display(WorldItem worldItem, Box box, List<string> info)

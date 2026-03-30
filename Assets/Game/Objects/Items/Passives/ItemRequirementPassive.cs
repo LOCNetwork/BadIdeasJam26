@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class ItemRequirementPassive : Passive
@@ -35,7 +36,7 @@ public class ItemRequirementPassive : Passive
         string[] requiredInfo = passiveInfo.Split(':');
 
         string listItems = requiredInfo[1];
-        float penaltyPercentage = float.Parse(requiredInfo[2]);
+        float penaltyPercentage = float.Parse(requiredInfo[2], CultureInfo.InvariantCulture);
 
         string[] items = listItems.Split("-");
 
@@ -104,7 +105,7 @@ public class ItemRequirementPassive : Passive
         string[] requiredInfo = passiveInfo.Split(':');
 
         string listItems = requiredInfo[1];
-        float penaltyPercentage = float.Parse(requiredInfo[2]);
+        float penaltyPercentage = float.Parse(requiredInfo[2], CultureInfo.InvariantCulture);
 
         string[] items = listItems.Split("-");
 
@@ -174,7 +175,7 @@ public class ItemRequirementPassive : Passive
         string[] requiredInfo = passiveInfo.Split(':');
 
         string listItems = requiredInfo[1];
-        float penaltyPercentage = float.Parse(requiredInfo[2]);
+        float penaltyPercentage = float.Parse(requiredInfo[2], CultureInfo.InvariantCulture);
 
         string[] items = listItems.Split("-");
 

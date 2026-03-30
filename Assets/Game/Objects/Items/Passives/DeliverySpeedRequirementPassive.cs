@@ -1,5 +1,6 @@
 using NUnit.Framework.Internal.Execution;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -35,7 +36,7 @@ public class DeliverySpeedRequirementPassive : Passive
         string[] requiredInfo = passiveInfo.Split(':');
 
         int maxSeconds = int.Parse(requiredInfo[1]);
-        float penaltyPercentage = float.Parse(requiredInfo[2]);
+        float penaltyPercentage = float.Parse(requiredInfo[2], CultureInfo.InvariantCulture);
         string type = requiredInfo[3];
 
 
@@ -85,7 +86,7 @@ public class DeliverySpeedRequirementPassive : Passive
         string[] requiredInfo = passiveInfo.Split(':');
 
         int maxSeconds = int.Parse(requiredInfo[1]);
-        float penaltyPercentage = float.Parse(requiredInfo[2]);
+        float penaltyPercentage = float.Parse(requiredInfo[2], CultureInfo.InvariantCulture);
         string type = requiredInfo[3];
 
 
@@ -132,7 +133,7 @@ public class DeliverySpeedRequirementPassive : Passive
         string[] requiredInfo = passiveInfo.Split(':');
 
         int maxSeconds = int.Parse(requiredInfo[1]);
-        float penaltyPercentage = float.Parse(requiredInfo[2]);
+        float penaltyPercentage = float.Parse(requiredInfo[2], CultureInfo.InvariantCulture);
         string type = requiredInfo[3];
 
 

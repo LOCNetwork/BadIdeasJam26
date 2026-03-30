@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.Rendering.LookDev;
 
@@ -51,13 +52,15 @@ public class ExtraValuePassive : Passive
             finalItem = itemTarget;
         }
 
+        Debug.Log("VALUE GAINED 1: " + value);
+        Debug.Log("VALUE GAINED: " + float.Parse(value, CultureInfo.InvariantCulture));
         if (option == "ADDITIVE")
         {
-            return $"<color=green>+{int.Parse(value) * amountOfSells} item value</color> from selling [10:{finalItem}:10] X{amountOfSells} times";
+            return $"<color=green>+{float.Parse(value, CultureInfo.InvariantCulture) * amountOfSells} item value</color> from selling [10:{finalItem}:40] x{amountOfSells} times";
         }
         else if (option == "MULTIPLIER")
         {
-            return $"<color=green>+{Mathf.RoundToInt(worldItem.value * float.Parse(value) * amountOfSells)} item value</color> [10:{finalItem}:10] X{amountOfSells} times.";
+            return $"<color=green>+{Mathf.RoundToInt(worldItem.value * float.Parse(value, CultureInfo.InvariantCulture) * amountOfSells)} item value</color> [10:{finalItem}:40] x{amountOfSells} times.";
         }
 
         return "";
@@ -96,11 +99,11 @@ public class ExtraValuePassive : Passive
 
         if (option == "ADDITIVE")
         {
-            worldItem.value += int.Parse(value) * amountOfSells;
+            worldItem.value += Mathf.RoundToInt(float.Parse(value, CultureInfo.InvariantCulture) * amountOfSells);
         }
         else if (option == "MULTIPLIER")
         {
-            worldItem.value += Mathf.RoundToInt(worldItem.value * float.Parse(value) * amountOfSells);
+            worldItem.value += Mathf.RoundToInt(worldItem.value * float.Parse(value, CultureInfo.InvariantCulture) * amountOfSells);
         }
 
 
