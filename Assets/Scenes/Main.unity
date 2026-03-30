@@ -12335,7 +12335,7 @@ MonoBehaviour:
     unlockedCatalogues:
     - STATIONERY
   currentDay: 0
-  dayDurationSeconds: 120
+  dayDurationSeconds: 14.1
   currentTimer: 0
   timer: 0
   fontAsset: {fileID: 11400000, guid: e1bb70acdcd05f948b5cabebcf42c541, type: 2}
@@ -13292,9 +13292,9 @@ MonoBehaviour:
   gainColor: {r: 0, g: 1, b: 0, a: 1}
   lossColor: {r: 1, g: 0, b: 0, a: 1}
   mainMoneyColor: {r: 0.32156864, g: 0.7647059, b: 0.32156864, a: 1}
-  initialStepDelay: 0.05
-  minStepDelay: 0.008
-  accelerationPerStep: 0.08
+  totalGainTransferDuration: 2
+  totalLossTransferDuration: 2
+  minimumStepDelay: 5e-15
   lossAccumulationWindow: 0.12
   shakeDuration: 0.12
   shakeStrength: 8
@@ -13316,10 +13316,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1173562083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bebc4d987d19bd43ac6b65c05b25a34, type: 3}
+  m_Script: {fileID: 11500000, guid: ff1ab73722201db47b6a101b608290e9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TriggerESCMenu
-  ESCMenu: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::GameOverManager
+  player: {fileID: 1798789838}
+  quotaManager: {fileID: 944592965}
+  spriteRendererToDisable: {fileID: 1798789841}
+  spriteRendererToDisable2: {fileID: 958695637}
+  firstObjectToActivate: {fileID: 1055039007}
+  secondObjectToActivate: {fileID: 846317469}
+  thirdObjectToFadeIn: {fileID: 1574889902}
+  fourthObjectToFadeIn: {fileID: 1608004424}
+  firstDelay: 2
+  secondDelay: 5
+  finalFadeDuration: 2
+  managerAudioSource: {fileID: 0}
+  firstLoopClip: {fileID: 0}
+  secondLoopClip: {fileID: 0}
+  firstLoopVolume: 1
+  secondLoopVolume: 1
+  stopAllOtherAudioSources: 1
+  muteAllOtherAudioListeners: 0
+  detectedByLog: 0
 --- !u!1 &1188180425
 GameObject:
   m_ObjectHideFlags: 0
@@ -21729,7 +21747,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 9999
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1814095597
 RectTransform:
@@ -25251,6 +25269,6 @@ SceneRoots:
   - {fileID: 1609834943}
   - {fileID: 1001961727}
   - {fileID: 1866225370}
+  - {fileID: 1814095597}
   - {fileID: 2093975885}
   - {fileID: 846317473}
-  - {fileID: 1814095597}
