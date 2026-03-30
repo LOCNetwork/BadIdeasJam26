@@ -37,7 +37,6 @@ public class HeldInfoUIController : MonoBehaviour
     [Header("Item UI")]
     [SerializeField] private TMP_Text descriptionText;
     [SerializeField] private TMP_Text attributesText;
-    [SerializeField] private TMP_Text passivesNamesText;
     [SerializeField] private TMP_Text passivesDescriptionsText;
     [SerializeField] private TMP_Text rarityText;
     [SerializeField] private TMP_Text valueText;
@@ -119,7 +118,6 @@ public class HeldInfoUIController : MonoBehaviour
 
         AddTextIfNotNull(descriptionText);
         AddTextIfNotNull(attributesText);
-        AddTextIfNotNull(passivesNamesText);
         AddTextIfNotNull(passivesDescriptionsText);
         AddTextIfNotNull(rarityText);
         AddTextIfNotNull(valueText);
@@ -306,9 +304,6 @@ public class HeldInfoUIController : MonoBehaviour
         if (attributesText != null)
             attributesText.text = FormatAttributes(item.attributes);
 
-        if (passivesNamesText != null)
-            passivesNamesText.text = FormatPassives(item.passives);
-
         if (passivesDescriptionsText != null)
             passivesDescriptionsText.text = FormatPassiveDescriptions(item.passivesDescriptions);
 
@@ -352,9 +347,6 @@ public class HeldInfoUIController : MonoBehaviour
         if (attributesText != null)
             attributesText.text = string.Empty;
 
-        if (passivesNamesText != null)
-            passivesNamesText.text = string.Empty;
-
         if (passivesDescriptionsText != null)
             passivesDescriptionsText.text = string.Empty;
 
@@ -368,7 +360,7 @@ public class HeldInfoUIController : MonoBehaviour
             weightText.text = string.Empty;
 
         if (sellTimeText != null)
-            sellTimeText.text = $"Sell Time: {box.sellTime}s";
+            sellTimeText.text = $"Sell Time: {box.sellTime}";
 
         if (playerBoxItemsText != null)
             playerBoxItemsText.text = $"Items in player box: {FormatPlayerBoxItems(box.playerItemPool)}";
@@ -536,7 +528,7 @@ public class HeldInfoUIController : MonoBehaviour
             if (sb.Length > 0)
                 sb.Append('\n');
 
-            sb.Append(descriptions[i]);
+            sb.Append("- " + descriptions[i]);
         }
 
         return sb.ToString();

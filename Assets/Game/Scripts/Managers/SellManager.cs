@@ -315,8 +315,8 @@ public class SellManager
                 continue;
             }
 
-            GameObject textObject;
 
+            GameObject textObject;
 
             if (lastObject != null && lastObject.name.Contains("Icon"))
             {

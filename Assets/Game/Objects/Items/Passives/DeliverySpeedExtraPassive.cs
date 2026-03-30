@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class DeliverySpeedExtraPassive : Passive
@@ -34,7 +35,7 @@ public class DeliverySpeedExtraPassive : Passive
 
         string[] requiredInfo = passiveInfo.Split(':');
 
-        double extraKitValuePerSecond = double.Parse(requiredInfo[1]);
+        double extraKitValuePerSecond = double.Parse(requiredInfo[1], CultureInfo.InvariantCulture);
 
 
         // Calculate sell time
@@ -45,14 +46,16 @@ public class DeliverySpeedExtraPassive : Passive
             secondsOfDelivery += (int)GameManager.instance.sellManager.GetSellTimeByIndex(int.Parse(item.GetAttribute(Attributes.SELL_TIME).value));
         }
 
+        double totalValue = extraKitValuePerSecond * secondsOfDelivery;
+
         string message = "";
 
         if (extraKitValuePerSecond > 0)
         {
-            message = $"The item [10:{worldItem.itemID}:40] has added an extra <color=green>{extraKitValuePerSecond * secondsOfDelivery * 100}%</color> kit value (delivery speed extra)!";
+            message = $"The item [10:{worldItem.itemID}:40] has added an extra <color=green>{totalValue * 100}%</color> kit value (delivery speed extra)!";
         } else
         {
-            message = $"The item [10:{worldItem.itemID}:40] has removed a total of <color=red>{Mathf.RoundToInt(Mathf.Abs((float) extraKitValuePerSecond * secondsOfDelivery * 100))}%</color> kit value (delivery speed penalty)!";
+            message = $"The item [10:{worldItem.itemID}:40] has removed a total of <color=red>{Mathf.RoundToInt(Mathf.Abs((float) totalValue * 100))}%</color> kit value (delivery speed penalty)!";
         }
 
         return message;
@@ -91,6 +94,7 @@ public class DeliverySpeedExtraPassive : Passive
 
         
         float secondsOfDelivery = GameManager.instance.sellManager.GetSellTimeByIndex(finalIndex);
+
 
         box.extraPercentage += extraKitValuePerSecond * secondsOfDelivery;
     }

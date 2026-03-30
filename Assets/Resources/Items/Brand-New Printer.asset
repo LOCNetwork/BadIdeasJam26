@@ -15,8 +15,7 @@ MonoBehaviour:
   itemID: BRANDNEW_PRINTER
   displayName: Brand-New Printer
   description: Now THIS is a rare find! But now I'm wondering how all of this is
-    going to fit into a single box... Although I don't think two boxes would help
-    much either.
+    going to fit into a single box...
   value: 100
   weight: 2
   rarity: 2

@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Build.Reporting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -43,12 +42,36 @@ public class UIManager : MonoBehaviour
         currentPosition = "MainMenu";
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
     public void TransitionToSceneAnimation(string sceneName)
     {
 
         StartCoroutine(SlidePanelsFromCenterMenuAndLoad(sceneName, 0.5f));
         StartCoroutine(FadeOutCoroutine(fadeImage, 40f));
 
+    }
+
+    public void TransitionToSceneEndingAnimation(string sceneName, Image fadeImg)
+    {
+        StartCoroutine(TransitionToEndScene(sceneName, fadeImg));
+    }
+
+    public void TransitionToSceneEndingAnimation(string sceneName)
+    {
+        StartCoroutine(TransitionToEndScene(sceneName, fadeImage));
+    }
+
+    private IEnumerator TransitionToEndScene(string sceneName, Image image)
+    {
+        StartCoroutine(FadeOutCoroutine(image, 40f));
+
+        yield return new WaitForSecondsRealtime(1.9f);
+
+        SceneManager.LoadScene(sceneName);
     }
 
 

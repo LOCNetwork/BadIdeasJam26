@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class ItemReplacerPassive : Passive
 {
@@ -25,16 +24,15 @@ public class ItemReplacerPassive : Passive
     {
 
         int index = 0;
-        foreach (WorldItem item in box.playerItemPool)
+        for (index = 0; index < box.playerItemPool.Count; index++)
         {
-            if (item.itemID.Equals(item.itemID))
+            if (box.playerItemPool[index].itemID.Equals(worldItem.itemID))
             {
                 break;
             }
-            index++;
         }
 
-        if (index + 1 == box.playerItemPool.Count)
+        if (index + 1 >= box.playerItemPool.Count)
         {
             return;
         }
@@ -48,13 +46,12 @@ public class ItemReplacerPassive : Passive
     public override bool MeetsCondition(WorldItem worldItem, Box box, List<string> info)
     {
         int index = 0;
-        foreach (WorldItem item in box.playerItemPool)
+        for (index = 0; index < box.playerItemPool.Count; index++)
         {
-            if (item.itemID.Equals(item.itemID))
+            if (box.playerItemPool[index].itemID.Equals(worldItem.itemID))
             {
                 break;
             }
-            index++;
         }
 
         if (index + 1 == box.playerItemPool.Count)

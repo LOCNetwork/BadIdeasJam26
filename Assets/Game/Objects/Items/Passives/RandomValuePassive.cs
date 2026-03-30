@@ -24,10 +24,6 @@ public class RandomValuePassive : Passive
 
     public override void ExecutePassive(WorldItem worldItem, Box box, List<string> info)
     {
-        int amountOfSells = GameManager.instance.gameStats.itemsSold.TryGetValue(worldItem.itemID, out int sells) ? sells : 0;
-
-        if (amountOfSells == 0) return;
-
         string passiveInfo = null;
         foreach (string passive in worldItem.passivesInfo)
         {
@@ -49,6 +45,8 @@ public class RandomValuePassive : Passive
 
         int selection = Random.Range(min, max);
         int selection2 = Random.Range(min, max);
+
+        Debug.Log(selection * selection2);
 
         worldItem.value = selection * selection2;
     }

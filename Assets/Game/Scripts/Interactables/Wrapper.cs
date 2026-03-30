@@ -229,7 +229,7 @@ public class Wrapper : Interactable
             RefreshSlotsText();
             PlaySuccessSlotsJuice();
 
-            if (currentCapacityFilled + boxSlots == boxCapacity)
+            if (GetItemCapacity() == boxCapacity)
             {
                 yield return StartCoroutine(SpawnBoxRoutine(AVAILABLE_BOX_SIZE, true));
                 yield break;
@@ -315,6 +315,8 @@ public class Wrapper : Interactable
         if (currentBox != null)
         {
             Box boxData = currentBox.GetComponent<Box>();
+
+            ModifyItemsInWrapper();
 
             CalculatePrice();
             CalculateSellTime();

@@ -88,44 +88,16 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void GameOver()
-    {
-        // Stop player movement
-        player.GetComponent<Player>().SetMovementLocked(true);
-
-        // Play Game Over animation
-        GameOverVisuals();
-    }
-
-
-    private IEnumerator GameOverVisuals()
-    {
-        // Pre-animation start time?
-        yield return new WaitForSeconds(2f);
-
-
-        // Play animation
-        gameOverScreen.SetActive(true);
-        // REPLACE WITH ANIMATION CODE
-
-
-
-        yield return new WaitForSeconds(2f);
-
-        BackToMainMenu();
-
-
-    }
 
 
     public void BackToMainMenu()
     {
-        
+        UIManager.Instance.TransitionToSceneEndingAnimation("Main Menu", fadeImage);
     }
 
     public void Restart()
     {
-
+        UIManager.Instance.TransitionToSceneEndingAnimation("Main", fadeImage);
     }
 
 

@@ -9,11 +9,16 @@ public class AudioManager : MonoBehaviour
     private AudioMixer Mixer;
     [SerializeField]
     private GameObject muteIcon;
+    [SerializeField]
+    private Slider slider;
 
 
     public void Start()
     {
         float volume = PlayerPrefs.GetFloat("Volume", 1);
+
+        slider.value = volume;
+
         OnChangeSlider(volume);
 
         
