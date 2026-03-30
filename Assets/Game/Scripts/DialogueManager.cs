@@ -134,7 +134,7 @@ public class DialogueManager : MonoBehaviour
     private bool triggeredQuota75 = false;
 
     private int lastObservedDay = -1;
-    private int lastObservedCartCount = 0;
+    private bool lastObservedPurchaseRunning = false;
 
     private FieldInfo playerCurrentTargetField;
 
@@ -174,7 +174,7 @@ public class DialogueManager : MonoBehaviour
             gameManager = GameManager.instance;
 
         lastObservedDay = gameManager != null ? gameManager.currentDay : 0;
-        lastObservedCartCount = GetShoppingCartCount();
+        lastObservedPurchaseRunning = GetPurchaseRunningState();
 
         TriggerDialogue(DialogueTriggerType.Tutorial, true);
     }
@@ -211,11 +211,9 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        // Guardar lo actual para reanudarlo después
         if (currentSequence != null && currentSequence.nextIndex < GetSequenceCount(currentSequence.triggerType))
             pendingQueue.Enqueue(new DialogueSequenceState(currentSequence.triggerType, currentSequence.nextIndex, false));
 
-        // El nuevo trigger va primero
         Queue<DialogueSequenceState> rebuilt = new Queue<DialogueSequenceState>();
         rebuilt.Enqueue(newState);
 
@@ -620,7 +618,6 @@ public class DialogueManager : MonoBehaviour
             return;
 
         string typeName = targetBehaviour.GetType().Name;
-
         bool isInteractableNow = EvaluateTargetInteractableNow(targetBehaviour);
 
         switch (typeName)
@@ -774,27 +771,32 @@ public class DialogueManager : MonoBehaviour
 
     private void DetectBuyBoxTrigger()
     {
-        int currentCartCount = GetShoppingCartCount();
-        if (currentCartCount > lastObservedCartCount)
+        bool currentPurchaseRunning = GetPurchaseRunningState();
+
+        if (currentPurchaseRunning && !lastObservedPurchaseRunning)
             TriggerBuyBox();
 
-        lastObservedCartCount = currentCartCount;
+        lastObservedPurchaseRunning = currentPurchaseRunning;
     }
 
-    private int GetShoppingCartCount()
+    private bool GetPurchaseRunningState()
     {
         if (PCShoppingCartManager.Instance == null)
-            return 0;
+            return false;
 
-        FieldInfo cartField = typeof(PCShoppingCartManager).GetField("cart", BindingFlags.Instance | BindingFlags.NonPublic);
-        if (cartField == null)
-            return 0;
+        FieldInfo purchaseRunningField = typeof(PCShoppingCartManager).GetField(
+            "purchaseRunning",
+            BindingFlags.Instance | BindingFlags.NonPublic
+        );
 
-        object value = cartField.GetValue(PCShoppingCartManager.Instance);
-        if (value is System.Collections.ICollection collection)
-            return collection.Count;
+        if (purchaseRunningField == null)
+            return false;
 
-        return 0;
+        object value = purchaseRunningField.GetValue(PCShoppingCartManager.Instance);
+        if (value is bool running)
+            return running;
+
+        return false;
     }
 
     // =========================================================

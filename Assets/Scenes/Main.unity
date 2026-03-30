@@ -2846,7 +2846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5529412}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5921569}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5122,7 +5122,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text New Text New Text New Text New Text New Text New Text New Text
+  m_text: If you need more money, i can help by giving you 10$ as long as you return
+    15$ on quota!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e1bb70acdcd05f948b5cabebcf42c541, type: 2}
   m_sharedMaterial: {fileID: -2367171183061416670, guid: e1bb70acdcd05f948b5cabebcf42c541, type: 2}
@@ -5149,14 +5150,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49.6
-  m_fontSizeBase: 49.6
+  m_fontSize: 50.8
+  m_fontSizeBase: 50.8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 8
   m_VerticalAlignment: 2048
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -5188,7 +5189,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -3.4490356, y: 0, z: -91.97333, w: -64.38141}
+  m_margin: {x: -3.4490356, y: 0, z: -132.22736, w: -64.38141}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5218,7 +5219,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -172, y: 130}
+  m_AnchoredPosition: {x: -207, y: 142}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &576859954
@@ -12443,9 +12444,11 @@ MonoBehaviour:
   messageText: {fileID: 570885393}
   confirmButton: {fileID: 981920911}
   closeButton: {fileID: 1564039649}
-  normalOpenMessage: "\xBFQuieres activar esta opci\xF3n?"
-  lowMoneyOpenMessage: "Tu dinero es bajo. Quiz\xE1 te convenga activar esta opci\xF3n."
-  lowMoneyThreshold: 12
+  normalOpenMessage: If you need more money, I can help by giving you 10$ as long
+    as you return 15$ on quota!
+  lowMoneyOpenMessage: You seem like you need money... I'll give you 10$ if you give
+    back 15$ on quota, deal?
+  lowMoneyThreshold: 6
   quotaIncreaseAmount: 15
   moneyIncreaseAmount: 10
   openDuration: 0.18
@@ -12498,55 +12501,125 @@ MonoBehaviour:
     holdCompletedTextTime: 0.5
   - id: 
     triggerType: 0
-    phrase: You're the new hire right?
-    secondsPerCharacter: 0.05
-    holdCompletedTextTime: 0.5
+    phrase: Use W A S D to move and E to interact
+    secondsPerCharacter: 0.08
+    holdCompletedTextTime: 0.8
   - id: 
     triggerType: 0
-    phrase: Since I take it you haven't had a single job until now, how about I teach
-      you how to be useful for once?
-    secondsPerCharacter: 0.05
-    holdCompletedTextTime: 0.5
+    phrase: 'To start out...
+
+      Make sure to check the PC on your left.'
+    secondsPerCharacter: 0.08
+    holdCompletedTextTime: 0.8
   - id: 
-    triggerType: 0
-    phrase: At your left you've got your own company-assigned laptop. Move towards
-      it with WASD and press E to interact.
+    triggerType: 1
+    phrase: This is Giggle!
     secondsPerCharacter: 0.05
     holdCompletedTextTime: 0.5
   - id: 
     triggerType: 1
-    phrase: This is Giggle, the only place where you'll be able to obtain items.
+    phrase: Go ahead and select the catalog of which you want to get a box of.
     secondsPerCharacter: 0.05
-    holdCompletedTextTime: 0.5
-  - id: 
-    triggerType: 1
-    phrase: Unfortunately for you, Giggle only offers random items of whichever catalog
-      you choose.
-    secondsPerCharacter: 0.05
-    holdCompletedTextTime: 0.5
-  - id: 
-    triggerType: 1
-    phrase: And, since Giggle only offers one catalog to new customers, you'll just
-      have to order from the Stationery catalog for now.
-    secondsPerCharacter: 0.05
-    holdCompletedTextTime: 0.5
-  - id: 
-    triggerType: 1
-    phrase: And, since Giggle only offers one catalog to new customers, you'll just
-      have to order from the Stationery catalog for now.
-    secondsPerCharacter: 0.05
-    holdCompletedTextTime: 0.5
-  - id: 
-    triggerType: 8
-    phrase: penepenepene
-    secondsPerCharacter: 0.05
-    holdCompletedTextTime: 0.5
+    holdCompletedTextTime: 0.6
   - id: 
     triggerType: 16
-    phrase: chorropene
+    phrase: Pick the boxes and unwrap them using the machine on the top-left corner.
+    secondsPerCharacter: 0.065
+    holdCompletedTextTime: 0.6
+  - id: 
+    triggerType: 7
+    phrase: These items can then be packed with the wrapper on your right.
+    secondsPerCharacter: 0.065
+    holdCompletedTextTime: 0.6
+  - id: 
+    triggerType: 7
+    phrase: All of them also have special abilities and quirks, so be sure to check
+      them first.
+    secondsPerCharacter: 0.065
+    holdCompletedTextTime: 0.6
+  - id: 
+    triggerType: 4
+    phrase: When you're done, give that box to your fellow employee at the top.
+    secondsPerCharacter: 0.06
+    holdCompletedTextTime: 0.6
+  - id: 
+    triggerType: 10
+    phrase: For each box you sell, you gain money based on item synergies in the
+      box.
+    secondsPerCharacter: 0.06
+    holdCompletedTextTime: 0.6
+  - id: 
+    triggerType: 10
+    phrase: You can then put that money in the briefcase to fill out the quota in
+      time.
+    secondsPerCharacter: 0.05
+    holdCompletedTextTime: 0.6
+  - id: 
+    triggerType: 10
+    phrase: Simple enough yeah? Now GET TO WORK.
     secondsPerCharacter: 0.05
     holdCompletedTextTime: 0.5
-  player: {fileID: 0}
+  - id: 
+    triggerType: 13
+    phrase: The money you put in this briefcase goes to your quota, you have a time
+      limit to clear it so be careful... Still, be sure to save some money for boxes.
+    secondsPerCharacter: 0.07
+    holdCompletedTextTime: 0.65
+  - id: 
+    triggerType: 8
+    phrase: This is the unwrapper, you need to feed it with boxes from the PC on
+      your left.
+    secondsPerCharacter: 0.06
+    holdCompletedTextTime: 0.55
+  - id: 
+    triggerType: 5
+    phrase: This is the wrapper, you can pack items here after unwrapping them from
+      the boxes.
+    secondsPerCharacter: 0.06
+    holdCompletedTextTime: 0.6
+  - id: 
+    triggerType: 11
+    phrase: You need to first get a package ready to deliver using the wrapper on
+      your right.
+    secondsPerCharacter: 0.06
+    holdCompletedTextTime: 0.6
+  - id: 
+    triggerType: 14
+    phrase: Whenever you spend all your money, you can to take a loan using the button
+      on the bottom right. They will ask for interest though, so use this sparingly.
+    secondsPerCharacter: 0.05
+    holdCompletedTextTime: 0.6
+  - id: 
+    triggerType: 9
+    phrase: Be sure to get some boxes at the PC before coming here.
+    secondsPerCharacter: 0.05
+    holdCompletedTextTime: 0.5
+  - id: 
+    triggerType: 6
+    phrase: This needs ITEMS, be sure to unwrap them first.
+    secondsPerCharacter: 0.05
+    holdCompletedTextTime: 0.5
+  - id: 
+    triggerType: 12
+    phrase: Pack your items first before selling them.
+    secondsPerCharacter: 0.05
+    holdCompletedTextTime: 0.5
+  - id: 
+    triggerType: 18
+    phrase: You've got 1 minute left for the time limit, one slip-up and it's over.
+    secondsPerCharacter: 0.05
+    holdCompletedTextTime: 0.5
+  - id: 
+    triggerType: 17
+    phrase: Remember to keep up with the quota... Time's ticking.
+    secondsPerCharacter: 0.05
+    holdCompletedTextTime: 0.5
+  - id: 
+    triggerType: 15
+    phrase: Remember to take a loan to keep going!
+    secondsPerCharacter: 0.05
+    holdCompletedTextTime: 0.5
+  player: {fileID: 1798789838}
   gameManager: {fileID: 1173562084}
   quotaManager: {fileID: 944592965}
   interactKey: 101
