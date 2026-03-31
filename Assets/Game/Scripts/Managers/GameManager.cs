@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
 
     // Fade
-    [SerializeField] private Image fadeImage;
+    [SerializeField] private UnityEngine.UI.Image fadeImage;
 
 
 
@@ -84,6 +85,7 @@ public class GameManager : MonoBehaviour
 
 
         HandleSells();
+        HandleTextSells();
         UpdateMoneyUI();
     }
 
@@ -169,10 +171,38 @@ public class GameManager : MonoBehaviour
         if (info.Value + box.sellTime <= timer)
         {
             Debug.Log("SOLD BOX");
-            sellManager.CompleteBoxSale(info.Key);
+            sellManager.CompleteBoxSale(info.Key, boxObject);
         }
 
     }
+
+
+    private void HandleTextSells()
+    {
+        if (sellManager.boxesQueue.Count == 0) return;
+
+        foreach (GameObject boxObject in sellManager.boxesQueue)
+        {
+            for (int i = boxObject.transform.childCount - 1; i >= 0; --i)
+            {
+                GameObject text = boxObject.transform.GetChild(i).gameObject;
+
+                if (text.GetComponent<TextMeshPro>() != null)
+                {
+                    Box box = boxObject.GetComponent<Box>();
+                    sellManager.boxesOnSale.TryGetValue(box.guid, out KeyValuePair<Box, float> info);
+
+                    int seconds = Mathf.RoundToInt(box.sellTime - (timer - info.Value));
+
+                    if (seconds < 0) seconds = 0;
+
+                    text.GetComponent<TextMeshPro>().text = "" + seconds;
+                }
+            }
+        }
+       
+    }
+
 
     public void UpdateMoneyUI()
     {

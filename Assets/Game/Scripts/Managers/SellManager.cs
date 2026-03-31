@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
+using System.Xml.Linq;
 using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
@@ -30,6 +31,9 @@ public class SellManager
     private Stack<GameObject> truckBodyModules;
 
     private MonoBehaviour mono;
+
+    [SerializeField]
+    private float secondsBetweenItemInfo = 1f;
 
     public SellManager(RectTransform container, TMP_FontAsset fontAsset, MonoBehaviour mono)
     {
@@ -83,17 +87,33 @@ public class SellManager
 
         go.GetComponent<Box>().guid = box.guid;
 
-        GameObject text = new GameObject();
-        text.transform.parent = go.transform;
+        GameObject textGO = new GameObject("SellTimeText");
+        textGO.transform.SetParent(go.transform, false); // keep local transform clean
+        textGO.transform.localRotation = Quaternion.identity;
+        textGO.transform.localScale = Vector3.one;
 
-        TextMeshPro textMesh = text.AddComponent<TextMeshPro>();
-        textMesh.text = "" + box.sellTime;
-        textMesh.autoSizeTextContainer = true;
-        textMesh.alignment = TextAlignmentOptions.Center;
-        textMesh.font = fontAsset;
-        textMesh.fontSize = 50;
-        textMesh.color = Color.white;
-        textMesh.transform.localPosition += new Vector3(0, 10, 0);
+        TextMeshPro tmp = textGO.AddComponent<TextMeshPro>();
+        tmp.text = box.sellTime.ToString();
+        tmp.autoSizeTextContainer = true;
+        tmp.alignment = TextAlignmentOptions.Center;
+        tmp.font = fontAsset;
+        tmp.fontSize = 10;
+        tmp.color = Color.white;
+
+        // put it above the sprite
+        var sr = go.GetComponent<SpriteRenderer>();
+        var mr = textGO.GetComponent<MeshRenderer>();
+        float yOffset = 0.3f;
+
+        if (sr != null && mr != null)
+        {
+            mr.sortingLayerID = sr.sortingLayerID;
+            mr.sortingOrder = sr.sortingOrder + 999; // draw above the sprite
+            textGO.transform.localPosition = new Vector3(0f, sr.bounds.extents.y + yOffset, 0f);
+        } else
+        {
+            textGO.transform.localPosition = new Vector3(0f, 1f, 0f);
+        }
 
 
         boxesQueue.Enqueue(go);
@@ -105,19 +125,51 @@ public class SellManager
         return true;
     }
 
-    public void CompleteBoxSale(Box box)
+    public void CompleteBoxSale(Box box, GameObject boxObject)
     {
         Debug.Log("Selling box with value: " + box.value);
         boxesOnSale.Remove(box.guid);
-        
+
         Debug.Log("Performing sell animation");
         mono.StartCoroutine(PerformBoxSellAnimation(box));
 
+        for (int i = boxObject.transform.childCount - 1; i >= 0; --i)
+        {
+            GameObject text = boxObject.transform.GetChild(i).gameObject;
 
-      
+            if (text.GetComponent<TextMeshPro>() != null)
+            {
+                mono.StartCoroutine(ShakeTimeText(text));
+            }
+        }
     }
-    
-    
+
+    IEnumerator ShakeTimeText(GameObject text)
+    {
+        if (text == null) yield break;
+
+        Transform tr = text.transform;
+        Vector3 startLocalPos = tr.localPosition;
+        Quaternion startLocalRot = tr.localRotation;
+
+        float posAmplitude = 0.1f;   // small shake
+        float rotAmplitude = 5f;      // optional tiny tilt
+        float speed = 30f;
+
+        while (text != null)
+        {
+            float x = (Mathf.PerlinNoise(Time.time * speed, 0f) * 2f - 1f) * posAmplitude;
+            float y = (Mathf.PerlinNoise(0f, Time.time * speed) * 2f - 1f) * posAmplitude;
+
+            tr.localPosition = startLocalPos + new Vector3(x, y, 0f);
+            tr.localRotation = startLocalRot * Quaternion.Euler(0f, 0f, Mathf.Sin(Time.time * speed) * rotAmplitude);
+
+            yield return null;
+        }
+    }
+
+
+
     IEnumerator PerformBoxSellAnimation(Box box)
     {
 
@@ -148,7 +200,7 @@ public class SellManager
                         DisplayInfo(passiveDisplay);
                         passive.ExecutePassive(item, box, item.passivesInfo);
 
-                        yield return new WaitForSeconds(2f);
+                        yield return new WaitForSeconds(secondsBetweenItemInfo);
                     }
 
                 }
@@ -158,11 +210,11 @@ public class SellManager
             {
                 container.gameObject.SetActive(true);
 
-                string display = $"[20:{item.itemID}:40] <color=green>+{item.value} $</color>";
+                string display = $"[20:{item.itemID}:60] <color=green>+{item.value}</color>";
 
                 DisplayInfo(display);
 
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(secondsBetweenItemInfo);
             }
 
         }
@@ -305,7 +357,7 @@ public class SellManager
                     go.transform.localPosition = new Vector3(float.Parse(separation1), 41, 0);
                 }
 
-
+                    
 
                 lastObject = go;
 

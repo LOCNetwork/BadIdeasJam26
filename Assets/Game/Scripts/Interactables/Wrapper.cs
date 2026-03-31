@@ -226,7 +226,6 @@ public class Wrapper : Interactable
 
             ModifyItemsInWrapper();
 
-            RefreshSlotsText();
             PlaySuccessSlotsJuice();
 
             if (GetItemCapacity() == boxCapacity)
@@ -235,6 +234,7 @@ public class Wrapper : Interactable
                 yield break;
             }
 
+            RefreshSlotsText();
             UpdateItemsUI();
 
             Debug.Log($"Estadisticas Wrapper --> ESPACIO RELLENO: {currentCapacityFilled + boxSlots}, TOTAL SLOTS CAJA: {boxCapacity}, SOBRANTE: {boxCapacity - (currentCapacityFilled + boxSlots)}");
@@ -262,7 +262,6 @@ public class Wrapper : Interactable
             yield return new WaitForSeconds(waitTime);
 
         SpawnBox(boxSize);
-        RefreshSlotsText();
 
         if (applyCooldownAfterSpawn && extractCooldown > 0f)
             yield return new WaitForSeconds(extractCooldown);
@@ -329,6 +328,7 @@ public class Wrapper : Interactable
 
             currentBox = null;
 
+            RefreshSlotsText();
             UpdateItemsUI();
             return;
         }

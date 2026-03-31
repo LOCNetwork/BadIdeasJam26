@@ -217,7 +217,7 @@ public class SynergyPassive : Passive
                 {
                     foreach (string midItem in midItems)
                     {
-                        itemCounts.Add(midItem, count);
+                        itemCounts[midItem] = count;
                     }
                     
                 }
@@ -238,7 +238,7 @@ public class SynergyPassive : Passive
 
                 if (count >= int.Parse(itemAmount))
                 {
-                    itemCounts.Add(itemID, count);
+                    itemCounts[itemID] = count;
                 }
             }
 

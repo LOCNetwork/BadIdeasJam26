@@ -30,22 +30,46 @@ public class DisplayManager : MonoBehaviour
 
     private void AddResolutions()
     {
-        resolutions = Screen.resolutions;
+        Resolution[] allResolutions = Screen.resolutions;
+
+        Resolution[] resolutionsArray;
 
         List<string> options = new List<string>();
-
+        
         int currentResolution = 0;
 
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            options.Add(resolutions[i].ToString());
+        int size = 0;
 
-            if (Screen.currentResolution.Equals(resolutions[i]))
+        for (int i = 0; i < allResolutions.Length; i++)
+        {
+            if (Screen.currentResolution.Equals(allResolutions[i]))
             {
                 currentResolution = i;
             }
 
+            if (((double) allResolutions[i].width / allResolutions[i].height) == (1920.0 / 1080.0))
+            {
+                size++;
+            }
+
         }
+
+        resolutionsArray = new Resolution[size];
+
+        int index = 0;
+        for (int i = 0; i < allResolutions.Length; i++)
+        {
+
+            if (((double) allResolutions[i].width / allResolutions[i].height) == (1920.0 / 1080.0))
+            {
+                options.Add(allResolutions[i].ToString());
+
+                resolutionsArray[index++] = allResolutions[i];
+            }
+
+        }
+
+        resolutions = resolutionsArray;
 
         resolutionsDropDown.AddOptions(options);
 
@@ -90,6 +114,10 @@ public class DisplayManager : MonoBehaviour
 
     public void ChangeResolution(int index)
     {
+
+        if (index >= resolutions.Length) return;
+
+
         PlayerPrefs.SetInt("Resolution", index);
 
         Resolution resolucion = resolutions[index];
@@ -101,6 +129,8 @@ public class DisplayManager : MonoBehaviour
 
     public void ChangeScreenType(int index)
     {
+        if (index >= fullScreenModes.Length) return;
+
         PlayerPrefs.SetInt("ScreenType", index);
 
         Resolution resolucion = resolutions[PlayerPrefs.GetInt("Resolution")];

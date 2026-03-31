@@ -77,7 +77,7 @@ public class DeliverySpeedExtraPassive : Passive
 
         string[] requiredInfo = passiveInfo.Split(':');
 
-        double extraKitValuePerSecond = double.Parse(requiredInfo[1]) * worldItem.value;
+        double extraKitValuePerSecond = double.Parse(requiredInfo[1], CultureInfo.InvariantCulture);
 
 
         // Calculate sell time
