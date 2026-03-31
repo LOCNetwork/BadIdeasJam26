@@ -35,6 +35,12 @@ public class JuiceTargetEntry
     public Color clickColor = Color.gray;
     public float clickHoldDuration = 0.06f;
 
+    [Header("Audio")]
+    public AudioClip hoverEnterClip;
+    public AudioClip clickClip;
+    [Range(0f, 1f)] public float hoverEnterVolume = 1f;
+    [Range(0f, 1f)] public float clickVolume = 1f;
+
     [HideInInspector] public bool initialized;
     [HideInInspector] public bool isRectTransform;
     [HideInInspector] public RectTransform rectTarget;
@@ -57,13 +63,22 @@ public class JuiceProfileManager : MonoBehaviour
     [Header("Targets")]
     [SerializeField] private List<JuiceTargetEntry> targets = new List<JuiceTargetEntry>();
 
+    [Header("Shared Audio Source")]
+    [SerializeField] private AudioSource sharedAudioSource;
+
+    private float sharedAudioSourceBasePitch = 1f;
+    private bool sharedAudioSourceBaseLoop = false;
+    private AudioClip sharedAudioSourceBaseClip;
+
     private void Awake()
     {
+        CacheAudioSourceBaseState();
         InitializeAllTargets();
     }
 
     private void OnEnable()
     {
+        CacheAudioSourceBaseState();
         InitializeAllTargets();
         RestoreAllToBaseImmediate();
     }
@@ -88,6 +103,16 @@ public class JuiceProfileManager : MonoBehaviour
             UpdateUpDown(entry, scaledDt, unscaledDt, scaledTime, unscaledTime);
             UpdateHover(entry, scaledDt, unscaledDt);
         }
+    }
+
+    private void CacheAudioSourceBaseState()
+    {
+        if (sharedAudioSource == null)
+            return;
+
+        sharedAudioSourceBasePitch = sharedAudioSource.pitch;
+        sharedAudioSourceBaseLoop = sharedAudioSource.loop;
+        sharedAudioSourceBaseClip = sharedAudioSource.clip;
     }
 
     private void InitializeAllTargets()
@@ -236,6 +261,7 @@ public class JuiceProfileManager : MonoBehaviour
             return;
 
         entry.isHovered = true;
+        PlayEntryClip(entry.hoverEnterClip, entry.hoverEnterVolume);
     }
 
     public void NotifyPointerExit(int index)
@@ -259,10 +285,34 @@ public class JuiceProfileManager : MonoBehaviour
         if (!entry.juiceOnClick || entry.target == null)
             return;
 
+        PlayEntryClip(entry.clickClip, entry.clickVolume);
+
         if (entry.clickRoutine != null)
             StopCoroutine(entry.clickRoutine);
 
         entry.clickRoutine = StartCoroutine(ClickJuiceRoutine(entry));
+    }
+
+    private void PlayEntryClip(AudioClip clip, float volume)
+    {
+        if (sharedAudioSource == null || clip == null)
+            return;
+
+        // Asegura que un clip en loop o configuraciones previas no interfieran
+        bool wasPlaying = sharedAudioSource.isPlaying;
+        AudioClip previousClip = sharedAudioSource.clip;
+        bool previousLoop = sharedAudioSource.loop;
+        float previousPitch = sharedAudioSource.pitch;
+
+        sharedAudioSource.loop = false;
+        sharedAudioSource.clip = null;
+        sharedAudioSource.pitch = 1f;
+        sharedAudioSource.PlayOneShot(clip, volume);
+
+        // Restauramos el estado base para no dejar la source contaminada
+        sharedAudioSource.loop = sharedAudioSourceBaseLoop;
+        sharedAudioSource.pitch = sharedAudioSourceBasePitch;
+        sharedAudioSource.clip = sharedAudioSourceBaseClip != null ? sharedAudioSourceBaseClip : previousClip;
     }
 
     private IEnumerator ClickJuiceRoutine(JuiceTargetEntry entry)
