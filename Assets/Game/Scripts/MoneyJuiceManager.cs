@@ -158,8 +158,7 @@ public class MoneyJuiceManager : MonoBehaviour
                     totalGain += pendingMoneyChanges.Dequeue();
 
                 yield return StartCoroutine(AnimateGainRoutine(totalGain));
-            }
-            else if (firstDelta < 0)
+            } else if (firstDelta < 0)
             {
                 int totalLoss = -firstDelta;
 
@@ -190,15 +189,23 @@ public class MoneyJuiceManager : MonoBehaviour
         PrepareDeltaTextForGain(amount);
 
         int remainingGain = amount;
-        float stepDelay = GetStepDelayForAmount(amount, totalGainTransferDuration);
+
+        float effectiveStepDuration = Mathf.Max(shakeDuration, minimumStepDelay);
+        int maxSteps = Mathf.Max(1, Mathf.FloorToInt(totalGainTransferDuration / effectiveStepDuration));
+        int steps = Mathf.Max(1, Mathf.Min(amount, maxSteps));
+        int remainingSteps = steps;
+        float stepDelay = totalGainTransferDuration / steps;
 
         while (remainingGain > 0)
         {
-            remainingGain--;
-            displayedMoney++;
+            int stepAmount = Mathf.CeilToInt((float)remainingGain / remainingSteps);
+            remainingGain -= stepAmount;
+            displayedMoney += stepAmount;
 
             deltaMoneyText.text = $"{remainingGain}";
             PlayTick(gainTickClip, gainTickVolume, gainPitchRange);
+
+            remainingSteps--;
 
             if (shakeDuration > 0f && shakeStrength > 0f)
                 yield return StartCoroutine(ShakeDeltaRoutine(shakeDuration, shakeStrength));
@@ -230,16 +237,26 @@ public class MoneyJuiceManager : MonoBehaviour
         PrepareDeltaTextForLoss(amount);
 
         int progressedLoss = 0;
-        float stepDelay = GetStepDelayForAmount(amount, totalLossTransferDuration);
+
+        float effectiveStepDuration = Mathf.Max(shakeDuration, minimumStepDelay);
+        int maxSteps = Mathf.Max(1, Mathf.FloorToInt(totalLossTransferDuration / effectiveStepDuration));
+        int steps = Mathf.Max(1, Mathf.Min(amount, maxSteps));
+        int remainingSteps = steps;
+        float stepDelay = totalLossTransferDuration / steps;
 
         while (progressedLoss < amount)
         {
-            progressedLoss++;
-            displayedMoney--;
+            int remainingLoss = amount - progressedLoss;
+            int stepAmount = Mathf.CeilToInt((float)remainingLoss / remainingSteps);
+
+            progressedLoss += stepAmount;
+            displayedMoney -= stepAmount;
 
             int remainingToDisplay = amount - progressedLoss;
             deltaMoneyText.text = $"- {remainingToDisplay}";
             PlayTick(lossTickClip, lossTickVolume, lossPitchRange);
+
+            remainingSteps--;
 
             if (shakeDuration > 0f && shakeStrength > 0f)
                 yield return StartCoroutine(ShakeDeltaRoutine(shakeDuration, shakeStrength));

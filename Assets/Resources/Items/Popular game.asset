@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: POPULAR_GAME
   displayName: Popular game
   description: We FINALLY got this after so long. No wait too great...
-  value: 40
+  value: 30
   weight: 0
   rarity: 1
   boxSlots: 1

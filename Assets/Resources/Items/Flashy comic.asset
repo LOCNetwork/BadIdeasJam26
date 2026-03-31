@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Flashy comic
   description: The front page has a cubic character saying "Join NOW!" and something
     about... a league of crafting?
-  value: 15
+  value: 13
   weight: 0
   rarity: 1
   boxSlots: 2

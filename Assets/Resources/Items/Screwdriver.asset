@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: SCREWDRIVER
   displayName: Screwdriver
   description: I better not "screw" this kit up...
-  value: 20
+  value: 15
   weight: 0
   rarity: 1
   boxSlots: 1

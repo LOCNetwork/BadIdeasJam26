@@ -25,6 +25,11 @@ public class SynergyPassive : Passive
         
         Dictionary<string, int> itemCounts = GetItemCounts(box, info);
 
+        if (itemCounts.ContainsKey(worldItem.itemID) && itemCounts[worldItem.itemID] <= 1)
+        {
+            itemCounts.Remove(worldItem.itemID);
+        }
+
         if (itemCounts.Count == 0) return "";
 
         string message = $"Item [10:{worldItem.itemID}:40] has synergized with";
@@ -120,7 +125,7 @@ public class SynergyPassive : Passive
                 int count = 0;
                 foreach (WorldItem i in box.playerItemPool)
                 {
-                    if (i.itemID.Equals(itemID))
+                    if (i != worldItem && i.itemID.Equals(itemID))
                     {
                         count++;
                     }

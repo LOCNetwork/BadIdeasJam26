@@ -54,6 +54,9 @@ public class Box : MonoBehaviour
     [SerializeField, Min(1)] private int mediumCapacity = 5;
     [SerializeField, Min(1)] private int largeCapacity = 8;
 
+    [Header("Item Weight")]
+    public Weights itemsWeight;
+
     [Header("Item Roll Settings")]
     [SerializeField] private bool allowRepeatedItems = true;
 

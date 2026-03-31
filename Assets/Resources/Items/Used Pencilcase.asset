@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Used pencil case
   description: These were always useful to prevent some items from being robbed in
     class.. Unless they straight-up stole the whole thing.
-  value: 7
+  value: 5
   weight: 0
   rarity: 0
   boxSlots: 2

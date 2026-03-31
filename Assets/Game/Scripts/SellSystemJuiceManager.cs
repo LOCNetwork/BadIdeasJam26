@@ -318,28 +318,30 @@ public class SellSystemJuiceManager : MonoBehaviour
         TMP_Text tmp = state.tmp;
         string fullText = state.originalText ?? string.Empty;
 
-        tmp.text = string.Empty;
+        // Lay out the full text once so TMP uses the correct width/scale.
+        tmp.text = fullText;
+        tmp.ForceMeshUpdate();
 
-        StringBuilder sb = new StringBuilder();
+        int totalVisibleCharacters = tmp.textInfo.characterCount;
+        tmp.maxVisibleCharacters = 0;
 
-        for (int i = 0; i < fullText.Length; i++)
+        if (animateNumericCharacters && state.textAnimator != null)
+        {
+            state.textAnimator.SetAnimationEnabled(true);
+            state.textAnimator.SetParameters(numericWaveAmplitude, numericWaveSpeed, numericShakeStrength, numericShakeSpeed);
+        }
+
+        for (int i = 0; i <= totalVisibleCharacters; i++)
         {
             if (tmp == null)
                 yield break;
 
-            sb.Append(fullText[i]);
-            tmp.text = sb.ToString();
-
-            if (animateNumericCharacters && state.textAnimator != null)
-            {
-                state.textAnimator.SetAnimationEnabled(true);
-                state.textAnimator.SetParameters(numericWaveAmplitude, numericWaveSpeed, numericShakeStrength, numericShakeSpeed);
-            }
+            tmp.maxVisibleCharacters = i;
 
             yield return new WaitForSecondsRealtime(Mathf.Max(0.001f, characterInterval));
         }
 
-        tmp.text = fullText;
+        tmp.maxVisibleCharacters = totalVisibleCharacters;
         state.lastObservedText = fullText;
 
         if (animateNumericCharacters && state.textAnimator != null)

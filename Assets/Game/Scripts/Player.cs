@@ -130,6 +130,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        SetMovementLocked(false);
         ForcePlayAnimationState(GetTargetAnimState());
         RefreshTargetVisuals();
     }
@@ -424,6 +425,7 @@ public class Player : MonoBehaviour
         Vector3 localOffset = new Vector3(0f, yOffset * stackIndex, 0f);
 
         target.PickUpToStack(HoldTarget, localOffset);
+        ApplyStackWeight(target, true);
         RefreshStackVisuals();
         PlayOneShot(holdClip, holdVolume);
     }
@@ -444,6 +446,7 @@ public class Player : MonoBehaviour
         if (heldStack.Count == 0)
             heldCategory = HoldCategory.None;
 
+        ApplyStackWeight(last, false);
         RefreshStackVisuals();
         return last;
     }
@@ -483,6 +486,56 @@ public class Player : MonoBehaviour
 
         return new Vector3(origin.x + offset.x, origin.y + offset.y, origin.z);
     }
+
+
+    private void ApplyStackWeight(Interactable interactable, bool enters)
+    {
+
+        float weight = -1;
+
+        if (interactable.IsItem)
+        {
+            WorldItemComponent itemComponent = interactable.GetComponent<WorldItemComponent>();
+
+            WorldItem item = itemComponent.Data;
+
+            weight = GetPercentageFromWeights(item.weight);
+        } else if (interactable.IsBox)
+        {
+            Box box = interactable.GetComponent<Box>();
+
+            weight = GetPercentageFromWeights(box.itemsWeight);
+        }
+
+
+        if (weight < 0) return;
+
+        if (enters)
+        {
+            speed *= weight;
+        } else
+        {
+            speed /= weight;
+        }
+
+    }
+
+
+    private float GetPercentageFromWeights(Weights weights)
+    {
+        switch (weights)
+        {
+            case Weights.LOW:
+                return 0.9f;
+            case Weights.MEDIUM:
+                return 0.7f;
+            case Weights.HIGH:
+                return 0.5f;
+        }
+
+        return -1;
+    }
+
 
     private Vector2 RotateVector(Vector2 vector, float angleDegrees)
     {

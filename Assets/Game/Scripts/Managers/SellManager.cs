@@ -95,6 +95,7 @@ public class SellManager
         TextMeshPro tmp = textGO.AddComponent<TextMeshPro>();
         tmp.text = box.sellTime.ToString();
         tmp.autoSizeTextContainer = true;
+        tmp.textWrappingMode = TextWrappingModes.NoWrap;
         tmp.alignment = TextAlignmentOptions.Center;
         tmp.font = fontAsset;
         tmp.fontSize = 10;

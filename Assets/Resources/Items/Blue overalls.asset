@@ -25,8 +25,8 @@ MonoBehaviour:
   - key: 2
     value: Clothing-Shirt
   passivesDescriptions:
-  - +30% kit value if this is sold with the Jumping shoes
+  - +20% kit value if this is sold with the Jumping shoes
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
   displaySprite: {fileID: -311596417, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
   passivesInfo:
-  - SYNERGY:JUMPING_SHOES-1:MULTIPLIER:0.3
+  - SYNERGY:JUMPING_SHOES-1:MULTIPLIER:0.2

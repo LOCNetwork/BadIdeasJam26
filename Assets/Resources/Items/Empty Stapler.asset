@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: EMPTY_STAPLER
   displayName: Empty stapler
   description: What's even the point of getting this with nothing to *Staple* with?
-  value: 12
+  value: 5
   weight: 0
   rarity: 1
   boxSlots: 1

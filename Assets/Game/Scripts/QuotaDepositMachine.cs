@@ -24,7 +24,9 @@ public class QuotaDepositMachine : Interactable
 
     [Header("Quota By Day")]
     [Tooltip("Cuota del día 0.")]
-    [SerializeField] private int startingQuota = 100;
+    [SerializeField] private int startingQuota = 0;
+    [Tooltip("Cuota extra")]
+    [SerializeField] private int quotaBonus = 0;
     [Tooltip("Incremento de cuota por cada día.")]
     [SerializeField] private int quotaIncreasePerDay = 50;
     [SerializeField] private bool clampDepositToQuota = true;
@@ -430,6 +432,7 @@ public class QuotaDepositMachine : Interactable
     private void ResetForNewDayVisualAndLogic()
     {
         currentDeposited = 0;
+        quotaBonus = 0;
         heldTime = 0f;
         tickTimer = 0f;
         dayResolved = false;
@@ -442,7 +445,10 @@ public class QuotaDepositMachine : Interactable
     public int GetCurrentQuota()
     {
         int day = gameManager != null ? gameManager.currentDay : 0;
-        return Mathf.Max(1, startingQuota + (day * quotaIncreasePerDay));
+
+        float x = day + 1;
+
+        return Mathf.RoundToInt(Mathf.Max(1, 50 * Mathf.Pow(x, x / (x + 3)))) + quotaBonus;
     }
 
     public int GetCurrentDeposited()

@@ -19,7 +19,7 @@ MonoBehaviour:
   value: 1
   weight: 0
   rarity: 0
-  boxSlots: 0
+  boxSlots: 1
   attributes:
   - key: 0
     value: 3

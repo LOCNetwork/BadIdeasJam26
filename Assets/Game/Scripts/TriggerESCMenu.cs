@@ -20,6 +20,9 @@ public class TriggerESCMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
 
+         if (GameManager.instance.gameOver) return;
+            
+
          if (!inAnimation) 
          { 
 

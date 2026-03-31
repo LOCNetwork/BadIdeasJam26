@@ -45,7 +45,7 @@ public class ItemRequirementPassive : Passive
         int itemIndex = 0;
         while (itemIndex < items.Length && meetsCondition)
         {
-            string item = items[itemIndex];
+            string item = items[itemIndex++];
 
             if (item.Contains("TYPE"))
             {
@@ -114,7 +114,7 @@ public class ItemRequirementPassive : Passive
         int itemIndex = 0;
         while (itemIndex < items.Length && meetsCondition)
         {
-            string item = items[itemIndex];
+            string item = items[itemIndex++];
 
             if (item.Contains("TYPE"))
             {
@@ -184,7 +184,7 @@ public class ItemRequirementPassive : Passive
         int itemIndex = 0;
         while (itemIndex < items.Length && meetsCondition)
         {
-            string item = items[itemIndex];
+            string item = items[itemIndex++];
 
             if (item.Contains("TYPE"))
             {

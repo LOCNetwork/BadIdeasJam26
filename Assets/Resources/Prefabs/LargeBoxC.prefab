@@ -83,7 +83,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1004800591
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 6951114633567200485, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
@@ -128,6 +128,7 @@ MonoBehaviour:
   smallCapacity: 3
   mediumCapacity: 5
   largeCapacity: 8
+  itemsWeight: 2
   allowRepeatedItems: 1
   smallSprites:
     front: {fileID: -6880077232281017949, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
@@ -155,7 +156,7 @@ MonoBehaviour:
   extraPercentage: 0
   extraValue: 0
   value: 0
-  sellTimeIndex: 0
+  sellTime: 0
 --- !u!61 &2581942408372732687
 BoxCollider2D:
   m_ObjectHideFlags: 0

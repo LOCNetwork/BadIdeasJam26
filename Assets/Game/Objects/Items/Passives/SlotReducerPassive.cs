@@ -100,7 +100,9 @@ public class SlotReducerPassive : Passive
 
             if (!accountsSameItem && !item.itemID.Equals(worldItem.itemID))
             {
+                Debug.Log("Lowed slots of item from: " + item.boxSlots);
                 item.boxSlots = Mathf.Max(0, item.boxSlots - int.Parse((valueString)));
+                Debug.Log("TO: " + item.boxSlots);
                 amount++;
             } else if (accountsSameItem && item != worldItem)
             {

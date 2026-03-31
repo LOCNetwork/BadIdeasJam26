@@ -220,6 +220,11 @@ public class QuotaUpgradeSelectionUI : MonoBehaviour
         if (upgradeUIRoot == null)
             return;
 
+        if (currentCarryLevel >= carryUpgrade.maxLevel && currentSpeedLevel >= speedUpgrade.maxLevel && currentWrapperLevel >= wrapperUpgrade.maxLevel && currentCatalogLevel >= catalogUpgrade.maxLevel)
+        {
+            return;
+        }
+
         upgradeUIOpen = true;
         isOpening = true;
 

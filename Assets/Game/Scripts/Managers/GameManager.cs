@@ -58,6 +58,9 @@ public class GameManager : MonoBehaviour
     // Fade
     [SerializeField] private UnityEngine.UI.Image fadeImage;
 
+    // Indicates if the game is over or not
+    public bool gameOver = false;
+
 
 
 
@@ -130,6 +133,7 @@ public class GameManager : MonoBehaviour
 
     public void AdvanceDay()
     {
+        Debug.Log("DAY INCREASED");
         currentDay++;
         currentTimer = 0f;
     }

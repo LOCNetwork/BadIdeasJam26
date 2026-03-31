@@ -129,6 +129,8 @@ public class GameOverManager : MonoBehaviour
     {
         gameOverTriggered = true;
 
+        GameManager.instance.gameOver = true;
+
         if (player != null)
             player.SetMovementLocked(true);
 
@@ -138,7 +140,7 @@ public class GameOverManager : MonoBehaviour
             spriteRendererToDisable2.enabled = false;
 
         StopAllOtherGameAudio();
-        PlayManagerLoop(firstLoopClip, firstLoopVolume);
+        PlayManagerLoop(firstLoopClip, firstLoopVolume, false);
 
         if (firstObjectToActivate != null)
             firstObjectToActivate.SetActive(true);
@@ -155,7 +157,7 @@ public class GameOverManager : MonoBehaviour
         PrepareFadeObject(thirdObjectToFadeIn);
         PrepareFadeObject(fourthObjectToFadeIn);
 
-        PlayManagerLoop(secondLoopClip, secondLoopVolume);
+        PlayManagerLoop(secondLoopClip, secondLoopVolume, true);
 
         yield return StartCoroutine(FadeInObjectsRoutine(finalFadeDuration, thirdObjectToFadeIn, fourthObjectToFadeIn));
     }
@@ -184,7 +186,7 @@ public class GameOverManager : MonoBehaviour
         }
     }
 
-    private void PlayManagerLoop(AudioClip clip, float volume)
+    private void PlayManagerLoop(AudioClip clip, float volume, bool loop)
     {
         if (managerAudioSource == null || clip == null)
             return;
@@ -194,7 +196,7 @@ public class GameOverManager : MonoBehaviour
 
         managerAudioSource.Stop();
         managerAudioSource.clip = clip;
-        managerAudioSource.loop = true;
+        managerAudioSource.loop = loop;
         managerAudioSource.volume = volume;
         managerAudioSource.Play();
     }

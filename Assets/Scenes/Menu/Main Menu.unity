@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.78867924, g: 0.5302072, b: 0.40922034, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -485,7 +485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.70344293, b: 0.5641509, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -698,6 +698,135 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160560597}
   m_CullTransparentMesh: 1
+--- !u!1 &160847962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 160847964}
+  - component: {fileID: 160847963}
+  m_Layer: 0
+  m_Name: AudioSourceButtons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &160847963
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160847962}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 208b70cae4bcbcd4082bd38c7e5dd9be, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 146
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &160847964
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160847962}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.10155, y: -0.60231, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &202807243
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +840,7 @@ GameObject:
   - component: {fileID: 202807246}
   - component: {fileID: 202807248}
   - component: {fileID: 202807247}
+  - component: {fileID: 202807249}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -803,6 +933,200 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DisplayManager
   resolutionsDropDown: {fileID: 26955948}
   fullscreenDropDown: {fileID: 1266403898}
+--- !u!114 &202807249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202807243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f993c3b8a187a6e4eae79dc8a29b33e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JuiceProfileManager
+  targets:
+  - target: {fileID: 259559715}
+    hoverSourceImage: {fileID: 485799573}
+    juiceUpDown: 0
+    juiceOnHover: 1
+    juiceOnClick: 1
+    upDownAmplitude: 1.7
+    upDownSpeed: 0.8
+    useUnscaledTimeForUpDown: 1
+    hoverScaleMultiplier: 1.09
+    hoverLerpSpeed: 6
+    clickScaleMultiplier: 0.88
+    clickLerpSpeed: 6
+    clickRecoverLerpSpeed: 14
+    clickColor: {r: 0, g: 0, b: 0, a: 0}
+    clickHoldDuration: 0
+    hoverEnterClip: {fileID: 8300000, guid: 44a094ab2b7a9c243b839503cf8d1bd1, type: 3}
+    clickClip: {fileID: 8300000, guid: 2372062c43dfe4e4d8308b265e1dbde3, type: 3}
+    hoverEnterVolume: 0.75
+    clickVolume: 1
+    initialized: 0
+    isRectTransform: 0
+    rectTarget: {fileID: 0}
+    baseLocalPosition: {x: 0, y: 0, z: 0}
+    baseAnchoredPosition3D: {x: 0, y: 0, z: 0}
+    baseLocalScale: {x: 0, y: 0, z: 0}
+    isHovered: 0
+    isClickAnimating: 0
+    targetImage: {fileID: 0}
+    baseColor: {r: 0, g: 0, b: 0, a: 0}
+    uiRelay: {fileID: 0}
+  - target: {fileID: 581296168}
+    hoverSourceImage: {fileID: 780970611}
+    juiceUpDown: 0
+    juiceOnHover: 1
+    juiceOnClick: 1
+    upDownAmplitude: 1.7
+    upDownSpeed: 0.8
+    useUnscaledTimeForUpDown: 1
+    hoverScaleMultiplier: 1.09
+    hoverLerpSpeed: 6
+    clickScaleMultiplier: 0.88
+    clickLerpSpeed: 6
+    clickRecoverLerpSpeed: 14
+    clickColor: {r: 0, g: 0, b: 0, a: 0}
+    clickHoldDuration: 0
+    hoverEnterClip: {fileID: 8300000, guid: 44a094ab2b7a9c243b839503cf8d1bd1, type: 3}
+    clickClip: {fileID: 8300000, guid: 2372062c43dfe4e4d8308b265e1dbde3, type: 3}
+    hoverEnterVolume: 0.75
+    clickVolume: 1
+    initialized: 0
+    isRectTransform: 0
+    rectTarget: {fileID: 0}
+    baseLocalPosition: {x: 0, y: 0, z: 0}
+    baseAnchoredPosition3D: {x: 0, y: 0, z: 0}
+    baseLocalScale: {x: 0, y: 0, z: 0}
+    isHovered: 0
+    isClickAnimating: 0
+    targetImage: {fileID: 0}
+    baseColor: {r: 0, g: 0, b: 0, a: 0}
+    uiRelay: {fileID: 0}
+  - target: {fileID: 149820939}
+    hoverSourceImage: {fileID: 716808085}
+    juiceUpDown: 0
+    juiceOnHover: 1
+    juiceOnClick: 1
+    upDownAmplitude: 1.7
+    upDownSpeed: 0.8
+    useUnscaledTimeForUpDown: 1
+    hoverScaleMultiplier: 1.09
+    hoverLerpSpeed: 6
+    clickScaleMultiplier: 0.88
+    clickLerpSpeed: 6
+    clickRecoverLerpSpeed: 14
+    clickColor: {r: 0, g: 0, b: 0, a: 0}
+    clickHoldDuration: 0
+    hoverEnterClip: {fileID: 8300000, guid: 44a094ab2b7a9c243b839503cf8d1bd1, type: 3}
+    clickClip: {fileID: 8300000, guid: 2372062c43dfe4e4d8308b265e1dbde3, type: 3}
+    hoverEnterVolume: 0.75
+    clickVolume: 1
+    initialized: 0
+    isRectTransform: 0
+    rectTarget: {fileID: 0}
+    baseLocalPosition: {x: 0, y: 0, z: 0}
+    baseAnchoredPosition3D: {x: 0, y: 0, z: 0}
+    baseLocalScale: {x: 0, y: 0, z: 0}
+    isHovered: 0
+    isClickAnimating: 0
+    targetImage: {fileID: 0}
+    baseColor: {r: 0, g: 0, b: 0, a: 0}
+    uiRelay: {fileID: 0}
+  - target: {fileID: 1553047708}
+    hoverSourceImage: {fileID: 1214593356}
+    juiceUpDown: 0
+    juiceOnHover: 1
+    juiceOnClick: 1
+    upDownAmplitude: 1.7
+    upDownSpeed: 0.8
+    useUnscaledTimeForUpDown: 1
+    hoverScaleMultiplier: 1.09
+    hoverLerpSpeed: 6
+    clickScaleMultiplier: 0.88
+    clickLerpSpeed: 6
+    clickRecoverLerpSpeed: 14
+    clickColor: {r: 0, g: 0, b: 0, a: 0}
+    clickHoldDuration: 0
+    hoverEnterClip: {fileID: 8300000, guid: 44a094ab2b7a9c243b839503cf8d1bd1, type: 3}
+    clickClip: {fileID: 8300000, guid: 2372062c43dfe4e4d8308b265e1dbde3, type: 3}
+    hoverEnterVolume: 0.75
+    clickVolume: 1
+    initialized: 0
+    isRectTransform: 0
+    rectTarget: {fileID: 0}
+    baseLocalPosition: {x: 0, y: 0, z: 0}
+    baseAnchoredPosition3D: {x: 0, y: 0, z: 0}
+    baseLocalScale: {x: 0, y: 0, z: 0}
+    isHovered: 0
+    isClickAnimating: 0
+    targetImage: {fileID: 0}
+    baseColor: {r: 0, g: 0, b: 0, a: 0}
+    uiRelay: {fileID: 0}
+  - target: {fileID: 1038051609}
+    hoverSourceImage: {fileID: 1540460778}
+    juiceUpDown: 0
+    juiceOnHover: 1
+    juiceOnClick: 1
+    upDownAmplitude: 1.7
+    upDownSpeed: 0.8
+    useUnscaledTimeForUpDown: 1
+    hoverScaleMultiplier: 1.09
+    hoverLerpSpeed: 6
+    clickScaleMultiplier: 0.88
+    clickLerpSpeed: 6
+    clickRecoverLerpSpeed: 14
+    clickColor: {r: 0, g: 0, b: 0, a: 0}
+    clickHoldDuration: 0
+    hoverEnterClip: {fileID: 8300000, guid: 44a094ab2b7a9c243b839503cf8d1bd1, type: 3}
+    clickClip: {fileID: 8300000, guid: 2372062c43dfe4e4d8308b265e1dbde3, type: 3}
+    hoverEnterVolume: 0.75
+    clickVolume: 1
+    initialized: 0
+    isRectTransform: 0
+    rectTarget: {fileID: 0}
+    baseLocalPosition: {x: 0, y: 0, z: 0}
+    baseAnchoredPosition3D: {x: 0, y: 0, z: 0}
+    baseLocalScale: {x: 0, y: 0, z: 0}
+    isHovered: 0
+    isClickAnimating: 0
+    targetImage: {fileID: 0}
+    baseColor: {r: 0, g: 0, b: 0, a: 0}
+    uiRelay: {fileID: 0}
+  - target: {fileID: 1792969229}
+    hoverSourceImage: {fileID: 971274932}
+    juiceUpDown: 0
+    juiceOnHover: 1
+    juiceOnClick: 1
+    upDownAmplitude: 1.7
+    upDownSpeed: 0.8
+    useUnscaledTimeForUpDown: 1
+    hoverScaleMultiplier: 1.09
+    hoverLerpSpeed: 6
+    clickScaleMultiplier: 0.88
+    clickLerpSpeed: 6
+    clickRecoverLerpSpeed: 14
+    clickColor: {r: 0, g: 0, b: 0, a: 0}
+    clickHoldDuration: 0
+    hoverEnterClip: {fileID: 8300000, guid: 44a094ab2b7a9c243b839503cf8d1bd1, type: 3}
+    clickClip: {fileID: 8300000, guid: 2372062c43dfe4e4d8308b265e1dbde3, type: 3}
+    hoverEnterVolume: 0.75
+    clickVolume: 1
+    initialized: 0
+    isRectTransform: 0
+    rectTarget: {fileID: 0}
+    baseLocalPosition: {x: 0, y: 0, z: 0}
+    baseAnchoredPosition3D: {x: 0, y: 0, z: 0}
+    baseLocalScale: {x: 0, y: 0, z: 0}
+    isHovered: 0
+    isClickAnimating: 0
+    targetImage: {fileID: 0}
+    baseColor: {r: 0, g: 0, b: 0, a: 0}
+    uiRelay: {fileID: 0}
+  sharedAudioSource: {fileID: 160847963}
 --- !u!1 &236224050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,7 +1626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7058824, b: 0.5647059, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1363,7 +1687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -91}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &364282358
@@ -1615,7 +1939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7058824, b: 0.5647059, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1807,6 +2131,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Main
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 202807249}
+        m_TargetAssemblyTypeName: JuiceProfileManager, Assembly-CSharp
+        m_MethodName: PlayClickJuice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &485799573
@@ -2700,6 +3036,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 202807249}
+        m_TargetAssemblyTypeName: JuiceProfileManager, Assembly-CSharp
+        m_MethodName: PlayClickJuice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &716808085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2869,6 +3217,18 @@ MonoBehaviour:
           m_StringArgument: OptionsMenu
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 202807249}
+        m_TargetAssemblyTypeName: JuiceProfileManager, Assembly-CSharp
+        m_MethodName: PlayClickJuice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &780970611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2959,7 +3319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7058824, b: 0.5647059, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3316,6 +3676,18 @@ MonoBehaviour:
           m_StringArgument: MainMenu
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 202807249}
+        m_TargetAssemblyTypeName: JuiceProfileManager, Assembly-CSharp
+        m_MethodName: PlayClickJuice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &971274932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3424,8 +3796,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2138194249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.00990099, y: 0}
-  m_AnchorMax: {x: 0.00990099, y: 1}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3449,7 +3821,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -6880077232281017949, guid: fad33519e5836f94ab5cb3ce8b000496, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3936,6 +4308,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 202807249}
+        m_TargetAssemblyTypeName: JuiceProfileManager, Assembly-CSharp
+        m_MethodName: PlayClickJuice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1214593356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4034,7 +4418,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 1, g: 0.7058824, b: 0.5647059, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4473,7 +4857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7058824, b: 0.5647059, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4619,7 +5003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7921569, g: 0.53333336, b: 0.4117647, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4727,7 +5111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7058824, b: 0.5647059, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4802,7 +5186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7058824, b: 0.5647059, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4924,7 +5308,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 1, g: 0.7058824, b: 0.5647059, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -5003,7 +5387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7058824, b: 0.5647059, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5074,7 +5458,7 @@ RectTransform:
   m_Father: {fileID: 1686891615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.00990099, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5091,7 +5475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.69803923, g: 0.32941177, b: 0.15686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5312,6 +5696,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 202807249}
+        m_TargetAssemblyTypeName: JuiceProfileManager, Assembly-CSharp
+        m_MethodName: PlayClickJuice
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1540460778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5365,7 +5761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1541720256
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6505,6 +6901,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1236020406}
+  - {fileID: 160847964}
   - {fileID: 564982390}
   - {fileID: 202807245}
   - {fileID: 1842955136}

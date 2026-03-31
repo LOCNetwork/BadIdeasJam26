@@ -25,11 +25,11 @@ MonoBehaviour:
   - key: 2
     value: Technology
   passivesDescriptions:
-  - +20.00$ for each Popular game sold before this kit
+  - +15.00$ for each Popular game sold before this kit
   - +10% item value if sold with a Popular game or Knock-off game
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
   displaySprite: {fileID: -7531631374678658416, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
   passivesInfo:
-  - EXTRA_VALUE:ADDITIVE:20:POPULAR_GAME
+  - EXTRA_VALUE:ADDITIVE:15:POPULAR_GAME
   - SYNERGY:POPULAR_GAME-1:MULTIPLIER:0.1
   - SYNERGY:BOOTLEG_GAME-1:MULTIPLIER:0.1

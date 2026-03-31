@@ -16,10 +16,10 @@ MonoBehaviour:
   displayName: Staple pack
   description: Seems kinda pointless with no stapler, but i guess it can be sold
     by its own?
-  value: 1
+  value: 2
   weight: 0
   rarity: 0
-  boxSlots: 0
+  boxSlots: 1
   attributes:
   - key: 0
     value: 3

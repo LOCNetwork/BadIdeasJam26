@@ -317,6 +317,7 @@ public class Wrapper : Interactable
 
             ModifyItemsInWrapper();
 
+            CalculateWeight();
             CalculatePrice();
             CalculateSellTime();
 
@@ -412,6 +413,18 @@ public class Wrapper : Interactable
         slotsText.transform.localScale = slotsBaseScale;
     }
 
+    private void ResetSlotsJuiceState()
+    {
+        if (slotsRect != null)
+            slotsRect.anchoredPosition = slotsBaseAnchoredPos;
+
+        if (slotsText != null)
+        {
+            slotsText.transform.localScale = slotsBaseScale;
+            slotsText.color = normalSlotsColor;
+        }
+    }
+
     private void PlaySuccessSlotsJuice()
     {
         if (slotsText == null)
@@ -423,7 +436,7 @@ public class Wrapper : Interactable
         if (slotsErrorRoutine != null)
             StopCoroutine(slotsErrorRoutine);
 
-        slotsText.color = normalSlotsColor;
+        ResetSlotsJuiceState();
         slotsJuiceRoutine = StartCoroutine(SuccessSlotsJuiceRoutine());
     }
 
@@ -438,6 +451,7 @@ public class Wrapper : Interactable
         if (slotsErrorRoutine != null)
             StopCoroutine(slotsErrorRoutine);
 
+        ResetSlotsJuiceState();
         slotsErrorRoutine = StartCoroutine(FailSlotsJuiceRoutine());
     }
 
@@ -489,6 +503,9 @@ public class Wrapper : Interactable
 
     private IEnumerator FailSlotsJuiceRoutine()
     {
+        if (slotsText == null)
+            yield break;
+
         slotsText.color = errorSlotsColor;
 
         float shakeTimer = 0f;
@@ -511,6 +528,7 @@ public class Wrapper : Interactable
         yield return new WaitForSeconds(failColorDuration);
 
         slotsText.color = normalSlotsColor;
+        slotsText.transform.localScale = slotsBaseScale;
         slotsErrorRoutine = null;
     }
 
@@ -575,6 +593,53 @@ public class Wrapper : Interactable
                 passive.ExecutePassive(item, box, item.passivesInfo);
             }
 
+        }
+
+    }
+
+
+    private void CalculateWeight()
+    {
+        Box box = currentBox.GetComponent<Box>();
+
+        float total = 0;
+        float items = 0;
+
+        foreach (WorldItem item in currentBox.GetComponent<Box>().playerItemPool)
+        {
+            switch (item.weight)
+            {
+                case Weights.LOW:
+                    total += 0;
+                    break;
+
+                case Weights.MEDIUM:
+                    total += 1;
+                    break;
+
+                case Weights.HIGH:
+                    total += 2;
+                    break;
+            }
+
+            items++;
+        }
+
+        int ordinal = Mathf.RoundToInt(total / items);
+
+        switch (ordinal)
+        {
+            case 0:
+                box.itemsWeight = Weights.LOW;
+                break;
+
+            case 1:
+                box.itemsWeight = Weights.MEDIUM;
+                break;
+
+            case 2:
+                box.itemsWeight = Weights.HIGH;
+                break;
         }
 
     }

@@ -310,7 +310,7 @@ public class QuotaExtraMenuManager : MonoBehaviour
         }
 
         FieldInfo startingQuotaField =
-            type.GetField("startingQuota", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            type.GetField("quotaBonus", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
         if (startingQuotaField != null && startingQuotaField.FieldType == typeof(int))
         {
