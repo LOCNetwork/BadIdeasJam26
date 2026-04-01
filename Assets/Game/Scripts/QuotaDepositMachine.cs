@@ -399,10 +399,10 @@ public class QuotaDepositMachine : Interactable
         int quota = GetCurrentQuota();
 
         if (dayText != null)
-            dayText.text = $"Day: {day}";
+            dayText.text = $"Day {day + 1}";
 
         if (quotaText != null)
-            quotaText.text = $"Quote: {currentDeposited}/{quota}";
+            quotaText.text = $"{currentDeposited}/{quota}";
 
         if (quotaDebugText != null)
             quotaDebugText.text = $"{currentDeposited}/{quota}";
@@ -446,9 +446,9 @@ public class QuotaDepositMachine : Interactable
     {
         int day = gameManager != null ? gameManager.currentDay : 0;
 
-        float x = day + 1;
+        float x = day;
 
-        return Mathf.RoundToInt(Mathf.Max(1, 50 * Mathf.Pow(x, x / (x + 3)))) + quotaBonus;
+        return Mathf.RoundToInt(Mathf.Max(1, 30 + 10 * Mathf.Pow(x, 2))) + quotaBonus;
     }
 
     public int GetCurrentDeposited()
