@@ -68,6 +68,8 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(UIManager.FadeInCoroutine(fadeImage, 250f));
 
+        Time.timeScale = 1.0f;
+
         instance = this;
         gameStats = new GameStats();
         
@@ -76,8 +78,6 @@ public class GameManager : MonoBehaviour
         LoadItems();
         
         itemManager = new ItemManager();
-
-        player.GetComponent<Player>().SetMovementLocked(false);
     }
 
 

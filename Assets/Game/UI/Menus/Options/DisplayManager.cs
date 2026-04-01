@@ -11,6 +11,10 @@ public class DisplayManager : MonoBehaviour
     private TMP_Dropdown resolutionsDropDown;
     [SerializeField]
     private TMP_Dropdown fullscreenDropDown;
+    [SerializeField]
+    private GameObject webVersionText;
+    [SerializeField]
+    private GameObject resolutionsGO;
 
     private Resolution[] resolutions;
     private FullScreenMode[] fullScreenModes;
@@ -21,7 +25,17 @@ public class DisplayManager : MonoBehaviour
         resolutionsDropDown.ClearOptions();
         fullscreenDropDown.ClearOptions();
 
-        AddResolutions();
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+        {
+            AddResolutions();
+        } else
+        {
+            webVersionText.SetActive(true);
+            resolutionsGO.SetActive(false);
+
+            resolutions = new Resolution[0];
+        }
+        
         AddScreenTypes();
 
         ChangeResolution(PlayerPrefs.GetInt("Resolution"));
@@ -122,9 +136,7 @@ public class DisplayManager : MonoBehaviour
 
         Resolution resolucion = resolutions[index];
 
-        FullScreenMode fsm = fullScreenModes[PlayerPrefs.GetInt("ScreenType")];
-
-        Screen.SetResolution(resolucion.width, resolucion.height, fsm);
+        Screen.SetResolution(resolucion.width, resolucion.height, Screen.fullScreenMode);
     }
 
     public void ChangeScreenType(int index)
@@ -133,11 +145,9 @@ public class DisplayManager : MonoBehaviour
 
         PlayerPrefs.SetInt("ScreenType", index);
 
-        Resolution resolucion = resolutions[PlayerPrefs.GetInt("Resolution")];
-
         FullScreenMode fsm = fullScreenModes[index];
 
-        Screen.SetResolution(resolucion.width, resolucion.height, fsm);
+        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, fsm);
     }
 
 }

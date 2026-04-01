@@ -7,18 +7,30 @@ using UnityEngine.Video;
 public class PreMenuFade : MonoBehaviour
 {
 
+    [SerializeField] private GameObject videoPlayerGO;
     [SerializeField] private VideoPlayer player;
     [SerializeField] private Image fadeImg;
+    [SerializeField] private GameObject logoImg;
 
 
     public void Start()
     {
-        player.Stop();
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+        {
+            player.Stop();
+        } 
+            
         RunAnimationCoroutine();
     }
 
     public void RunAnimationCoroutine()
     {
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            logoImg.SetActive(true);
+            videoPlayerGO.SetActive(false);
+        }
+
         StartCoroutine(Run());
     }
 
@@ -29,10 +41,19 @@ public class PreMenuFade : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        player.Play();
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+        {
+            player.Play();
+        }
 
-        yield return new WaitForSeconds(5f);
-
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+        {
+            yield return new WaitForSeconds(5f);
+        } else
+        {
+            yield return new WaitForSeconds(2f);
+        }
+            
         StartCoroutine(FadeOutCoroutine(fadeImg, 40f));
 
         yield return new WaitForSeconds(2.1f);
