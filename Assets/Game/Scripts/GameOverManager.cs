@@ -8,6 +8,11 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private MonoBehaviour quotaManager;
 
+    [Header("Optional UI To Close On Game Over")]
+    [SerializeField] private MonoBehaviour pcMenuController;
+    [SerializeField] private MonoBehaviour dealerMenuController;
+    [SerializeField] private GameObject dealerUIRoot;
+
     [Header("Scene Objects")]
     [SerializeField] private SpriteRenderer spriteRendererToDisable;
     [SerializeField] private SpriteRenderer spriteRendererToDisable2;
@@ -129,13 +134,17 @@ public class GameOverManager : MonoBehaviour
     {
         gameOverTriggered = true;
 
-        GameManager.instance.gameOver = true;
+        if (GameManager.instance != null)
+            GameManager.instance.gameOver = true;
+
+        CloseOpenInterfaces();
 
         if (player != null)
             player.SetMovementLocked(true);
 
         if (spriteRendererToDisable != null)
             spriteRendererToDisable.enabled = false;
+
         if (spriteRendererToDisable2 != null)
             spriteRendererToDisable2.enabled = false;
 
@@ -160,6 +169,57 @@ public class GameOverManager : MonoBehaviour
         PlayManagerLoop(secondLoopClip, secondLoopVolume, true);
 
         yield return StartCoroutine(FadeInObjectsRoutine(finalFadeDuration, thirdObjectToFadeIn, fourthObjectToFadeIn));
+    }
+
+    private void CloseOpenInterfaces()
+    {
+        CloseMenuControllerIfOpen(pcMenuController);
+        CloseMenuControllerIfOpen(dealerMenuController);
+
+        if (dealerUIRoot != null && dealerUIRoot.activeSelf)
+            dealerUIRoot.SetActive(false);
+    }
+
+    private void CloseMenuControllerIfOpen(MonoBehaviour controller)
+    {
+        if (controller == null)
+            return;
+
+        System.Type type = controller.GetType();
+
+        bool isOpen = false;
+
+        PropertyInfo isOpenProperty = type.GetProperty("IsOpen", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (isOpenProperty != null && isOpenProperty.PropertyType == typeof(bool))
+        {
+            object value = isOpenProperty.GetValue(controller);
+            if (value is bool openValue)
+                isOpen = openValue;
+        }
+        else
+        {
+            FieldInfo isOpenField = type.GetField("isOpen", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (isOpenField != null && isOpenField.FieldType == typeof(bool))
+            {
+                object value = isOpenField.GetValue(controller);
+                if (value is bool openValue)
+                    isOpen = openValue;
+            }
+        }
+
+        if (!isOpen)
+            return;
+
+        MethodInfo closeMethod = type.GetMethod("Close", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (closeMethod != null)
+        {
+            closeMethod.Invoke(controller, null);
+            return;
+        }
+
+        GameObject controllerGO = controller.gameObject;
+        if (controllerGO != null && controllerGO.activeSelf)
+            controllerGO.SetActive(false);
     }
 
     private void StopAllOtherGameAudio()
