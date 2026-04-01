@@ -18960,6 +18960,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOverManager
   player: {fileID: 1798789838}
   quotaManager: {fileID: 944592965}
+  pcMenuController: {fileID: 1320354732}
+  dealerMenuController: {fileID: 0}
+  dealerUIRoot: {fileID: 1001961726}
   spriteRendererToDisable: {fileID: 1798789841}
   spriteRendererToDisable2: {fileID: 958695637}
   firstObjectToActivate: {fileID: 1055039007}
@@ -31885,7 +31888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1814095594
 MonoBehaviour:
   m_ObjectHideFlags: 0
