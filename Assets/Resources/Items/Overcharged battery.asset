@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Overcharged battery
   description: It looks like this can charge your active item twice... Unluckily
     for me, there are none of those here.
-  value: 70
+  value: 150
   weight: 0
   rarity: 0
   boxSlots: 1

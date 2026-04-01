@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: RUN_NGUN_POTION
   displayName: Run n' gun potion
   description: This looks like it comes straight out of a cartoon...
-  value: 150
+  value: 350
   weight: 0
   rarity: 1
   boxSlots: 1

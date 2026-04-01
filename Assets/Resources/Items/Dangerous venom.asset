@@ -22,7 +22,9 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 2
-  passivesDescriptions: []
+  passivesDescriptions:
+  - +50% item value if this is sold with at least 2 items Clothing catalogue
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}
   displaySprite: {fileID: -1383057227, guid: a0207c882f9ec904abb696add3c4385d, type: 3}
-  passivesInfo: []
+  passivesInfo:
+  - SYNERGY:TYPE-Clothing-2:MULTIPLIER-ITEM:0.50

@@ -22,6 +22,8 @@ MonoBehaviour:
   attributes:
   - key: 0
     value: 1
+  - key: 2
+    value: Clothing
   passivesDescriptions:
   - +6% kit value if this is sold with a Popular game
   spriteRenderer: {fileID: 5457993782934353821, guid: 8eaa37ac40b8fe24aa7b727403d5da10, type: 3}

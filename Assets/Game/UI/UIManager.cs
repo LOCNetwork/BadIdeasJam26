@@ -39,6 +39,11 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
 
+        if (SceneManager.GetActiveScene() != null && SceneManager.GetActiveScene().name.Equals("Main Menu"))
+        {
+            StartCoroutine(FadeInCoroutine(fadeImage, 40f));
+        }
+
         currentPosition = "MainMenu";
     }
 

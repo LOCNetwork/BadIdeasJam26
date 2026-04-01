@@ -206,23 +206,26 @@ public class SynergyPassive : Passive
                 string itemType = itemToSellWith.Split('-')[1];
                 int count = 0;
 
-                List<string> midItems = new List<string>();
+                Dictionary<string, int> midItems = new Dictionary<string, int>();
 
                 foreach (WorldItem i in box.playerItemPool)
                 {
                     Attribute att = i.GetAttribute(Attributes.ITEM_TYPE);
                     if (att != null && att.value.Contains(itemType))
                     {
-                        midItems.Add(i.itemID);
+                        int itemCount = 0;
+                        midItems.TryGetValue(i.itemID, out itemCount);
+
+                        midItems[i.itemID] = itemCount + 1;
                         count++;
                     }
                 }
 
                 if (count >= int.Parse(itemToSellWith.Split('-')[2]))
                 {
-                    foreach (string midItem in midItems)
+                    foreach (KeyValuePair<string, int> pair in midItems)
                     {
-                        itemCounts[midItem] = count;
+                        itemCounts[pair.Key] = pair.Value; 
                     }
                     
                 }

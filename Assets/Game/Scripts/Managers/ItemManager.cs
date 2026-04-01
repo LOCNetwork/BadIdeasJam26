@@ -31,6 +31,7 @@ public class ItemManager
         loadedItems["COMPRESSOR_TOOL"].passives.Add(new SynergyPassive());
         loadedItems["CORRECTION_TAPE"].passives.Add(new SynergyPassive());
         loadedItems["DECK_OF_CARDS"].passives.Add(new RandomValuePassive());
+        loadedItems["DANGEROUS_VENOM"].passives.Add(new SynergyPassive());
         loadedItems["ELEGANT_MOLE_TOP_HAT"].passives.Add(new DeliverySpeedExtraPassive());
         loadedItems["EMPTY_STAPLER"].passives.Add(new SynergyPassive());
         loadedItems["EMPTY_STAPLER"].passives.Add(new ItemRequirementPassive());

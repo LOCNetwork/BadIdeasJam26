@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: ENERGY_GUN
   displayName: Energy gun
   description: You know, i'd say this gun is pretty +STYLISH.
-  value: 175
+  value: 275
   weight: 0
   rarity: 1
   boxSlots: 1

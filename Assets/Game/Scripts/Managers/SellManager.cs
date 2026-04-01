@@ -191,12 +191,12 @@ public class SellManager
                 {
                     if (passive.MeetsCondition(item, box, item.passivesInfo))
                     {
-                        activatesPassives = true;
-                        container.gameObject.SetActive(true);
-
                         string passiveDisplay = passive.Display(item, box, item.passivesInfo);
 
                         if (passiveDisplay.Equals(string.Empty)) continue;
+
+                        activatesPassives = true;
+                        container.gameObject.SetActive(true);
 
                         DisplayInfo(passiveDisplay);
                         passive.ExecutePassive(item, box, item.passivesInfo);

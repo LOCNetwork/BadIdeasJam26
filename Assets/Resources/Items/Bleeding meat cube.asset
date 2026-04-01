@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: BLEEDING_MEAT_CUBE
   displayName: Bleeding meat cube
   description: Straight out of the butcher shop I hope...
-  value: 200
+  value: 300
   weight: 0
   rarity: 0
   boxSlots: 1

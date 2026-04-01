@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: QUIRKY_HERBS
   displayName: Quirky herbs
   description: I heard these have the power to change someone's nature...
-  value: 80
+  value: 200
   weight: 0
   rarity: 0
   boxSlots: 1
