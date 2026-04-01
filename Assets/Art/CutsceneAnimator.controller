@@ -55,7 +55,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GameOverCutscene
-  m_Speed: 0.67
+  m_Speed: 0.84
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8576277513920225998}

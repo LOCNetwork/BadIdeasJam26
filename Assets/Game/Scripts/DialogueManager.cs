@@ -135,6 +135,7 @@ public class DialogueManager : MonoBehaviour
 
     private int lastObservedDay = -1;
     private bool lastObservedPurchaseRunning = false;
+    private bool firstBuyBoxPlayed = false;
 
     private FieldInfo playerCurrentTargetField;
 
@@ -773,8 +774,11 @@ public class DialogueManager : MonoBehaviour
     {
         bool currentPurchaseRunning = GetPurchaseRunningState();
 
-        if (currentPurchaseRunning && !lastObservedPurchaseRunning)
+        if (!firstBuyBoxPlayed && currentPurchaseRunning && !lastObservedPurchaseRunning)
+        {
+            firstBuyBoxPlayed = true;
             TriggerBuyBox();
+        }
 
         lastObservedPurchaseRunning = currentPurchaseRunning;
     }
