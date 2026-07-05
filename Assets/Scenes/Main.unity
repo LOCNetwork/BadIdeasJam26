@@ -20673,7 +20673,7 @@ MonoBehaviour:
     pageBarObject: {fileID: 825606006}
     bgSearchBarAnchoredPosition: {x: 684, y: 17}
   debugMode: 1
-  debugUpgradeLevel: 4
+  debugUpgradeLevel: 0
   currentUpgradeLevel: 0
   openJuice:
     initialDelay: 0
@@ -22424,7 +22424,7 @@ GameObject:
   - component: {fileID: 1409254088}
   - component: {fileID: 1409254087}
   m_Layer: 5
-  m_Name: PcImageBackground
+  m_Name: DescImageBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31803,7 +31803,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2077961499, guid: 0acc951030857a84e99d18bed009f8ba, type: 3}
+  m_Sprite: {fileID: 7860355370646335520, guid: e01c99c19ba2a954396ba104d848376f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
